@@ -4,11 +4,20 @@
   "description": "quizz game",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "author": "",
+  "author": "Tommy 'Motyak'",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Motyak/cerigame.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Motyak/cerigame/issues"
+  },
+  "homepage": "https://github.com/Motyak/cerigame#readme"
 }
