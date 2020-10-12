@@ -1,11 +1,17 @@
+// On charge les modules dont nous aurons besoin
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const app = express();
-const port = 3037;
 const path = require('path');
 
+// On instancie l'application express et 
+// on définit le numéro de port sur lequel écouté
+const app = express();
+const port = 3037;
+
+// On créé un accès statique aux ressources du répertoire 'public'
+// dans lequel se trouve les fichiers du site (html, css, ..)
 app.use(express.static("public"));
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,6 +36,8 @@ var sessionChecker = (req, res, next) => {
     }
 };
 
+// Charge la page index lorsqu'un utilisateur accède à la racine
+// du site
 app.get('/', sessionChecker, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'indexx.html'));
 });
@@ -54,6 +62,8 @@ app.get('/test', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'test.html'));
 });
 
+// On lance le serveur node sous le port assigné, qui va traiter
+// chaque requête HTTP qui lui sera destinée (GET, POST, ..)
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
 });
