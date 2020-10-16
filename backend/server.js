@@ -14,7 +14,8 @@ const port = 3037;
 
 // On créé un accès statique aux ressources du répertoire 'public'
 // dans lequel se trouve les fichiers du site (html, css, ..)
-app.use(express.static("public"));
+// app.use(express.static("public"));
+app.use(express.static("../frontend/dist/frontend"));
 
 // Permet de lire les paramètre POST en utilisant 'req.body.xxxx'
 app.use(bodyParser.urlencoded({ extended: true }));
