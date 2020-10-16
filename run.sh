@@ -1,7 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "Launching backend.."
-
-echo -e "Succeeded!\n"
-
-# when script killed or interrupted => kill the node server
+cd backend; npm start
