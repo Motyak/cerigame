@@ -1,0 +1,34 @@
+#banner {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  /* pour que le bandeau soit toujours au dessus des autres elements */
+  z-index: 9999;
+  /* margin-bottom: -50px; */
+  margin-bottom: -0px;
+  padding: 10px;
+
+  font-family: 'Roboto', sans-serif;
+  font-size: 130%;
+  text-align: center;
+
+  background-color: rgba(80, 111, 169, 0.5);
+  color: white;
+}
+
+/* .banner-info {
+      background-color: rgba(80, 111, 169, 0.5);
+      color: white;
+  } */
+
+#banner #close {
+  display: block;
+  cursor: pointer;
+  float: right;
+  /* margin-right: 30px; */
+}
+
+#banner #close:hover {
+  color: black;
+}

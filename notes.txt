@@ -1,0 +1,11 @@
+J'aimerais avoir un component banner générique 
+(structure, positionnement, police,  taille du texte)
+
+Mais plusieurs types possibles (info, succès, erreur, warning),
+chaque type aura son icône associée (à gauche), sa couleur de fond et
+sa couleur de police (blanche si fond foncée et noire si fond clair).
+
+
+
+Faire du formulaire de login un composant (sans prendre en compte son 
+positionnement là où il sera utilisé)
