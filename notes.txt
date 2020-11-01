@@ -9,3 +9,10 @@ sa couleur de police (blanche si fond foncée et noire si fond clair).
 
 Faire du formulaire de login un composant (sans prendre en compte son 
 positionnement là où il sera utilisé)
+
+
+
+
+Faire en sorte de pouvoir afficher une bannière personnaliser
+en appelant une fonction javascript depuis n'importe quelle page.
+(type de bannière + message)

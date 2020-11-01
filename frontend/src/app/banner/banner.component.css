@@ -1,4 +1,4 @@
-#banner {
+.banner {
   bottom: 0;
   left: 0;
   position: fixed;
@@ -11,24 +11,53 @@
 
   font-family: 'Roboto', sans-serif;
   font-size: 130%;
-  text-align: center;
 
-  background-color: rgba(80, 111, 169, 0.5);
+  background-color: rgba(80, 110, 170, 0.5);
   color: white;
 }
 
-/* .banner-info {
-      background-color: rgba(80, 111, 169, 0.5);
-      color: white;
-  } */
-
-#banner #close {
-  display: block;
-  cursor: pointer;
-  float: right;
-  /* margin-right: 30px; */
+.banner-success {
+  background-color: #1DB954;
 }
 
-#banner #close:hover {
+.banner-error {
+  background-color: #EF403D;
   color: black;
+}
+
+.banner-warning {
+  background-color:#FFD557;
+  color: black;
+}
+
+.banner-info {
+  background-color: #3a73ef;
+}
+
+.banner #icon {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.banner #icon img {
+  height: 20px;
+  margin-bottom: 3px;
+}
+
+.banner #text {
+  display: inline-block;
+}
+
+.banner #close {
+  cursor: pointer;
+  float: right;
+}
+
+.banner #close:hover {
+  color: black;
+}
+
+.banner-error #close:hover,
+.banner-warning #close:hover {
+  color: white;
 }

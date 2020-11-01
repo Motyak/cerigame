@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { BannerType } from '../enums/BannerType';
 
 @Component({
   selector: 'app-banner',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BannerComponent implements OnInit {
 
-  constructor() { }
+  @Input() type: BannerType;
+  @Input() msg: string;
 
-  ngOnInit(): void {
-  }
+  
+
+  constructor() {}
+
+  ngOnInit(): void {}
 
 }
