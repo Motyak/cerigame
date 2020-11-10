@@ -1,27 +1,23 @@
 // On charge les modules dont nous aurons besoin
 const express = require('express');                 //pour appli
 const bodyParser = require('body-parser');          //pour récup params POST
-// const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const mongoDBStore = require('connect-mongodb-session')(session);
 const path = require('path');                       //pour chemin statique des res
-const { request } = require('express');
 
 // On instancie l'application express et 
 // on définit le numéro de port sur lequel écouté
 const app = express();
 const port = 3037;
 
-// On créé un accès statique aux ressources du répertoire 'public'
+// On créé un accès statique aux ressources du répertoire
 // dans lequel se trouve les fichiers du site (html, css, ..)
-// app.use(express.static("public"));
 app.use(express.static("../frontend/dist/frontend"));
 
 // Permet de lire les paramètre POST en utilisant 'req.body.xxxx'
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use(cookieParser());
-
+// Récupération des données de session (stockées dans bdd MongoDB)
 app.use(session({
     secret: 'onsenfout',
     saveUninitialized: false,
@@ -35,23 +31,23 @@ app.use(session({
 }));
 
 // var sessionChecker = (req, res, next) => {
-//     if (req.session.user && req.cookies.user_sid) {
+//     if (req.session.user)
 //         res.redirect('/test');
-//     } else {
+//     else
 //         next();
-//     }
 // };
 
 // Charge la page index lorsqu'un utilisateur accède à la racine
 // du site
 // app.get('/', sessionChecker, (req, res) => {
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile('index.html');
 });
 
+// Route permettant d'authentifier un utilisateur
 // app.post('/login', sessionChecker, (req, res) => {
 app.post('/login', (req, res) => {
-    // récupération des query strings
+    // récupération des données POST
     const mail = req.body.mail;
     const pwd = req.body.pwd;
 
@@ -64,7 +60,7 @@ app.post('/login', (req, res) => {
         req.session.cookie.maxAge + ' s');
 
     // on redirige vers l'index
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile('index.html');
     
     console.log('mail :', mail, '\npwd :', pwd);
 });

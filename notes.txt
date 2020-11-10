@@ -16,3 +16,148 @@ positionnement là où il sera utilisé)
 Faire en sorte de pouvoir afficher une bannière personnaliser
 en appelant une fonction javascript depuis n'importe quelle page.
 (type de bannière + message)
+
+
+
+______________________________________________________________________
+
+
+
+
+
+
+
+
+Révisions Angular :
+-Basé sur le modèle MVC ou MVVM.
+    -Les modèles sont représentés par les attributs de classe 
+    de chaque composant individuel ou bien d'une classe externe importée.
+    -Les vues sont représentées par les fichiers HTML et CSS
+            de chaque composant individuel. Fait appel au controleur
+            au travers d'actions menés par l'utilisateur (clic, formulaire,etc..)
+    -Le controleur contient les fonctionnalités de l'appli, 
+            mais on peut également utilisé des services
+            à la place. Il accède aux modèles par appel au serveur
+            pour récupérer les données nécessaires et transmissions à la vue.
+            Réponse aux actions utilisateurs par éxecution des traitements associés.
+            Consommation de services fournissant la logique fonctionnelle.
+
+-Pour insérer un composant dans un autre composant, 
+        on ajoute dans le code html du composant parent
+        le selecteur du composant fils entre balises.
+        Pour passer des valeurs du modèle du composant
+        parent au modèle du composant fils, on peut
+        les ajouter entre les balises HTML :
+        <selecteur-fils [attrFils]="attrParent" [..]=".."></selecteur-fils>
+
+(Data binding uni-directionnel <=> MVC)----------------------------
+
+(Property Binding = Composant vers DOM)
+-Pour afficher les valeurs des attributs d'un composant depuis
+        son code HTML, on écrit le nom de l'attr entre double accolades :
+        <img src="../../assets/{{type}}.svg">
+-Pour modifier un élement du DOM : 
+    <img [src]="url_model" />
+    <.. [disabled]="bool-attr-model" />
+    <.. [hidden]="bool-attr-model" />
+-Pour modifier une directive d'attribut : 
+    <div [ngStyle]="{color:couleur_modele}" />
+-Pour modifier une données du modèle (@Input) :
+    <comp-selector [attrEnInput]="une_var">
+
+(Event Binding = DOM vers Composant)
+-Gestion des événements utilisateur (clic, frappe clavier, touch, ..) :
+(nom-event)="methode-composant()"
+
+(Class et Style Binding (Element HTML))
+Interaction entre le DOM et le composant, modifier dynamiquement
+        une classe ou le style d'un élément en fonction du modèle :
+    [class]="variable-string-model"
+    [style]="variable-string-model"
+
+---------------------------------------------------------------------
+
+
+(Data binding bi-directionnel <=> MVVM)----------------------------------
+-Pour mettre à jour une donnnée du modèle d'un composant depuis la vue :
+    [(ngModel)]="variable-data-model"       <- dans une balise permettant
+            une action de l'utilisateur (ex: input de type text)
+------------------------------------------------------------------------
+
+
+Les Directives sont des éléments d'Angular permettant une intéraction
+avec le DOM, deux types de directives :
+    -Directive d'attribut
+    -Directive structurelle
+
+On peut créer des Directives avec le décorateur @Directive.
+
+(Permet de faire du data binding bi-directionnel)
+Directives d'attribut : ngModel, ngClass et ngStyle :
+ [ngClass]="{'nom-class': variable-model}"
+ [ngStyle]=...
+
+ (Responsables de la mise en page HTML)
+ Directives structurelles
+ -Permet d'ajouter, supprimer ou remplacer des éléments dans le DOM
+ - *ngIf="condition" => ajoute ou supprime l'élément du DOM
+ - *ngFor="let var of tableau_var" => itération sur une variable
+        de type tableau ou objet, ex :
+            <ul><li *ngFor="let var of tab_var"> {{var}}</li></ul>
+- *ngSwitch, *ngSwitchCase, *ngSwitchDefault
+
+
+Les Pipes permettent le formatage des données avant leur
+affichage dans les vues.
+-Pipes prédéfinis (et attributs associés) :
+    -Datepipe
+    -UpperCasePipe, LowerCasePipe
+    -CurrencyPipe
+    -DecimalPipe, PercentPipe
+    -...
+
+-Utilisable directement dans la vue :
+    -{{variable-model | nom-pipe | ..}}
+
+-Possibilité de créer des pipes métier grâce au décorateur @Pipe
+
+-------------------------------------------------------------------
+
+Un service est une fonctionnalité (ensemble de traitements)
+nécessaire à une application.
+-Possibilité de réutiliser un service plusieurs fois.
+-1 service = 1 classe TypeScript avec des méthodes publiques utilisables
+        par d'autres éléments de l'application (ex: composant)
+-Décorateur @Injectable à ajouter (conseillé)
+
+-----------------------------------------------------------------
+
+
+Objectif fin étape 2 :
+1)Je me connecte à la racine du site:
+    -Si j'ai une session de déjà ouverte => affiche page vide 
+            avec bandeau "Bienvenue <user> !" et 
+            la dernière heure de connexion. (Component barre de connexion)
+    -Sinon => affiche formulaire de login
+
+2)Le formulaire de login envoie les infos à POST /login
+    -Si la connexion a réussi
+        =>Ouverture de la session
+        =>Redirection vers racine du site
+        =>Affichage du bandeau succès
+    -Sinon 
+        =>Redirection vers racine du site
+        =>Affichage du bandeau erreur
+
+
+
+
+https://e-uapv2020.univ-avignon.fr/pluginfile.php/100526/mod_resource/content/0/stackMEAN_2020-2021-part3.pdf
+Voir exemple cours à page 72 pour mieux comprendre le tout.
+
+
+
+
+
+
+
