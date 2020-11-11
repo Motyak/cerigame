@@ -10,7 +10,6 @@ export class BannerComponent implements OnInit {
 
   @Input() type: BannerType;
   @Input() msg: string;
-  @Input() visible: boolean;
 
   constructor() {}
 

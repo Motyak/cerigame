@@ -1,0 +1,18 @@
+.top-bar {
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  /* pour que la barre soit toujours au dessus des autres elements */
+  z-index: 9999;
+  padding: 10px;
+
+  font-family: 'Roboto', sans-serif;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  }
+
+#logoutBtn {
+  margin-left: 10px;
+}
