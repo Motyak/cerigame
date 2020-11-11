@@ -135,16 +135,17 @@ nécessaire à une application.
 
 Objectif fin étape 2 :
 1)Je me connecte à la racine du site:
-    -Si j'ai une session de déjà ouverte => affiche page vide 
-            avec bandeau "Bienvenue <user> !" et 
-            la dernière heure de connexion. (Component barre de connexion)
-    -Sinon => affiche formulaire de login
+    -Si j'ai une session de déjà ouverte => affichage du nom de l'utilisateur
+            connecté et de la dernière heure de connexion dans la barre de 
+            connexion.
+    -Sinon => affichage du formulaire de login.
 
 2)Le formulaire de login envoie les infos à POST /login
     -Si la connexion a réussi
         =>Ouverture de la session
         =>Redirection vers racine du site
-        =>Affichage du bandeau succès
+        =>Affichage du bandeau succès (on met les attributs du composant
+            bool visible=true et BannerType=SUCCESS)
     -Sinon 
         =>Redirection vers racine du site
         =>Affichage du bandeau erreur
@@ -155,7 +156,26 @@ Objectif fin étape 2 :
 https://e-uapv2020.univ-avignon.fr/pluginfile.php/100526/mod_resource/content/0/stackMEAN_2020-2021-part3.pdf
 Voir exemple cours à page 72 pour mieux comprendre le tout.
 
+Faire un composant pour la barre de connexion :
+-Barre située en haut du layout.
+-un bouton-lien Se connecter qui fait afficher le formulaire
+-Si connecté, affiche le pseudo de la personne et
+        sa dernière heure de connexion sur la machine (local storage)
+-Si connecté, affiche le bouton-lien pour se déconnecter
 
+Utiliser les directives structurelles pour faire apparaître
+des composants Angular sous certaines conditions.
+->Formulaire uniquement si param GET /login et si
+la session n'est pas déjà établie.
+->Barre de connexion affiche des choses différentes selon si
+l'utilisateur est connecté ou pas (attr bool dans composant)
+
+GET / pour afficher la page d'accueil
+GET /login pour afficher le formulaire
+POST /login {data identifiants} pour faire une demande de login
+
+Le chargement d'une vue se fait par appel au Controleur qui fait 
+une requête AJAX.
 
 
 

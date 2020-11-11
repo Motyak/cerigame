@@ -9,6 +9,7 @@ import { BannerType } from './enums/BannerType';
 export class AppComponent {
   title = 'frontend';
 
+  bannerVisible = true;
   bannerType = BannerType.ERROR;
   bannerMsg = 'Login incorrect!';
 }
