@@ -51,18 +51,24 @@ app.post('/login', (req, res) => {
     const mail = req.body.mail;
     const pwd = req.body.pwd;
 
+    // vérifier les identifiants dans bdd...
+
     // si paramètre reçus correct..
+    if(true) {
+        // // ouverture session
+        // req.session.isConnected = true;
+        // req.session.user = mail;
+        // console.log(req.session.id + ' expire dans ' + 
+        //     req.session.cookie.maxAge + ' s');
 
-    // ouverture session
-    req.session.isConnected = true;
-    req.session.user = mail;
-    console.log(req.session.id + ' expire dans ' + 
-        req.session.cookie.maxAge + ' s');
+        // on retourne les infos de l'utilisateur
+        res.json({"auth":true, "user":"Motyak"});
+        // res.json({"auth":false, "user":""});
+        
+        console.log('mail :', mail, '\npwd :', pwd);
+    }
 
-    // on redirige vers l'index
-    res.sendFile('index.html');
     
-    console.log('mail :', mail, '\npwd :', pwd);
 });
 
 // On lance le serveur node sous le port assigné, qui va traiter

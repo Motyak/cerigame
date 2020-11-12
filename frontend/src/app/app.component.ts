@@ -12,7 +12,7 @@ import { AuthentificationService } from './authentification.service';
 export class AppComponent {
   auth: AuthentificationService;
   title = 'frontend';
-  bannerVisible = false;
+  bannerVisible = true;
 
   topbarUsername = "Motyak";
   topbarLastLoginTime = "10 novembre 2020 à 10h52"
@@ -21,6 +21,11 @@ export class AppComponent {
   bannerMsg = 'Login incorrect!';
 
     constructor(auth: AuthentificationService) {
-    this.auth = auth;
+      this.auth = auth;
+  }
+
+  onStatusChange = function(status: string) : void {
+    console.log("onStatusChange called");
+    this.bannerMsg = status;
   }
 }

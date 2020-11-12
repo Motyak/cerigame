@@ -20,14 +20,15 @@ export class AuthentificationService {
   }
 
   // utilisé par le composant loginform au moment du submit
-  verifyId(user: string, pwd: string) : Observable<boolean> {
+  verifyId(mail: string, pwd: string) : Observable<boolean> {
     var trueId: boolean = false;
 
     return Observable.create((observer: Subscriber<boolean>) => {
-      this.http.post<any>('api/endpoint', {user: user, pwd: pwd}).subscribe(
+      this.http.post<any>('http://localhost:3037/login', {mail: mail, pwd: pwd}).subscribe(
         response => {
-          if(response.statusResp) {
-            localStorage.setItem('user', JSON.stringify(response.data.user));
+          // si la connexion a réussie..
+          if(response.auth) {
+            // localStorage.setItem('user', JSON.stringify(response.data.user));
             trueId = true;
           }
         },

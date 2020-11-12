@@ -192,3 +192,16 @@ https://e-uapv2020.univ-avignon.fr/pluginfile.php/100526/mod_resource/content/0/
 -> en cas d'échec, ca return false
 -> dans la méthode du composant appelant, on pourra tester la valeur retour, 
     et en fonction de sa valeur afficher un bandeau différent.
+
+
+Suite à la vérification des identifiants (méthode onSubmit() du loginform), 
+dans le cas où ça fonctionne on stocke dans le localstorage les données
+de l'utilisateur en question. La loginform doit communiquer avec le bandeau
+de notification pour afficher le message approprié selon l'issue de la
+tentative d'authentification.
+Une idée pourrait être faire appel au composant père pour notifier tous
+les composants, chaque composant aurait une méthode refresh() qui sera 
+appelée lors de la notification.
+
+Pour ça il faut utiliser @Output côté composant enfant pour envoyer l'info
+au composant père ?
