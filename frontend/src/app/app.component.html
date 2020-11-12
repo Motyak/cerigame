@@ -1,5 +1,5 @@
 <div class="container">
-  <app-topbar *ngIf="userIsConnected" [username]="topbarUsername" [lastLoginTime]="topbarLastLoginTime"></app-topbar>
-  <app-loginform *ngIf="!userIsConnected"></app-loginform>
+  <app-topbar *ngIf="auth.isLogged()" [username]="topbarUsername" [lastLoginTime]="topbarLastLoginTime"></app-topbar>
+  <app-loginform *ngIf="!auth.isLogged()"></app-loginform>
   <app-banner *ngIf="bannerVisible" [type]="bannerType" [msg]="bannerMsg"></app-banner>
 </div>
