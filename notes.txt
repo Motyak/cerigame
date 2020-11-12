@@ -161,7 +161,7 @@ Objectif fin étape 2 :
 1)Je me connecte à la racine du site:
     -Si j'ai une session de déjà ouverte => affichage du nom de l'utilisateur
             connecté et de la dernière heure de connexion dans la barre de 
-            connexion.
+            connexion. Je peux me déconnecter (fermer session + détruire localstorage)
     -Sinon => affichage du formulaire de login.
 
 2)Le formulaire de login envoie les infos à POST /login
@@ -202,6 +202,16 @@ tentative d'authentification.
 Une idée pourrait être faire appel au composant père pour notifier tous
 les composants, chaque composant aurait une méthode refresh() qui sera 
 appelée lors de la notification.
-
 Pour ça il faut utiliser @Output côté composant enfant pour envoyer l'info
 au composant père ?
+
+
+
+Pour l'instant dans le local storage y'a :
+-<nomUtilisateur>:
+    -dernière heure de connexion
+    -heure de connexion courante
+-user: <nomUtilisateurConnecte>
+
+Et dans la bdd mongodb :
+-sessions ouvertes

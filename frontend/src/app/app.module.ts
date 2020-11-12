@@ -23,7 +23,6 @@ import { AuthentificationService } from './authentification.service';
     FormsModule,
     HttpClientModule
   ],
-  // providers: [AuthentificationService, HttpClient],
   providers: [AuthentificationService],
   bootstrap: [AppComponent]
 })

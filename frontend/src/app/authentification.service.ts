@@ -12,10 +12,8 @@ export class AuthentificationService {
   constructor(private http: HttpClient) {}
 
   isLogged(): boolean {
-    // if(localStorage.getItem('accessToken'))
-    //   return true;
-    // return false;
-
+    if(localStorage.getItem('connected'))
+      return true;
     return false;
   }
 
@@ -26,11 +24,18 @@ export class AuthentificationService {
     return Observable.create((observer: Subscriber<boolean>) => {
       this.http.post<any>('http://localhost:3037/login', {mail: mail, pwd: pwd}).subscribe(
         response => {
-          // si la connexion a réussie..
+          // login réussi
           if(response.auth) {
-            // localStorage.setItem('user', JSON.stringify(response.data.user));
+            const prev = JSON.parse(localStorage.getItem(response.user.name));
+            var user = {};
+            user["lastLogin"] = prev.currentLogin;
+            user["currentLogin"] = response.user.currentLogin;
+            localStorage.setItem(response.user.name, JSON.stringify(user));
+            localStorage.setItem('user', response.user.name);
             trueId = true;
           }
+          else
+            trueId = false;
         },
         error => {
           console.error('une erreur est survenue!', error);

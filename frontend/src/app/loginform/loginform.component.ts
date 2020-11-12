@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { AuthentificationService } from '../authentification.service';
 
+import { ConStatus } from '../structs/ConStatus';
+
 @Component({
   selector: 'app-loginform',
   templateUrl: './loginform.component.html',
@@ -14,7 +16,7 @@ export class LoginformComponent implements OnInit {
   @Input() auth: AuthentificationService;
 
   @Output('authStatus')
-  sendAuthStatusEmitter: EventEmitter<string> = new EventEmitter<string>();
+  sendAuthStatusEmitter: EventEmitter<ConStatus> = new EventEmitter<ConStatus>();
 
   constructor() { }
 
@@ -29,12 +31,13 @@ export class LoginformComponent implements OnInit {
 
     this.auth.verifyId(this.attrMail, this.attrPwd).subscribe(
       success => {
-        console.log("success");
-        this.sendAuthStatusEmitter.emit("Connexion réussie!");
+        if(success.valueOf)
+          this.sendAuthStatusEmitter.emit(new ConStatus("success", "Connexion réussie!"));
+        else
+          this.sendAuthStatusEmitter.emit(new ConStatus("error", "Identifiants incorrects!"));
       },
       error => {
-        console.log("error");
-        this.sendAuthStatusEmitter.emit("Connexion échouée.");
+        this.sendAuthStatusEmitter.emit(new ConStatus("error", "Connexion échouée!"));
       }
     );
   }

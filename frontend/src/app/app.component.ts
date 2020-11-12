@@ -4,6 +4,8 @@ import { BannerType } from './enums/BannerType';
 
 import { AuthentificationService } from './authentification.service';
 
+import { ConStatus } from './structs/ConStatus';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,7 +14,7 @@ import { AuthentificationService } from './authentification.service';
 export class AppComponent {
   auth: AuthentificationService;
   title = 'frontend';
-  bannerVisible = true;
+  bannerVisible = false;
 
   topbarUsername = "Motyak";
   topbarLastLoginTime = "10 novembre 2020 à 10h52"
@@ -24,8 +26,10 @@ export class AppComponent {
       this.auth = auth;
   }
 
-  onStatusChange = function(status: string) : void {
+  onStatusChange = function(status: ConStatus) : void {
     console.log("onStatusChange called");
-    this.bannerMsg = status;
+    this.bannerVisible = true;
+    this.bannerType = status.status;
+    this.bannerMsg = status.msg;
   }
 }

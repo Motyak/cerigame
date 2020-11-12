@@ -62,8 +62,11 @@ app.post('/login', (req, res) => {
         //     req.session.cookie.maxAge + ' s');
 
         // on retourne les infos de l'utilisateur
-        res.json({"auth":true, "user":"Motyak"});
-        // res.json({"auth":false, "user":""});
+        var user = {};
+        var data = {};
+        user["name"] = "Motyak"; user["currentLogin"] = new Date();
+        data["auth"] = true; data["user"] = user;
+        res.json(data);
         
         console.log('mail :', mail, '\npwd :', pwd);
     }
