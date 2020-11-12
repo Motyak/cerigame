@@ -16,7 +16,6 @@ export class LoginformComponent implements OnInit {
   }
 
   onSubmit(formValue: any): void {
-    // console.log("mail: " + this.mail + "\npwd: " + this.pwd);
     console.log(formValue);
   }
 
