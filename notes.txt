@@ -132,28 +132,6 @@ nécessaire à une application.
 
 -----------------------------------------------------------------
 
-
-Objectif fin étape 2 :
-1)Je me connecte à la racine du site:
-    -Si j'ai une session de déjà ouverte => affichage du nom de l'utilisateur
-            connecté et de la dernière heure de connexion dans la barre de 
-            connexion.
-    -Sinon => affichage du formulaire de login.
-
-2)Le formulaire de login envoie les infos à POST /login
-    -Si la connexion a réussi
-        =>Ouverture de la session
-        =>Redirection vers racine du site
-        =>Affichage du bandeau succès (on met les attributs du composant
-            bool visible=true et BannerType=SUCCESS)
-    -Sinon 
-        =>Redirection vers racine du site
-        =>Affichage du bandeau erreur
-
-
-
-
-https://e-uapv2020.univ-avignon.fr/pluginfile.php/100526/mod_resource/content/0/stackMEAN_2020-2021-part3.pdf
 Voir exemple cours à page 72 pour mieux comprendre le tout.
 
 Faire un composant pour la barre de connexion :
@@ -178,6 +156,27 @@ Le chargement d'une vue se fait par appel au Controleur qui fait
 une requête AJAX.
 
 
+
+Objectif fin étape 2 :
+1)Je me connecte à la racine du site:
+    -Si j'ai une session de déjà ouverte => affichage du nom de l'utilisateur
+            connecté et de la dernière heure de connexion dans la barre de 
+            connexion.
+    -Sinon => affichage du formulaire de login.
+
+2)Le formulaire de login envoie les infos à POST /login
+    -Si la connexion a réussi
+        =>Ouverture de la session
+        =>Redirection vers racine du site
+        =>Affichage du bandeau succès (on met les attributs du composant
+            bool visible=true et BannerType=SUCCESS)
+    -Sinon 
+        =>Redirection vers racine du site
+        =>Affichage du bandeau erreur
+
+
+
+
 Checker le Datepipe pour la présentation de la date
 de dernière connexion.
 
@@ -185,4 +184,11 @@ Pour le formulaire d'authentification, faire un event binding du
 submit du form à une méthode du composant loginform (onSubmit), qui va
 faire appel au service Authentification, injecté au préalable
 lors de la construction du composant.
-
+Pour le service Authentification, voir cours page 61.
+https://e-uapv2020.univ-avignon.fr/pluginfile.php/100526/mod_resource/content/0/stackMEAN_2020-2021-part3.pdf
+-> création d'observables et d'observers.
+-> envoie d'une requête HTTP POST
+-> en cas de succès ça ajoute un token dans le local storage et ca return true
+-> en cas d'échec, ca return false
+-> dans la méthode du composant appelant, on pourra tester la valeur retour, 
+    et en fonction de sa valeur afficher un bandeau différent.

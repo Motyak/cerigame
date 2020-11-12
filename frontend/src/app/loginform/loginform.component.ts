@@ -17,6 +17,9 @@ export class LoginformComponent implements OnInit {
 
   onSubmit(formValue: any): void {
     console.log(formValue);
+
+    // hasher le mdp puis envoyer requête ajax
+    // POST /login avec en data l'identifiant + mdp hashé
   }
 
 }
