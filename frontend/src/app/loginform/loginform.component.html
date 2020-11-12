@@ -4,21 +4,31 @@
       <h3>Account Login</h3>
     </div>
     <div class="card-body">
-      <form>
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
         <div class="input-group form-group">
           <i class="fa fa-envelope"></i>
-          <input type="email" name="mail" class="form-control" placeholder="Email">
+          <input type="email" name="mail" #mail="ngModel" class="form-control" 
+              [(ngModel)]="attrMail" minlength="1" placeholder="Email" email required/>
         </div>
         <div class="input-group form-group">
           <i class="fa fa-lock"></i>
-          <input type="password" name="pwd" class="form-control" placeholder="Password">
+          <input type="password" name="pwd" #pwd="ngModel" class="form-control" 
+              [(ngModel)]="attrPwd" placeholder="Password" required/>
         </div>
         <div class="form-check remember">
           <input type="checkbox" class="form-check-input" id="rememberMe">
           <label class="form-check-label" for="rememberMe">Remember me</label>
         </div>
+        <!-- form error handling -->
+        <div *ngIf="mail.invalid && (mail.dirty || mail.touched)"
+              class="alert alert-danger">
+            <div *ngIf="mail.errors.required; else elseBlock">Email is required</div>
+            <ng-template #elseBlock>Email format is incorrect</ng-template>
+        </div>
+        <!-- submission -->
         <div class="form-group">
-          <input type="submit" formaction="/login" formmethod="POST" value="LOGIN" class="btn login_btn">
+          <input type="submit" formaction="/login" formmethod="POST" value="LOGIN" 
+              class="btn login_btn" [disabled]="!loginForm.form.valid">
         </div>
       </form>
     </div>

@@ -178,6 +178,11 @@ Le chargement d'une vue se fait par appel au Controleur qui fait
 une requête AJAX.
 
 
+Checker le Datepipe pour la présentation de la date
+de dernière connexion.
 
-
+Pour le formulaire d'authentification, faire un event binding du
+submit du form à une méthode du composant loginform (onSubmit), qui va
+faire appel au service Authentification, injecté au préalable
+lors de la construction du composant.
 

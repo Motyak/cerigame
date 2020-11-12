@@ -7,12 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginformComponent implements OnInit {
 
-  email: string;
-  hashedPwd: string;
+  attrMail: string;
+  attrPwd: string;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onSubmit(formValue: any): void {
+    // console.log("mail: " + this.mail + "\npwd: " + this.pwd);
+    console.log(formValue);
   }
 
 }
