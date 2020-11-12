@@ -19,6 +19,7 @@ export class AuthentificationService {
     return false;
   }
 
+  // utilisé par le composant loginform au moment du submit
   verifyId(user: string, pwd: string) : Observable<boolean> {
     var trueId: boolean = false;
 
