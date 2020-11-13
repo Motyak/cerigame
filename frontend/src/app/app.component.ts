@@ -16,18 +16,27 @@ export class AppComponent {
   title = 'frontend';
   bannerVisible = false;
 
-  topbarUsername = "Motyak";
-  topbarLastLoginTime = "10 novembre 2020 à 10h52"
-
-  bannerType = BannerType.ERROR;
-  bannerMsg = 'Login incorrect!';
+  topbarUsername: string;
+  topbarLastLoginTime: string;
 
     constructor(auth: AuthentificationService) {
       this.auth = auth;
+      const username = localStorage.getItem['user'];
+      if(username) {
+        const user = localStorage.getItem[username];
+        this.topbarUsername = username;
+        this.topbarLastLoginTime = user.lastLogin;
+      }
   }
 
   onStatusChange = function(status: ConStatus) : void {
     console.log("onStatusChange called");
+    if(this.auth.isLogged()) {
+      const username = localStorage.getItem('user');
+      const user = JSON.parse(localStorage.getItem(username));
+      this.topbarUsername = username;
+      this.topbarLastLoginTime = user.lastLogin;
+    }
     this.bannerVisible = true;
     this.bannerType = status.status;
     this.bannerMsg = status.msg;

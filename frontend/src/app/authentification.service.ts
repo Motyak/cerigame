@@ -12,7 +12,7 @@ export class AuthentificationService {
   constructor(private http: HttpClient) {}
 
   isLogged(): boolean {
-    if(localStorage.getItem('connected'))
+    if(localStorage.getItem('user'))
       return true;
     return false;
   }
@@ -28,7 +28,10 @@ export class AuthentificationService {
           if(response.auth) {
             const prev = JSON.parse(localStorage.getItem(response.user.name));
             var user = {};
-            user["lastLogin"] = prev.currentLogin;
+            if(prev)
+              user["lastLogin"] = prev.currentLogin;
+            else
+              user["lastLogin"] = '';
             user["currentLogin"] = response.user.currentLogin;
             localStorage.setItem(response.user.name, JSON.stringify(user));
             localStorage.setItem('user', response.user.name);
