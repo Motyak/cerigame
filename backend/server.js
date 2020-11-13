@@ -30,13 +30,6 @@ app.use(session({
     cookie: {maxAge: 24 * 3600 * 1000}
 }));
 
-// var sessionChecker = (req, res, next) => {
-//     if (req.session.user)
-//         res.redirect('/test');
-//     else
-//         next();
-// };
-
 // Charge la page index lorsqu'un utilisateur accède à la racine
 // du site
 // app.get('/', sessionChecker, (req, res) => {
@@ -55,11 +48,11 @@ app.post('/login', (req, res) => {
 
     // si paramètre reçus correct..
     if(true) {
-        // // ouverture session
-        // req.session.isConnected = true;
-        // req.session.user = mail;
-        // console.log(req.session.id + ' expire dans ' + 
-        //     req.session.cookie.maxAge + ' s');
+        // ouverture session
+        req.session.isConnected = true;
+        req.session.user = mail;
+        console.log(req.session.id + ' expire dans ' + 
+            req.session.cookie.maxAge + ' s');
 
         // on retourne les infos de l'utilisateur
         var user = {};
@@ -70,8 +63,6 @@ app.post('/login', (req, res) => {
         
         console.log('mail :', mail, '\npwd :', pwd);
     }
-
-    
 });
 
 app.post('/logout', (req, res) => {

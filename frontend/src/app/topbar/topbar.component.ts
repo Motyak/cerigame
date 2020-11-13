@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import { HttpClient } from '@angular/common/http';
+
 import { ConStatus } from '../structs/ConStatus';
 
 @Component({
@@ -15,13 +17,15 @@ export class TopbarComponent implements OnInit {
   @Output('authStatus')
   sendAuthStatusEmitter: EventEmitter<ConStatus> = new EventEmitter<ConStatus>();
 
-  constructor() { }
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
   }
 
   logoutOnClick() : void {
     localStorage.removeItem('user');
+    // send req but dont wait for response
+    this.http.post('http://localhost:3037/logout', {}).subscribe();
     this.sendAuthStatusEmitter.emit(new ConStatus("info", "Vous êtes déconnecté."));
     console.log('logout clicked');
   }
