@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-
-import { BannerType } from './enums/BannerType';
+import { Component, OnInit } from '@angular/core';
 
 import { AuthentificationService } from './authentification.service';
 
@@ -19,14 +17,17 @@ export class AppComponent {
   topbarUsername: string;
   topbarLastLoginTime: string;
 
-    constructor(auth: AuthentificationService) {
-      this.auth = auth;
-      const username = localStorage.getItem['user'];
-      if(username) {
-        const user = localStorage.getItem[username];
-        this.topbarUsername = username;
-        this.topbarLastLoginTime = user.lastLogin;
-      }
+  constructor(auth: AuthentificationService) {
+    this.auth = auth;
+  }
+
+  ngOnInit() : void {
+    if(this.auth.isLogged()) {
+      const username = localStorage.getItem('user');
+      const user = JSON.parse(localStorage.getItem(username));
+      this.topbarUsername = username;
+      this.topbarLastLoginTime = user.lastLogin;
+    }
   }
 
   onStatusChange = function(status: ConStatus) : void {
