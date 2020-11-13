@@ -224,3 +224,11 @@ Bon a la base je voulais injecter le service AuthentificationService
 dans tous les composants qui font des requetes HTTP mais je
 suis limité à 1. Du coup j'envoie une requete depuis le composant
 barre de connexion (pour le logout)
+
+
+
+Il manque plus que la vrai vérif sur les données de la base postgre, 
+déployer le tout sur le serveur pedago.
+
+Puis si ça marche on rente les animations sur les bandeaux 
+(apparition, disparition auto au bout de 5s, la croix qui fonctionne)

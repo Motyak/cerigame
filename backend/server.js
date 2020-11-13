@@ -4,6 +4,11 @@ const bodyParser = require('body-parser');          //pour récup params POST
 const session = require('express-session');
 const mongoDBStore = require('connect-mongodb-session')(session);
 const path = require('path');                       //pour chemin statique des res
+const sha1 = require('sha1');                       //pour hasher mot de passe
+const pgClient = require('pg');                      //middleware pgsql
+const { request } = require('http');
+const { release } = require('os');
+
 
 // On instancie l'application express et 
 // on définit le numéro de port sur lequel écouté
@@ -43,11 +48,33 @@ app.post('/login', (req, res) => {
     // récupération des données POST
     const mail = req.body.mail;
     const pwd = req.body.pwd;
+    console.log(mail+":"+pwd);
+    
+    var authSuccess = false;
 
     // vérifier les identifiants dans bdd...
+    const sqlReq = "select * from fredouil.users where identifiant='" + mail +
+            "' and motdepasse='" + pwd + "' limit 1;";
+    var pool = new pgClient.Pool({user: '', host: '127.0.0.1', database: 'etd', 
+            password: 'pwd', port: 5432});
+    pool.connect((err, client, done) => {
+        if(err)
+            console.log('Erreur connexion au serv pg ' + err.stack);
+        else {
+            client.query(sqlReq, (err, result) => {
+                if(err)
+                    console.log('err execution requete sql ' + err.stack);
+                else if((result.rows[0] != null) && (result.rows[0].password == pwd))
+                    authSuccess = true;
+                release();
+            })
+        }
+    });
+
+    var data = {};
 
     // si paramètre reçus correct..
-    if(true) {
+    if(authSuccess) {
         // ouverture session
         req.session.isConnected = true;
         req.session.user = mail;
@@ -56,13 +83,16 @@ app.post('/login', (req, res) => {
 
         // on retourne les infos de l'utilisateur
         var user = {};
-        var data = {};
-        user["name"] = "Motyak"; user["currentLogin"] = new Date();
+        user["name"] = mail; user["currentLogin"] = new Date();
         data["auth"] = true; data["user"] = user;
-        res.json(data);
-        
+
         console.log('mail :', mail, '\npwd :', pwd);
     }
+    else {
+        data["auth"] = false;
+    }
+    // on renvoie les données en JSON
+    res.json(data);
 });
 
 app.post('/logout', (req, res) => {
