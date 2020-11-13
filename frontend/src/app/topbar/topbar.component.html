@@ -1,7 +1,10 @@
 <div class="top-bar flex-column">
   <div class="d-flex justify-content-end">
     <div>Bonjour <b>{{username}}</b> !</div>
-    <a id="logoutBtn" href="#">Logout</a>
+    <!-- <a id="logoutBtn" href="#">Logout</a> -->
+    <form id="logoutBtn" (ngSubmit)="logoutOnClick()">
+      <input type="submit" value="logout">
+    </form>
   </div>
   <div class="d-flex justify-content-end" *ngIf="lastLoginTime != ''">
     <div>Last login: <i>{{lastLoginTime | date:'d MMM y à HH:mm, z' }}</i></div>

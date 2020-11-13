@@ -48,4 +48,10 @@ export class AuthentificationService {
       );
     });
   }
+
+  logout() : void {
+    // send req but dont wait for response
+    this.http.post('http://localhost:3037/logout', {}).subscribe();
+    localStorage.removeItem('user');
+  }
 }

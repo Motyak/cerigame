@@ -74,6 +74,12 @@ app.post('/login', (req, res) => {
     
 });
 
+app.post('/logout', (req, res) => {
+    req.session.destroy();
+    console.log('session destroyed');
+    res.send();
+});
+
 // On lance le serveur node sous le port assigné, qui va traiter
 // chaque requête HTTP qui lui sera destinée (GET, POST, ..)
 app.listen(port, () => {
