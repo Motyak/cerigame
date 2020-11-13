@@ -54,9 +54,9 @@ app.post('/login', (req, res) => {
 
     // vérifier les identifiants dans bdd...
     const sqlReq = "select * from fredouil.users where identifiant='" + mail +
-            "' and motdepasse='" + pwd + "' limit 1;";
-    var pool = new pgClient.Pool({user: '', host: '127.0.0.1', database: 'etd', 
-            password: 'pwd', port: 5432});
+            "' and motpasse='" + pwd + "' limit 1;";
+    var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+            password: 'depolX', port: 5432});
     pool.connect((err, client, done) => {
         if(err)
             console.log('Erreur connexion au serv pg ' + err.stack);
