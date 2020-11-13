@@ -14,8 +14,8 @@ const port = 3037;
 // dans lequel se trouve les fichiers du site (html, css, ..)
 app.use(express.static("../frontend/dist/frontend"));
 
-// Permet de lire les paramètre POST en utilisant 'req.body.xxxx'
-app.use(bodyParser.urlencoded({ extended: true }));
+// // Permet de lire les paramètre POST en utilisant 'req.body.xxxx'
+app.use(bodyParser.json());
 
 // Récupération des données de session (stockées dans bdd MongoDB)
 app.use(session({

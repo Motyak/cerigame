@@ -215,3 +215,12 @@ Pour l'instant dans le local storage y'a :
 
 Et dans la bdd mongodb :
 -sessions ouvertes
+
+
+
+
+
+Bon a la base je voulais injecter le service AuthentificationService
+dans tous les composants qui font des requetes HTTP mais je
+suis limité à 1. Du coup j'envoie une requete depuis le composant
+barre de connexion (pour le logout)
