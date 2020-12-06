@@ -8,6 +8,7 @@ const sha1 = require('sha1');                       //pour hasher mot de passe
 const pgClient = require('pg');                      //middleware pgsql
 const { request } = require('http');
 const { release } = require('os');
+const cors = require('cors');
 
 
 // On instancie l'application express et 
@@ -17,10 +18,13 @@ const port = 3037;
 
 // On créé un accès statique aux ressources du répertoire
 // dans lequel se trouve les fichiers du site (html, css, ..)
-app.use(express.static("../frontend/dist/frontend"));
+// app.use(express.static("../frontend/dist/frontend"));
 
 // // Permet de lire les paramètre POST en utilisant 'req.body.xxxx'
 app.use(bodyParser.json());
+
+// enable all cors requests
+app.use(cors())
 
 // Récupération des données de session (stockées dans bdd MongoDB)
 app.use(session({
@@ -37,10 +41,9 @@ app.use(session({
 
 // Charge la page index lorsqu'un utilisateur accède à la racine
 // du site
-// app.get('/', sessionChecker, (req, res) => {
-app.get('/', (req, res) => {
-    res.sendFile('index.html');
-});
+// app.get('/', (req, res) => {
+//     res.sendFile('index.html');
+// });
 
 // Route permettant d'authentifier un utilisateur
 // app.post('/login', sessionChecker, (req, res) => {
