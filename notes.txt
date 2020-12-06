@@ -232,3 +232,28 @@ déployer le tout sur le serveur pedago.
 
 Puis si ça marche on rente les animations sur les bandeaux 
 (apparition, disparition auto au bout de 5s, la croix qui fonctionne)
+
+
+
+__________________________________________
+
+
+Il faut qu'on comprenne les deux fois où sont utilisées les fonctions
+'subscribe', car actuellement lorsque je me connecte avec des identifiants
+bidons j'ai une barre de notif avec 'connexion réussi' ce qui n'est pas normal
+car le backend retourne bien 'auth=false'.
+
+
+#utilisateur enregistré
+insert into fredouil.users (identifiant, motpasse, nom, prenom, date_naissance) 
+values (
+    'Motyak', 
+    'd83177daa22aeba3081abf055f98fd39cb8ecf4a', 
+    'Skellington', 
+    'Motyak', 
+    '1997-04-04'
+);
+
+
+#requete post login
+curl -H "Content-Type: application/json" -d '{"mail":"a@a","pwd":"test"}' http://localhost:3037/login

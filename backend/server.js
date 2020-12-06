@@ -6,8 +6,7 @@ const mongoDBStore = require('connect-mongodb-session')(session);
 const path = require('path');                       //pour chemin statique des res
 const sha1 = require('sha1');                       //pour hasher mot de passe
 const pgClient = require('pg');                      //middleware pgsql
-const { request } = require('http');
-const { release } = require('os');
+// const { request } = require('http');
 const cors = require('cors');
 
 
@@ -24,7 +23,7 @@ const port = 3037;
 app.use(bodyParser.json());
 
 // enable all cors requests
-app.use(cors())
+app.use(cors());
 
 // Récupération des données de session (stockées dans bdd MongoDB)
 app.use(session({
@@ -46,56 +45,48 @@ app.use(session({
 // });
 
 // Route permettant d'authentifier un utilisateur
-// app.post('/login', sessionChecker, (req, res) => {
 app.post('/login', (req, res) => {
     // récupération des données POST
     const mail = req.body.mail;
     const pwd = req.body.pwd;
     console.log(mail+":"+pwd);
-    
-    var authSuccess = false;
 
     // vérifier les identifiants dans bdd...
     const sqlReq = "select * from fredouil.users where identifiant='" + mail +
-            "' and motpasse='" + pwd + "' limit 1;";
-    var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
-            password: 'depolX', port: 5432});
-    pool.connect((err, client, done) => {
+            "' and motpasse='" + sha1(pwd) + "' limit 1;";
+    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+    //         password: 'depolX', port: 5432});
+    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
+            password: 'passe', port: 5432});
+    pool.connect((err, client) => {
         if(err)
             console.log('Erreur connexion au serv pg ' + err.stack);
         else {
             client.query(sqlReq, (err, result) => {
-                if(err)
+                var data = {};
+                if(err) {
+                    data["auth"] = false;
+                    // envoi des données
+                    res.json(data);
                     console.log('err execution requete sql ' + err.stack);
-                else if((result.rows[0] != null) && (result.rows[0].password == pwd))
-                    authSuccess = true;
-                release();
+                }
+                else if((result.rows[0] != null) && (result.rows[0].motpasse == sha1(pwd))) {
+                    // ouverture session
+                    req.session.isConnected = true;
+                    req.session.user = mail;
+                    console.log(req.session.id + ' expire dans ' + 
+                            req.session.cookie.maxAge + ' s');
+                    // recuperation infos utilisateurs
+                    var user = {};
+                    user["name"] = result.rows[0].nom; user["currentLogin"] = new Date();
+                    data["auth"] = true; data["user"] = user;
+                    // envoi des données
+                    res.json(data);
+                }
             })
+            client.release();
         }
     });
-
-    var data = {};
-
-    // si paramètre reçus correct..
-    if(authSuccess) {
-        // ouverture session
-        req.session.isConnected = true;
-        req.session.user = mail;
-        console.log(req.session.id + ' expire dans ' + 
-            req.session.cookie.maxAge + ' s');
-
-        // on retourne les infos de l'utilisateur
-        var user = {};
-        user["name"] = mail; user["currentLogin"] = new Date();
-        data["auth"] = true; data["user"] = user;
-
-        console.log('mail :', mail, '\npwd :', pwd);
-    }
-    else {
-        data["auth"] = false;
-    }
-    // on renvoie les données en JSON
-    res.json(data);
 });
 
 app.post('/logout', (req, res) => {
