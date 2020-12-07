@@ -30,15 +30,15 @@ export class LoginformComponent implements OnInit {
     this.auth.verifyId(this.attrNomUtilisateur, this.attrPwd).subscribe(
       response => {
         if(response.auth) {
-          const prev = JSON.parse(localStorage.getItem(response.user.name));
+          const prev = JSON.parse(localStorage.getItem(response.user.identifiant));
           var user = {};
           if(prev)
             user["lastLogin"] = prev.currentLogin;
           else
             user["lastLogin"] = '';
           user["currentLogin"] = response.user.currentLogin;
-          localStorage.setItem(response.user.name, JSON.stringify(user));
-          localStorage.setItem('user', response.user.name);
+          localStorage.setItem(response.user.identifiant, JSON.stringify(user));
+          localStorage.setItem('user', response.user.identifiant);
           this.sendAuthStatusEmitter.emit(new ConStatus("success", "Connexion réussie!"));
         }
         else

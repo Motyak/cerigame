@@ -78,8 +78,9 @@ app.post('/login', (req, res) => {
                             req.session.cookie.maxAge + ' s');
                     // recuperation infos utilisateurs
                     var user = {};
-                    user["name"] = result.rows[0].nom; user["currentLogin"] = new Date();
-                    data["auth"] = true; data["user"] = user;
+                    user["identifiant"] = result.rows[0].identifiant; 
+                    user["currentLogin"] = new Date(); data["auth"] = true; 
+                    data["user"] = user;
                     // envoi des données
                     res.json(data);
                 }
