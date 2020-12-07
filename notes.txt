@@ -256,4 +256,19 @@ values (
 
 
 #requete post login
-curl -H "Content-Type: application/json" -d '{"mail":"a@a","pwd":"test"}' http://localhost:3037/login
+curl -H "Content-Type: application/json" -d '{"identifiant":"a@a","pwd":"test"}' http://localhost:3037/login
+
+Scénario fonctionnel :
+1) Je me connecte au site et clique sur le bouton "se connecter"
+    -> Se connecter affiche la login form
+    -> S'enregistrer redirige dans un nouvel onglet vers le site de fredouil
+2) Je me connecte avec des identifiants enregistrés
+    -> Si identifiants corrects => bandeau vert
+    [-> Sinon, bandeau rouge]
+3) Je lance un quiz
+    -> Affichage des themes disponibles sur la page d'accueil (si connecté)
+    -> Lancement d'un quiz et jeu
+4) Je vois le quiz s'ajouter dans mon historique
+    -> Le résultat du quiz s'ajoute à l'historique
+5) J'affiche mon profil
+6) Je modifie mon profil

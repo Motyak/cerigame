@@ -22,10 +22,11 @@ export class TopbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // on devrait faire appel au service authentification
   logoutOnClick() : void {
-    localStorage.removeItem('user');
     // send req but dont wait for response
     this.http.post('http://localhost:3037/logout', {}).subscribe();
+    localStorage.removeItem('user');
     this.sendAuthStatusEmitter.emit(new ConStatus("info", "Vous êtes déconnecté."));
     console.log('logout clicked');
   }

@@ -11,7 +11,7 @@ import { ConStatus } from '../structs/ConStatus';
 })
 export class LoginformComponent implements OnInit {
 
-  attrMail: string;
+  attrNomUtilisateur: string;
   attrPwd: string;
   @Input() auth: AuthentificationService;
 
@@ -23,16 +23,24 @@ export class LoginformComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
   onSubmit(): void {
-    console.log(this.attrMail + ":" + this.attrPwd);
+    console.log(this.attrNomUtilisateur + ":" + this.attrPwd);
 
-    // hasher le mdp puis envoyer requête ajax
-    // POST /login avec en data l'identifiant + mdp hashé
-
-    this.auth.verifyId(this.attrMail, this.attrPwd).subscribe(
-      success => {
-        if(success.valueOf)
+    this.auth.verifyId(this.attrNomUtilisateur, this.attrPwd).subscribe(
+      response => {
+        if(response.auth) {
+          const prev = JSON.parse(localStorage.getItem(response.user.name));
+          var user = {};
+          if(prev)
+            user["lastLogin"] = prev.currentLogin;
+          else
+            user["lastLogin"] = '';
+          user["currentLogin"] = response.user.currentLogin;
+          localStorage.setItem(response.user.name, JSON.stringify(user));
+          localStorage.setItem('user', response.user.name);
           this.sendAuthStatusEmitter.emit(new ConStatus("success", "Connexion réussie!"));
+        }
         else
           this.sendAuthStatusEmitter.emit(new ConStatus("error", "Identifiants incorrects!"));
       },
@@ -41,5 +49,24 @@ export class LoginformComponent implements OnInit {
       }
     );
   }
+
+
+
+
+  // onSubmit(): void {
+  //   console.log(this.attrNomUtilisateur + ":" + this.attrPwd);
+
+  //   this.auth.verifyId(this.attrNomUtilisateur, this.attrPwd).subscribe(
+  //     success => {
+  //       if(success.valueOf)
+  //         this.sendAuthStatusEmitter.emit(new ConStatus("success", "Connexion réussie!"));
+  //       else
+  //         this.sendAuthStatusEmitter.emit(new ConStatus("error", "Identifiants incorrects!"));
+  //     },
+  //     error => {
+  //       this.sendAuthStatusEmitter.emit(new ConStatus("error", "Connexion échouée!"));
+  //     }
+  //   );
+  // }
 
 }

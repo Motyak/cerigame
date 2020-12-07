@@ -1,43 +1,43 @@
 <div class="d-flex justify-content-center h-100">
   <div class="card">
     <div class="card-header text-center">
-      <h3>Account Login</h3>
+      <h3>Connexion</h3>
     </div>
     <div class="card-body">
       <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
         <div class="input-group form-group">
-          <i class="fa fa-envelope"></i>
-          <input type="email" name="mail" #mail="ngModel" class="form-control" 
-              [(ngModel)]="attrMail" minlength="1" placeholder="Email" email required/>
+          <i class="fa fa-user"></i>
+          <input type="text" name="nomUtilisateur" #nomUtilisateur="ngModel" class="form-control" 
+              [(ngModel)]="attrNomUtilisateur" pattern="^\S{1,40}$" placeholder="Nom d'utilisateur" required/>
         </div>
         <div class="input-group form-group">
           <i class="fa fa-lock"></i>
           <input type="password" name="pwd" #pwd="ngModel" class="form-control" 
-              [(ngModel)]="attrPwd" placeholder="Password" required/>
+              [(ngModel)]="attrPwd" placeholder="Mot de passe" required/>
         </div>
         <div class="form-check remember">
           <input type="checkbox" class="form-check-input" id="rememberMe">
-          <label class="form-check-label" for="rememberMe">Remember me</label>
+          <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
         </div>
         <!-- form error handling -->
-        <div *ngIf="mail.invalid && (mail.dirty || mail.touched)"
+        <div *ngIf="nomUtilisateur.invalid && (nomUtilisateur.dirty || nomUtilisateur.touched)"
               class="alert alert-danger">
-            <div *ngIf="mail.errors.required; else elseBlock">Email is required</div>
-            <ng-template #elseBlock>Email format is incorrect</ng-template>
+            <div *ngIf="nomUtilisateur.errors.required; else elseBlock">Nom d'utilisateur vide!</div>
+            <ng-template #elseBlock>Format incorrect!</ng-template>
         </div>
         <!-- submission -->
         <div class="form-group">
-          <input type="submit" value="LOGIN" class="btn login_btn" 
+          <input type="submit" value="SE CONNECTER" class="btn login_btn" 
               [disabled]="!loginForm.form.valid">
         </div>
       </form>
     </div>
     <div class="card-footer">
       <div class="d-flex justify-content-center links">
-        Don't have an account?<a href="#">Register</a>
+        Pas de compte?<a href="#">S'enregistrer</a>
       </div>
       <div class="d-flex justify-content-center">
-        <a href="#">Forgot your password?</a>
+        <a href="#">Mot de passe oublié?</a>
       </div>
     </div>
   </div>

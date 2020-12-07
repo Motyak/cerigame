@@ -47,12 +47,12 @@ app.use(session({
 // Route permettant d'authentifier un utilisateur
 app.post('/login', (req, res) => {
     // récupération des données POST
-    const mail = req.body.mail;
+    const identifiant = req.body.identifiant;
     const pwd = req.body.pwd;
-    console.log(mail+":"+pwd);
+    console.log(identifiant+":"+pwd);
 
     // vérifier les identifiants dans bdd...
-    const sqlReq = "select * from fredouil.users where identifiant='" + mail +
+    const sqlReq = "select * from fredouil.users where identifiant='" + identifiant +
             "' and motpasse='" + sha1(pwd) + "' limit 1;";
     // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
     //         password: 'depolX', port: 5432});
@@ -73,13 +73,18 @@ app.post('/login', (req, res) => {
                 else if((result.rows[0] != null) && (result.rows[0].motpasse == sha1(pwd))) {
                     // ouverture session
                     req.session.isConnected = true;
-                    req.session.user = mail;
+                    req.session.user = identifiant;
                     console.log(req.session.id + ' expire dans ' + 
                             req.session.cookie.maxAge + ' s');
                     // recuperation infos utilisateurs
                     var user = {};
                     user["name"] = result.rows[0].nom; user["currentLogin"] = new Date();
                     data["auth"] = true; data["user"] = user;
+                    // envoi des données
+                    res.json(data);
+                }
+                else {
+                    data["auth"] = false;
                     // envoi des données
                     res.json(data);
                 }
