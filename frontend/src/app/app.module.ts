@@ -9,6 +9,7 @@ import { LoginformComponent } from './loginform/loginform.component';
 import { TopbarComponent } from './topbar/topbar.component';
 
 import { AuthentificationService } from './authentification.service';
+import { ThemecardComponent } from './themecard/themecard.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { AuthentificationService } from './authentification.service';
     AppComponent,
     BannerComponent,
     LoginformComponent,
-    TopbarComponent
+    TopbarComponent,
+    ThemecardComponent
   ],
   imports: [
     BrowserModule,

@@ -49,24 +49,4 @@ export class LoginformComponent implements OnInit {
       }
     );
   }
-
-
-
-
-  // onSubmit(): void {
-  //   console.log(this.attrNomUtilisateur + ":" + this.attrPwd);
-
-  //   this.auth.verifyId(this.attrNomUtilisateur, this.attrPwd).subscribe(
-  //     success => {
-  //       if(success.valueOf)
-  //         this.sendAuthStatusEmitter.emit(new ConStatus("success", "Connexion réussie!"));
-  //       else
-  //         this.sendAuthStatusEmitter.emit(new ConStatus("error", "Identifiants incorrects!"));
-  //     },
-  //     error => {
-  //       this.sendAuthStatusEmitter.emit(new ConStatus("error", "Connexion échouée!"));
-  //     }
-  //   );
-  // }
-
 }

@@ -264,7 +264,7 @@ Scénario fonctionnel :
     -> S'enregistrer redirige dans un nouvel onglet vers le site de fredouil
 2) Je me connecte avec des identifiants enregistrés
     -> Si identifiants corrects => bandeau vert
-    [-> Sinon, bandeau rouge]
+    -> Sinon, bandeau rouge
 3) Je lance un quiz
     -> Affichage des themes disponibles sur la page d'accueil (si connecté)
     -> Lancement d'un quiz et jeu

@@ -3,6 +3,7 @@ const express = require('express');                 //pour appli
 const bodyParser = require('body-parser');          //pour récup params POST
 const session = require('express-session');
 const mongoDBStore = require('connect-mongodb-session')(session);
+const mongo = require('mongodb');
 const path = require('path');                       //pour chemin statique des res
 const sha1 = require('sha1');                       //pour hasher mot de passe
 const pgClient = require('pg');                      //middleware pgsql
@@ -14,10 +15,6 @@ const cors = require('cors');
 // on définit le numéro de port sur lequel écouté
 const app = express();
 const port = 3037;
-
-// On créé un accès statique aux ressources du répertoire
-// dans lequel se trouve les fichiers du site (html, css, ..)
-// app.use(express.static("../frontend/dist/frontend"));
 
 // // Permet de lire les paramètre POST en utilisant 'req.body.xxxx'
 app.use(bodyParser.json());
@@ -37,12 +34,6 @@ app.use(session({
     }),
     cookie: {maxAge: 24 * 3600 * 1000}
 }));
-
-// Charge la page index lorsqu'un utilisateur accède à la racine
-// du site
-// app.get('/', (req, res) => {
-//     res.sendFile('index.html');
-// });
 
 // Route permettant d'authentifier un utilisateur
 app.post('/login', (req, res) => {
@@ -95,10 +86,27 @@ app.post('/login', (req, res) => {
     });
 });
 
+// route pour logout (détruire la session)
 app.post('/logout', (req, res) => {
     req.session.destroy();
     console.log('session destroyed');
     res.send();
+});
+
+// route pour récupérer les thèmes de quiz disponibles
+app.post('/themes', (req, res) => {
+
+    var MongoClient = mongo.MongoClient;
+
+    MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+      if (err) throw err;
+      var db = client.db('db');
+      
+        db.collection('quiz').distinct('thème', (err, result) => {
+        if (err) throw err;
+        res.json(result);
+      });
+    });
 });
 
 // On lance le serveur node sous le port assigné, qui va traiter
