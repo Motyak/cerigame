@@ -272,3 +272,13 @@ Scénario fonctionnel :
     -> Le résultat du quiz s'ajoute à l'historique
 5) J'affiche mon profil
 6) Je modifie mon profil
+
+
+
+
+Bon j'ai aucune idée de comment fonctionne les grid/flex bootstrap du coup
+j'arrive pas à faire un truc simple pour l'affichage des themes.
+J'ai perdu beaucoup trop de temps.
+S'inspirer de la login form (recommencer de puis le début, les bases).
+Il faut que le themeselection ait une taille fixe et qu'il soit centré
+horizontalement et verticalement par rapport à son parent (comme la loginform).

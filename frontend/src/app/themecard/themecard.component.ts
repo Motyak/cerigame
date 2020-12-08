@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-themecard',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./themecard.component.css']
 })
 export class ThemecardComponent implements OnInit {
+
+  @Input() name: string;
 
   constructor() { }
 

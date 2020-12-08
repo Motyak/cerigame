@@ -1,5 +1,6 @@
 <div class="container">
   <app-topbar *ngIf="auth.isLogged()" (authStatus)="onStatusChange($event)" [username]="topbarUsername" [lastLoginTime]="topbarLastLoginTime"></app-topbar>
   <app-loginform *ngIf="!auth.isLogged()" (authStatus)="onStatusChange($event)" [auth]="auth"></app-loginform>
+  <app-themeselection *ngIf="auth.isLogged()" [themes]="themes"></app-themeselection>
   <app-banner *ngIf="bannerVisible" [type]="bannerType" [msg]="bannerMsg"></app-banner>
 </div>

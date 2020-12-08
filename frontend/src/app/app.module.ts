@@ -10,6 +10,7 @@ import { TopbarComponent } from './topbar/topbar.component';
 
 import { AuthentificationService } from './authentification.service';
 import { ThemecardComponent } from './themecard/themecard.component';
+import { ThemeselectionComponent } from './themeselection/themeselection.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ThemecardComponent } from './themecard/themecard.component';
     BannerComponent,
     LoginformComponent,
     TopbarComponent,
-    ThemecardComponent
+    ThemecardComponent,
+    ThemeselectionComponent
   ],
   imports: [
     BrowserModule,
