@@ -102,10 +102,38 @@ app.post('/themes', (req, res) => {
       if (err) throw err;
       var db = client.db('db');
       
-        db.collection('quiz').distinct('thème', (err, result) => {
+      db.collection('quiz').distinct('thème', (err, result) => {
         if (err) throw err;
         res.json(result);
       });
+    });
+});
+
+// route pour récupérer 10 questions selon un thème
+app.post('/quiz', (req, res) => {
+
+    const theme = req.body.theme;
+    console.log('theme = ' + theme);  //debug
+
+    var MongoClient = mongo.MongoClient;
+
+    MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+      if (err) throw err;
+      var db = client.db('db');
+      
+      const pipeline = [
+        {'$match': {'thème': theme}}, 
+        {'$project': {'quizz': 1}},
+        {'$unwind': '$quizz'},
+        {'$sample': {'size': 10}}
+      ];
+
+      db.collection('quiz').aggregate(pipeline).toArray((err, result) => {
+        if (err) throw err;
+        res.json(result);
+      });
+
+
     });
 });
 
