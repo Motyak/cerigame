@@ -3,3 +3,8 @@
     color: white;
     font-size: larger;
 }
+
+.card-body {
+    height: 400px;
+    overflow: scroll;
+}
