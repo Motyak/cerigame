@@ -60,4 +60,12 @@ export class AppComponent {
     this.bannerType = status.status;
     this.bannerMsg = status.msg;
   }
+
+  onThemeSelected = function(theme: string) : void {
+    console.log("onThemeSelected called");
+    
+    // récupérer 10 questions aléatoires basées sur le theme
+
+    // charger le quiz avec les questions
+  }
 }
