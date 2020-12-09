@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 import { AuthentificationService } from './authentification.service';
 
@@ -19,7 +21,7 @@ export class AppComponent {
 
   themes: string[];
 
-  constructor(auth: AuthentificationService) {
+  constructor(auth: AuthentificationService, private http: HttpClient) {
     this.auth = auth;
   }
 
@@ -48,6 +50,21 @@ export class AppComponent {
     }
   }
 
+  sendQuizzReq(theme : string) : Observable<any> {
+    return this.http.post<any>('http://localhost:3037/quiz', {theme: theme});
+  }
+
+  saveQuizzData(theme : string) : void {
+    this.sendQuizzReq(theme).subscribe(
+      response => {
+        localStorage.setItem('quiz', JSON.stringify(response));
+      },
+      error => {
+        this.onStatusChange(new ConStatus("error", "La récupération des données du quiz a échoué!"));
+      }
+    );
+  }
+
   onStatusChange = function(status: ConStatus) : void {
     console.log("onStatusChange called");
     if(this.auth.isLogged()) {
@@ -63,8 +80,9 @@ export class AppComponent {
 
   onThemeSelected = function(theme: string) : void {
     console.log("onThemeSelected called");
-    
-    // récupérer 10 questions aléatoires basées sur le theme
+
+    // enregistrer 10 questions aléatoires basées sur le theme
+    this.saveQuizzData(theme);
 
     // charger le quiz avec les questions
   }

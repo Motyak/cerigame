@@ -113,7 +113,6 @@ app.post('/themes', (req, res) => {
 app.post('/quiz', (req, res) => {
 
     const theme = req.body.theme;
-    console.log('theme = ' + theme);  //debug
 
     var MongoClient = mongo.MongoClient;
 
