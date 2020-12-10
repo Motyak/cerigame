@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-quizz',
@@ -7,11 +7,17 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class QuizzComponent implements OnInit {
 
-  @Input() quizz: string[];
+  quizz: any[];
+  theme: string;
+  diff: string;
+  questionNb : number = 0;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.quizz = JSON.parse(localStorage.getItem('quiz'));
+    this.theme = localStorage.getItem('thème');
+    this.diff = localStorage.getItem('diff');
   }
 
 }

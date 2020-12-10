@@ -16,7 +16,9 @@ export class AppComponent {
   title = 'frontend';
 
   bannerVisible = false;
+
   themeSelected = false;
+  diffSelected = false;
 
   topbarUsername: string;
   topbarLastLoginTime: string;
@@ -99,8 +101,8 @@ export class AppComponent {
       this.themeSelected = false;
     else {
       console.log('onDifficultySelected : ' + diff);
-      // charger le quiz avec les questions
-      // création et chargement du composant quizz à partir des données du local storage
+      this.diffSelected = true;
+      localStorage.setItem('diff', diff);
     }
   }
 }

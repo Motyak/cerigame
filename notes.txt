@@ -298,4 +298,6 @@ css pour chaque mode de difficulté (positionnement des propositions)
 Faire en sorte de construire le bon choix de difficulté basé sur le theme
 précédemment choisi.
 
+Utiliser une autre police d'écriture pour le panel quizz (parce que c'est illisible)
+
 

@@ -1,0 +1,23 @@
+.card {
+    /* background-color: rgba(0, 0, 0, 0.5) !important;
+    color: white; */
+    font-size: larger;
+}
+
+.card-body {
+    height: 400px;
+    /* overflow: scroll; */
+}
+
+.timer {
+    text-align: right;
+}
+
+.card-body p {
+    margin-bottom: 50px;
+}
+
+.btn-light {
+    width: 100%;
+    margin-bottom: 10px;
+}

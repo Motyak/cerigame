@@ -11,15 +11,15 @@ export class DiffselectionComponent implements OnInit {
   sendSelectedDiffEmitter: EventEmitter<string> = new EventEmitter<string>();
 
   selectEasy(): void {
-    this.sendSelectedDiffEmitter.emit('facile');
+    this.sendSelectedDiffEmitter.emit('Facile');
   }
 
   selectNormal(): void {
-    this.sendSelectedDiffEmitter.emit('normal');
+    this.sendSelectedDiffEmitter.emit('Normal');
   }
 
   selectHard(): void {
-    this.sendSelectedDiffEmitter.emit('difficile');
+    this.sendSelectedDiffEmitter.emit('Difficile');
   }
 
   goBack(): void {

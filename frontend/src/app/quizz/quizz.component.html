@@ -1,1 +1,26 @@
-<p>quizz works!</p>
+<div class="d-flex justify-content-center align-items-center h-100">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <p><b>Thème</b>: {{theme}}</p>
+                    </div>
+                    <div class="row">
+                        <p><b>Difficulté</b>: {{diff}}</p>
+                    </div>
+                </div>
+                <div class="col timer d-flex align-items-center justify-content-end">
+                    <p>timer</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <p><b>Q{{questionNb+1}}: {{quizz[questionNb].quizz.question}}</b></p>
+            <div class="row justify-content-center" *ngFor="let p of quizz[questionNb].quizz.propositions">
+                <button class="btn btn-light">{{p}}</button>
+            </div>
+
+        </div>
+    </div>
+</div>
