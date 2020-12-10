@@ -33,21 +33,20 @@ export class AppComponent {
       this.topbarUsername = username;
       this.topbarLastLoginTime = user.lastLogin;
 
-      // récupérer les themes dispos pour la construction des cartes
-      this.themes = [
-          'Actu people : août 2018 (Ils ont fait l\'actualité)', 
-          'Animaux célèbres',
-          'Culture générale',
-          'Culture générale 4 (La culture, c\'est l\'expression du vivant)',
-          'Héros Marvel',
-          'Linux',
-          'Musée du Louvre',
-          'Russia 2018 (Coupe du monde de football 2018)',
-          'Star Wars',
-          'Tintin',
-          'Trouvez le nombre'
-      ];
+      // récupérer les themes dispos
+      this.sendThemeReq().subscribe(
+        response => {
+          this.themes = response;
+        },
+        error => {
+          this.onStatusChange(new ConStatus("error", "La récupération des thèmes a échouée!"));
+        }
+      )
     }
+  }
+
+  sendThemeReq() : Observable<any> {
+    return this.http.post<any>('http://localhost:3037/themes', {});
   }
 
   sendQuizzReq(theme : string) : Observable<any> {
@@ -60,7 +59,7 @@ export class AppComponent {
         localStorage.setItem('quiz', JSON.stringify(response));
       },
       error => {
-        this.onStatusChange(new ConStatus("error", "La récupération des données du quiz a échoué!"));
+        this.onStatusChange(new ConStatus("error", "La récupération des données du quiz a échouée!"));
       }
     );
   }
