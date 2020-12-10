@@ -78,6 +78,10 @@ export class AppComponent {
     this.bannerVisible = true;
     this.bannerType = status.status;
     this.bannerMsg = status.msg;
+
+    setTimeout(() => {
+      this.bannerVisible = false;
+    }, 5000);
   }
 
   onThemeSelected = function(theme: string) : void {
