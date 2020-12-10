@@ -1,0 +1,22 @@
+.card {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    color: white;
+    font-size: larger;
+}
+
+.card-body {
+    padding-top: 60px;
+    height: 400px;
+}
+
+.btn {
+    width: 100%;
+}
+
+.justify-content-center .btn {
+    margin-bottom: 25px;
+}
+
+.btn-secondary {
+    margin-top: 40px;
+}

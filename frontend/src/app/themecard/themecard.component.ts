@@ -19,6 +19,7 @@ export class ThemecardComponent implements OnInit {
 
   select() : void {
     console.log(this.name + ' clicked');
+    
     this.sendSelectedThemeEmitter.emit(this.name);
   }
 }

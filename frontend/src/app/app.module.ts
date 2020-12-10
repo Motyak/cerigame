@@ -11,6 +11,8 @@ import { TopbarComponent } from './topbar/topbar.component';
 import { AuthentificationService } from './authentification.service';
 import { ThemecardComponent } from './themecard/themecard.component';
 import { ThemeselectionComponent } from './themeselection/themeselection.component';
+import { QuizzComponent } from './quizz/quizz.component';
+import { DiffselectionComponent } from './diffselection/diffselection.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { ThemeselectionComponent } from './themeselection/themeselection.compone
     LoginformComponent,
     TopbarComponent,
     ThemecardComponent,
-    ThemeselectionComponent
+    ThemeselectionComponent,
+    QuizzComponent,
+    DiffselectionComponent,
   ],
   imports: [
     BrowserModule,

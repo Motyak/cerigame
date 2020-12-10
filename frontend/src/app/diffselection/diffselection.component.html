@@ -1,0 +1,21 @@
+<div class="d-flex justify-content-center align-items-center h-100">
+    <div class="card">
+        <div class="card-header text-center">
+            <h3>Choix de la difficulté :</h3>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-success" (click)="selectEasy()">Facile</button>
+            </div>
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-warning" (click)="selectNormal()">Normal</button>
+            </div>
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-danger" (click)="selectHard()">Difficile</button>
+            </div>
+            <div class="row">
+                <button type="button" class="btn btn-secondary" (click)="goBack()">&lt; Retour</button>
+            </div>
+        </div>
+    </div>
+</div>

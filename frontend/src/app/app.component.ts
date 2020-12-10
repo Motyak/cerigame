@@ -14,7 +14,9 @@ import { ConStatus } from './structs/ConStatus';
 export class AppComponent {
   auth: AuthentificationService;
   title = 'frontend';
+
   bannerVisible = false;
+  themeSelected = false;
 
   topbarUsername: string;
   topbarLastLoginTime: string;
@@ -57,6 +59,7 @@ export class AppComponent {
     this.sendQuizzReq(theme).subscribe(
       response => {
         localStorage.setItem('quiz', JSON.stringify(response));
+        localStorage.setItem('thème', theme);
       },
       error => {
         this.onStatusChange(new ConStatus("error", "La récupération des données du quiz a échouée!"));
@@ -83,6 +86,17 @@ export class AppComponent {
     // enregistrer 10 questions aléatoires basées sur le theme
     this.saveQuizzData(theme);
 
-    // charger le quiz avec les questions
+    // cacher le choix du quizz et afficher le choix de la diff
+    this.themeSelected = true;
+  }
+
+  onDifficultySelected = function(diff: string) : void {
+    if(diff == 'back')
+      this.themeSelected = false;
+    else {
+      console.log('onDifficultySelected : ' + diff);
+      // charger le quiz avec les questions
+      // création et chargement du composant quizz à partir des données du local storage
+    }
   }
 }
