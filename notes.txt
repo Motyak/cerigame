@@ -300,4 +300,11 @@ précédemment choisi.
 
 Utiliser une autre police d'écriture pour le panel quizz (parce que c'est illisible)
 
+Pour le timer, on va avoir un attribut int pour les secondes, qui s'incrémente
+automatiquement chaque seconde. On pipera cette valeur pour afficher en format 'MM:ss'.
 
+Quand je clique sur un bouton ça doit enregistrer la réponse choisi +
+incrémenter 'questionNb'.
+
+Pour l'instant on va faire ;quand je clic sur une proposition, 
+ca log console son intutilé.
