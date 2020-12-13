@@ -1,28 +1,110 @@
 <div class="d-flex justify-content-center align-items-center h-100">
-    <div class="card">
-        <div class="card-header">
-            <div class="row">
-                <div class="col">
-                    <div class="row">
-                        <p><b>Thème</b>: {{theme}}</p>
-                    </div>
-                    <div class="row">
-                        <p><b>Difficulté</b>: {{diff}}</p>
-                    </div>
-                </div>
-                <div class="col timer d-flex align-items-center justify-content-end">
-                    <p>timer</p>
-                </div>
-            </div>
+
+  <!-- CARTE QUESTION -->
+  <div class="card" *ngIf="questionNb != 10">
+    <div class="card-header">
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <p><b>Thème</b>: {{theme}}</p>
+          </div>
+          <div class="row">
+            <p><b>Difficulté</b>: {{diff}}</p>
+          </div>
         </div>
-        <div class="card-body" *ngIf="questionNb != 10">
-            <p><b>Q{{questionNb+1}}: {{quizz[questionNb].quizz.question}}</b></p>
-            <div class="row justify-content-center" *ngFor="let i of [0,1,2,3]">
-                <button class="btn btn-light" (click)="select(i)">{{quizz[questionNb].quizz.propositions[i]}}</button>
-            </div>
+        <div class="col txt-align-r d-flex align-items-center justify-content-end">
+          <p>timer</p>
         </div>
-        <div class="card-body scrollable" *ngIf="questionNb == 10">
-            <p><b>RESULTATS</b></p>
-        </div>
+      </div>
     </div>
+    <div class="card-body">
+      <div class="question">
+        <p class="question-txt"><b>Q{{questionNb+1}}: {{quizz[questionNb].quizz.question}}</b></p>
+      </div>
+      <div class="row justify-content-center" *ngFor="let i of [0,1,2,3]">
+        <button class="btn btn-light" (click)="select(i)">{{quizz[questionNb].quizz.propositions[i]}}</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- CARTE RESULTAT -->
+  <div class="card" *ngIf="questionNb == 10">
+    <div class="card-header align-items-center">
+      <div class="col txt-align-c">
+        <h3><u><b>RÉSULTAT</b></u></h3>
+      </div>
+    </div>
+    <div class="card-body scrollable" *ngIf="questionNb == 10">
+      <div class="col">
+
+        <!-- Bonnes reponses : xxx -->
+        <div class="row">
+          <div class="col small-col">
+            <p class="line-h-1-2"><b>Bonnes réponses :</b></p>
+          </div>
+          <div class="col small-col txt-align-r">
+            <p>21/30</p>
+          </div>
+        </div>
+
+        <!-- Temps : xxx -->
+        <div class="row">
+          <div class="col small-col">
+            <p><b>Temps :</b></p>
+          </div>
+          <div class="col small-col txt-align-r">
+            <p>3:47</p>
+          </div>
+        </div>
+
+        <!-- Difficulté : xxx -->
+        <div class="row">
+          <div class="col small-col">
+            <p><b>Difficulté :</b></p>
+          </div>
+          <div class="col small-col txt-align-r">
+            <p>Facile</p>
+          </div>
+        </div>
+
+        <!-- Score -->
+        <div class="row">
+          <div class="col small-col txt-align-c">
+            <p><b>SCORE : 1100</b></p>
+          </div>
+        </div>
+
+        <!-- Défis -->
+        <div class="row">
+          <div class="col small-col txt-align-c">
+            <button>Défier un ami</button>
+          </div>
+          <div class="col small-col txt-align-c">
+            <button>Défier un joueur</button>
+          </div>
+        </div>
+
+        <!-- Voir correction -->
+        <div class="row">
+          <div class="col small-col txt-align-c">
+            <button>Voir la correction</button>
+          </div>
+        </div>
+
+        <!-- Retour au menu -->
+        <div class="row">
+          <div class="col small-col txt-align-c">
+            <button>Retour au menu</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
 </div>

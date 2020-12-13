@@ -1,16 +1,17 @@
 .card {
-    /* background-color: rgba(0, 0, 0, 0.5) !important;
-    color: white; */
     font-size: larger;
 }
 
 .card-body {
     height: 400px;
-    /* overflow: scroll; */
 }
 
-.timer {
+.txt-align-r {
     text-align: right;
+}
+
+.txt-align-c {
+    text-align: center;
 }
 
 .card-body p {
@@ -24,4 +25,26 @@
 
 .scrollable {
     overflow: scroll;
+}
+
+.small-col {
+    height: 50px;
+}
+
+button {
+    white-space: nowrap;
+}
+
+.question {
+    max-width: 600px;
+    height: 12.5ex; /* 2.5ex for each visible line */
+    overflow: hidden;
+}
+
+.question-txt {
+    line-height: 2.5ex;
+}
+
+.line-h-1-2 {
+    line-height: 2.0ex;
 }
