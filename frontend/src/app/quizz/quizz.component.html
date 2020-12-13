@@ -36,7 +36,7 @@
         <h3><u><b>RÉSULTAT</b></u></h3>
       </div>
     </div>
-    <div class="card-body scrollable" *ngIf="questionNb == 10">
+    <div class="card-body d-flex align-items-center" *ngIf="questionNb == 10">
       <div class="col">
 
         <!-- Bonnes reponses : xxx -->
@@ -79,10 +79,10 @@
         <!-- Défis -->
         <div class="row">
           <div class="col small-col txt-align-c">
-            <button>Défier un ami</button>
+            <button disabled>Défier un ami</button>
           </div>
           <div class="col small-col txt-align-c">
-            <button>Défier un joueur</button>
+            <button disabled>Défier un joueur</button>
           </div>
         </div>
 
@@ -96,7 +96,7 @@
         <!-- Retour au menu -->
         <div class="row">
           <div class="col small-col txt-align-c">
-            <button>Retour au menu</button>
+            <button class="btn btn-info">Retour au menu</button>
           </div>
         </div>
 
