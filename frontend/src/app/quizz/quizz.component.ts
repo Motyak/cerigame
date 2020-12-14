@@ -14,9 +14,12 @@ export class QuizzComponent implements OnInit {
   theme: string;
   diff: string;
   questionNb : number = 0;
-
   answers : number[];
-  timer : number = 0;
+  
+  interval;
+  timer : string = '0:00';
+  timerSec : number = 0;
+  timerMin : number = 0;
 
   constructor() { }
 
@@ -25,17 +28,38 @@ export class QuizzComponent implements OnInit {
     this.theme = localStorage.getItem('thème');
     this.diff = localStorage.getItem('diff');
     this.answers = new Array(10);
-    setInterval(() => { ++this.timer; }, 1000);
+    this.interval = setInterval(() => { 
+      this.timerSec++;
+      if(this.timerSec == 60)
+      {
+        this.timerMin++;
+        this.timerSec = 0;
+      }
+      if(this.timerSec < 10)
+        this.timer = this.timerMin.toString() + ':' + '0' + this.timerSec.toString();
+      else
+        this.timer = this.timerMin.toString() + ':' + this.timerSec.toString();
+    }, 1000);
   }
 
   select(i : number) : void {
     console.log(i + ' clicked');
       this.answers[this.questionNb] = i;
       ++this.questionNb;
+      if(this.questionNb == 10)
+      {
+        this.stopTimer();
+
+        // envoi des résultats à la bdd
+      }
   }
 
   backToMenu() : void {
     // envoi msg au composant principal
     this.sendQuizzEndedEmitter.emit();
+  }
+
+  stopTimer() : void {
+    clearInterval(this.interval);
   }
 }

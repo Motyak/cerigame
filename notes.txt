@@ -311,7 +311,6 @@ automatiquement chaque seconde. On pipera cette valeur pour afficher en format
 'MM:ss'.
 
 
-Faire un timer fonctionnel.
 Récupérer les bonnes infos pour le résultat.
 Envoyer le résultat du quizz dans la bdd (ajout à historique).
 
