@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-quizz',
@@ -6,6 +6,9 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./quizz.component.css']
 })
 export class QuizzComponent implements OnInit {
+
+  @Output('quizzEnded')
+  sendQuizzEndedEmitter: EventEmitter<string> = new EventEmitter<any>();
 
   quizz: any[];
   theme: string;
@@ -25,17 +28,12 @@ export class QuizzComponent implements OnInit {
 
   select(i : number) : void {
     console.log(i + ' clicked');
-    // if(this.questionNb >= 9)
-    // {
-      // dire au composant principal que le quizz ne
-      // devrait plus s'afficher ?
-      // et afficher les résultats
-    // }
-
-    // if(this.questionNb < 9)
-    // {
       this.answers[this.questionNb] = i;
       ++this.questionNb;
-    // }
+  }
+
+  backToMenu() : void {
+    // envoi msg au composant principal
+    this.sendQuizzEndedEmitter.emit();
   }
 }

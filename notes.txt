@@ -300,14 +300,18 @@ précédemment choisi.
 
 Utiliser une autre police d'écriture pour le panel quizz (parce que c'est illisible)
 
+
+
+
+
+
+
 Pour le timer, on va avoir un attribut int pour les secondes, qui s'incrémente
-automatiquement chaque seconde. On pipera cette valeur pour afficher en format 'MM:ss'.
+automatiquement chaque seconde. On pipera cette valeur pour afficher en format 
+'MM:ss'.
 
+Pouvoir retourner au menu à la fin du quiz.
+Faire un timer fonctionnel.
+Récupérer les bonnes infos pour le résultat.
 
-Empecher que les textes prennent plusieurs lignes 
-Mettre chaque texte sur une ligne même si longueur plus grande.
-
-Les questions devraient être au même endroit.
-Donc faudrait que le texte de la question fasse un certains nombre
-de lignes prédéterminé.
 

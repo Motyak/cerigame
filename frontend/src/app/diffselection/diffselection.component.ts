@@ -23,6 +23,8 @@ export class DiffselectionComponent implements OnInit {
   }
 
   goBack(): void {
+    localStorage.removeItem('quiz');
+    localStorage.removeItem('thème');
     this.sendSelectedDiffEmitter.emit('back');
   }
 

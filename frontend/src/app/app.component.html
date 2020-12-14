@@ -3,6 +3,6 @@
   <app-loginform *ngIf="!auth.isLogged()" (authStatus)="onStatusChange($event)" [auth]="auth"></app-loginform>
   <app-themeselection *ngIf="auth.isLogged() && !themeSelected" (selectedTheme)="onThemeSelected($event)" [themes]="themes"></app-themeselection>
   <app-diffselection *ngIf="auth.isLogged() && themeSelected && !diffSelected" (selectedDiff)="onDifficultySelected($event)"></app-diffselection>
-  <app-quizz *ngIf="auth.isLogged() && diffSelected"></app-quizz>
+  <app-quizz *ngIf="auth.isLogged() && diffSelected" (quizzEnded)="onQuizzEnded($event)"></app-quizz>
   <app-banner *ngIf="bannerVisible" [type]="bannerType" [msg]="bannerMsg"></app-banner>
 </div>

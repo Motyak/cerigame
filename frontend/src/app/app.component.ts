@@ -49,6 +49,13 @@ export class AppComponent {
     }
   }
 
+  // quizzHasEnded() : boolean {
+  //   if(localStorage.getItem('quiz'))
+  //     return false;
+  //   else
+  //     return true;
+  // }
+
   sendThemeReq() : Observable<any> {
     return this.http.post<any>('http://localhost:3037/themes', {});
   }
@@ -92,7 +99,6 @@ export class AppComponent {
     // enregistrer 10 questions aléatoires basées sur le theme
     this.saveQuizzData(theme);
 
-    // cacher le choix du quizz et afficher le choix de la diff
     this.themeSelected = true;
   }
 
@@ -104,5 +110,18 @@ export class AppComponent {
       this.diffSelected = true;
       localStorage.setItem('diff', diff);
     }
+  }
+
+  onQuizzEnded = function() : void {
+    console.log("onQuizzEnded called");
+
+    // clean up local storage
+    localStorage.removeItem('quiz');
+    localStorage.removeItem('thème');
+    localStorage.removeItem('diff');
+
+    // update view
+    this.themeSelected = false;
+    this.quizzHasEnded = true;
   }
 }
