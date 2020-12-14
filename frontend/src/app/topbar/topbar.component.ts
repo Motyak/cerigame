@@ -27,6 +27,7 @@ export class TopbarComponent implements OnInit {
     // send req but dont wait for response
     this.http.post('http://localhost:3037/logout', {}).subscribe();
     localStorage.removeItem('user');
+    localStorage.removeItem('idDb');
     this.sendAuthStatusEmitter.emit(new ConStatus("info", "Vous êtes déconnecté."));
     console.log('logout clicked');
   }

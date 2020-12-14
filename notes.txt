@@ -301,6 +301,11 @@ précédemment choisi.
 Utiliser une autre police d'écriture pour le panel quizz (parce que c'est illisible)
 
 
+Défauts de l'application :
+-J'utilise pas de pipe pour l'affichage du timer
+-J'utilise pas les sessions
+-J'arrive pas à partager un service dans plusieurs composants différents
+    (via le constructeur en private, tout ca)
 
 
 

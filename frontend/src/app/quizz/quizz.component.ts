@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-quizz',
@@ -31,7 +32,7 @@ export class QuizzComponent implements OnInit {
   nbGoodAnswers : number = 0;
   score : number = 0;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.theme = localStorage.getItem('thème');
@@ -102,9 +103,22 @@ export class QuizzComponent implements OnInit {
       {
         this.stopTimer();
         this.calculateScore();
-
-        // envoi des résultats à la bdd
+        this.sendResultToServer();
       }
+  }
+
+  sendResultToServer() : void {
+    const diffInt = {'Facile':0,'Normal':1,'Difficile':2};
+    const user = JSON.parse(localStorage.getItem(localStorage.getItem('user')));
+
+    this.http.post<any>('http://localhost:3037/histo', {
+      id_user: user.idDb, 
+      date_jeu: new Date(), 
+      niveau_jeu: diffInt[this.diff], 
+      nb_reponses_corr: this.nbGoodAnswers, 
+      temps: this.timerMin * 60 + this.timerSec, 
+      score: this.score
+    }).subscribe();
   }
 
   backToMenu() : void {
