@@ -94,6 +94,40 @@ app.post('/logout', (req, res) => {
     res.send();
 });
 
+app.post('/histo', (req, res) => {
+    // récupération des données POST
+    const id_user = req.body.id_user;
+    const date_jeu = req.body.date_jeu;
+    const niveau_jeu = req.body.niveau_jeu;
+    const nb_reponses_corr = req.body.nb_reponses_corr;
+    const temps = req.body.temps;
+    const score = req.body.score;
+
+    // ajout de la partie dans la base de données
+    const sqlReq = "insert into fredouil.historique" + 
+        "(id_user,date_jeu,niveau_jeu,nb_reponses_corr,temps,score) " + 
+        "values(" + id_user + ",'" + date_jeu + "'," + niveau_jeu + "," + 
+        nb_reponses_corr + "," + temps + "," + score + ");";
+
+    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+    //         password: 'depolX', port: 5432});
+    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
+            password: 'passe', port: 5432});
+    pool.connect((err, client) => {
+        if(err)
+            console.log('Erreur connexion au serv pg ' + err.stack);
+        else {
+            client.query(sqlReq, (err, result) => {
+                if(err)
+                    console.log('err execution requete sql ' + err.stack);
+                else
+                    console.log('sql insert success');
+            })
+            client.release();
+        }
+    });
+});
+
 // route pour récupérer les thèmes de quiz disponibles
 app.post('/themes', (req, res) => {
 
