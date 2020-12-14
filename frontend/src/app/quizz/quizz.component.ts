@@ -10,6 +10,12 @@ export class QuizzComponent implements OnInit {
   @Output('quizzEnded')
   sendQuizzEndedEmitter: EventEmitter<string> = new EventEmitter<any>();
 
+  nbOfProp : any = {
+    'Facile':     2,
+    'Normal':     3,
+    'Difficile':  4
+  };
+
   quizz: any[];
   theme: string;
   diff: string;
@@ -27,9 +33,10 @@ export class QuizzComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.quizz = JSON.parse(localStorage.getItem('quiz'));
     this.theme = localStorage.getItem('thème');
     this.diff = localStorage.getItem('diff');
+    this.quizz = JSON.parse(localStorage.getItem('quiz'));
+    this.setupQuizz();
     this.answers = new Array(10);
     this.interval = setInterval(() => { 
       this.timerSec++;
@@ -43,6 +50,47 @@ export class QuizzComponent implements OnInit {
       else
         this.timer = this.timerMin.toString() + ':' + this.timerSec.toString();
     }, 1000);
+  }
+
+  setupQuizz() : void {
+    /* USEFUL FUNCTIONS */
+    const getIndex = (arr, solution) => {
+      for(var i = 0 ; i < 4 ; ++i)
+        if(arr[i] == solution)
+          return i;
+      return -1;
+    };
+    var swap = (arr, i1, i2) => {
+      const tmp = arr[i1];
+      arr[i1] = arr[i2];
+      arr[i2] = tmp;
+    };
+    var shuffle = (array) => {
+      for(var i = array.length - 1 ; i > 0 ; --i) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+      }
+    };
+
+    var quiz = JSON.parse(localStorage.getItem('quiz'));
+    for(var z = 0 ; z < 10 ; ++z)
+    {
+      const réponse = quiz[z].quizz.réponse;
+
+      // on swap index solution avec index 0
+      swap(quiz[z].quizz.propositions, 0, getIndex(quiz[z].quizz.propositions, réponse));
+
+      // on créé les propositions en fonction de la diff
+      var newProp = new Array(this.nbOfProp[this.diff]);
+      for(var i = 0 ; i < newProp.length ; ++i)
+        newProp[i] = quiz[z].quizz.propositions[i];
+
+      // on randomize l'ordre des propositions
+      shuffle(newProp);
+
+      // on remplace les anciennes propositions par les nouvelles
+      this.quizz[z].quizz.propositions = newProp;
+    }
   }
 
   select(i : number) : void {
