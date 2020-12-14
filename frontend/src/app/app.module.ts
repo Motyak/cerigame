@@ -13,6 +13,7 @@ import { ThemecardComponent } from './themecard/themecard.component';
 import { ThemeselectionComponent } from './themeselection/themeselection.component';
 import { QuizzComponent } from './quizz/quizz.component';
 import { DiffselectionComponent } from './diffselection/diffselection.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { DiffselectionComponent } from './diffselection/diffselection.component'
     ThemeselectionComponent,
     QuizzComponent,
     DiffselectionComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

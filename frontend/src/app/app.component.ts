@@ -49,15 +49,8 @@ export class AppComponent {
     }
   }
 
-  // quizzHasEnded() : boolean {
-  //   if(localStorage.getItem('quiz'))
-  //     return false;
-  //   else
-  //     return true;
-  // }
-
   sendThemeReq() : Observable<any> {
-    return this.http.post<any>('http://localhost:3037/themes', {});
+    return this.http.get<any>('http://localhost:3037/themes');
   }
 
   sendQuizzReq(theme : string) : Observable<any> {

@@ -1,9 +1,13 @@
 <div class="top-bar flex-column">
   <div class="d-flex justify-content-end">
-    <div>Bonjour <b>{{username}}</b> !</div>
-    <form id="logoutBtn" (ngSubmit)="logoutOnClick()">
+    <div class="welcome align-self-center">Bonjour <b>{{username}}</b> !</div>
+    <!-- <form id="logoutBtn" (click)="logoutOnClick()">
       <input type="submit" value="Se déconnecter">
-    </form>
+    </form> -->
+    <button class="btn btn-secondary">Profil</button>
+    <button class="btn btn-danger" (click)="logoutOnClick()">
+      <i class="fas fa-sign-out-alt"></i>
+    </button>
   </div>
   <div class="d-flex justify-content-end" *ngIf="lastLoginTime != ''">
     <div>Dernière connexion: <i>{{lastLoginTime | date:'d MMM y à HH:mm, z' }}</i></div>

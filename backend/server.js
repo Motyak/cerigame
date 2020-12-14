@@ -7,7 +7,6 @@ const mongo = require('mongodb');
 const path = require('path');                       //pour chemin statique des res
 const sha1 = require('sha1');                       //pour hasher mot de passe
 const pgClient = require('pg');                      //middleware pgsql
-// const { request } = require('http');
 const cors = require('cors');
 
 
@@ -16,7 +15,10 @@ const cors = require('cors');
 const app = express();
 const port = 3037;
 
-// // Permet de lire les paramètre POST en utilisant 'req.body.xxxx'
+// Permet de lire les query strings (GET) en utilisant 'req.query.xxx'
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Permet de lire les paramètre POST en utilisant 'req.body.xxxx'
 app.use(bodyParser.json());
 
 // enable all cors requests
@@ -129,7 +131,7 @@ app.post('/histo', (req, res) => {
 });
 
 // route pour récupérer les thèmes de quiz disponibles
-app.post('/themes', (req, res) => {
+app.get('/themes', (req, res) => {
 
     var MongoClient = mongo.MongoClient;
 
@@ -168,6 +170,38 @@ app.post('/quiz', (req, res) => {
       });
 
 
+    });
+});
+
+// route pour récupérer l'historique de parties
+app.get('/histo', (req, res) => {
+
+    const idDb = req.query.idDb;
+
+    // récupération des 10 dernières parties du joueur
+    const sqlReq = "select * from fredouil.historique where id_user=" 
+        + idDb + " order by date_jeu desc limit 10;"
+    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+    //         password: 'depolX', port: 5432});
+    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
+            password: 'passe', port: 5432});
+    pool.connect((err, client) => {
+        if(err)
+            console.log('Erreur connexion au serv pg ' + err.stack);
+        else {
+            client.query(sqlReq, (err, result) => {
+                if(err) {
+                    // envoi des données
+                    res.json();
+                    console.log('err execution requete sql ' + err.stack);
+                }
+                else {
+                    // envoi des données
+                    res.json(result.rows);
+                }
+            })
+            client.release();
+        }
     });
 });
 
