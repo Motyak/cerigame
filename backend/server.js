@@ -70,7 +70,8 @@ app.post('/login', (req, res) => {
                     // recuperation infos utilisateurs
                     var user = {};
                     user["identifiant"] = result.rows[0].identifiant; 
-                    user["currentLogin"] = new Date(); data["auth"] = true; 
+                    user["currentLogin"] = new Date(); data["auth"] = true;
+                    user["idDb"] = result.rows[0].id;
                     data["user"] = user;
                     // envoi des données
                     res.json(data);

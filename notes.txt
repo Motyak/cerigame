@@ -304,18 +304,8 @@ Utiliser une autre police d'écriture pour le panel quizz (parce que c'est illis
 
 
 
-On créé un array de taille n (en fonction de la diff).
-On met la réponse à l'index 0.
-On ajoute autant de mauvaises réponses (non réponse) que nécessaire.
-On randomize l'ordre.
-On change l'index de la solution par rapport au nouvel ordre.
 
 
-
-
-En fonction de la difficulté on mets 2 3 ou 4 propositions.
-Lors de l'authentification, il faut aussi stocker l'id du user
-dans le local storage (pour l'ajout dans l'historique)
 
 Envoyer le résultat du quizz dans la bdd (ajout à historique).
 
