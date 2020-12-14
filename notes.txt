@@ -311,12 +311,20 @@ Défauts de l'application :
 
 
 
-
-Envoyer le résultat du quizz dans la bdd (ajout à historique).
-
 Pouvoir afficher son historique.
-Pouvoir afficher son profil.
+    -> Faire une route backend GET
+    -> Stocker l'historique dans le localstorage, dans la clé 'user'
+    -> Afficher historique sous la forme d'une liste scrollable
+
+Pouvoir afficher son profil
+    -> Faire en sorte qu'au moment du login on récupère les infos
+        persos et on les stocke dans le localstorage, clé 'user'->'profil'
+    -> Afficher le profile dans une vue simple (similaire à quiz résultat)
+
 Pouvoir modifier son profil.
+    -> Faire une route backend POST avec uniquement la donnée modifiée
+        (pouvoir construire des requetes sql sur mesure?? je sais pas)
+    -> Faire en sorte de pouvoir éditer les champs du profil directement
 
 Déploiement sur le serveur du CERI.
 

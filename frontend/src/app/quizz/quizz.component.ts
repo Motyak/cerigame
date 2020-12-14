@@ -154,6 +154,8 @@ export class QuizzComponent implements OnInit {
 
     if(TOTAL_TIME < MIN_TIME[this.diff])
       unitScore = MAX_SCORE / 10;
+    else if(TOTAL_TIME > MAX_TIME)
+      unitScore = 0;
     else
     {
       const SPEED_COEF = (TOTAL_TIME - MAX_TIME) 
