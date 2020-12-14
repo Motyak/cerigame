@@ -122,6 +122,7 @@ export class AppComponent {
 
     // update view
     this.themeSelected = false;
+    this.diffSelected = false;
     this.quizzHasEnded = true;
   }
 }

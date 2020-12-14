@@ -310,8 +310,16 @@ Pour le timer, on va avoir un attribut int pour les secondes, qui s'incrémente
 automatiquement chaque seconde. On pipera cette valeur pour afficher en format 
 'MM:ss'.
 
-Pouvoir retourner au menu à la fin du quiz.
+
 Faire un timer fonctionnel.
 Récupérer les bonnes infos pour le résultat.
+Envoyer le résultat du quizz dans la bdd (ajout à historique).
+
+Pouvoir afficher son historique.
+Pouvoir afficher son profil.
+Pouvoir modifier son profil.
+
+Déploiement sur le serveur du CERI.
+
 
 

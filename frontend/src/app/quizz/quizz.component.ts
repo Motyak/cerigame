@@ -16,6 +16,7 @@ export class QuizzComponent implements OnInit {
   questionNb : number = 0;
 
   answers : number[];
+  timer : number = 0;
 
   constructor() { }
 
@@ -24,6 +25,7 @@ export class QuizzComponent implements OnInit {
     this.theme = localStorage.getItem('thème');
     this.diff = localStorage.getItem('diff');
     this.answers = new Array(10);
+    setInterval(() => { ++this.timer; }, 1000);
   }
 
   select(i : number) : void {
