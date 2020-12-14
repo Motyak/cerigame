@@ -20,7 +20,8 @@ export class QuizzComponent implements OnInit {
   theme: string;
   diff: string;
   questionNb : number = 0;
-  answers : number[];
+  // answers : number[];
+  answers : string[];
 
   interval;
   timer : string = '0:00';
@@ -93,9 +94,9 @@ export class QuizzComponent implements OnInit {
     }
   }
 
-  select(i : number) : void {
-    console.log(i + ' clicked');
-      this.answers[this.questionNb] = i;
+  select(prop : string) : void {
+    console.log(prop + ' clicked');
+      this.answers[this.questionNb] = prop;
       ++this.questionNb;
       if(this.questionNb == 10)
       {
@@ -129,11 +130,8 @@ export class QuizzComponent implements OnInit {
 
     // calcul nb de bonnes réponses
     for(var i = 0 ; i < 10 ; ++i)
-    {
-      var a = this.answers[i];
-      if(this.quizz[i].quizz.réponse == this.quizz[i].quizz.propositions[a])
+      if(this.quizz[i].quizz.réponse == this.answers[i])
         this.nbGoodAnswers++;
-    }
 
     // calcul score par bonne réponse
     var unitScore;

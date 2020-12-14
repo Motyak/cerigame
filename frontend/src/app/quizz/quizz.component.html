@@ -21,8 +21,9 @@
       <div class="question">
         <p class="question-txt"><b>Q{{questionNb+1}}: {{quizz[questionNb].quizz.question}}</b></p>
       </div>
-      <div class="row justify-content-center" *ngFor="let i of [0,1,2,3]">
-        <button class="btn btn-light" (click)="select(i)">{{quizz[questionNb].quizz.propositions[i]}}</button>
+      <!-- <div class="row justify-content-center" *ngFor="let i of [0,1,2,3]"> -->
+      <div class="row justify-content-center" *ngFor="let p of quizz[questionNb].quizz.propositions">
+        <button class="btn btn-light" (click)="select(p)">{{p}}</button>
       </div>
     </div>
   </div>
