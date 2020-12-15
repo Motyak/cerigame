@@ -59,3 +59,15 @@
 a {
     color: black;
 }
+
+.diff0 {
+    color: green;
+}
+
+.diff1 {
+    color: orange;
+}
+
+.diff2 {
+    color: red;
+}
