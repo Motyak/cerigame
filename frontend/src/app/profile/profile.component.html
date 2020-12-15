@@ -10,8 +10,53 @@
                 </li>
             </ul>
         </div>
-        <div class="card-body">
-            <p>des choses</p>
+
+        <!-- ONGLET PROFIL -->
+        <div class="card-body" *ngIf="isSelected(0)">
+            <div class="row" id="header">
+                <div class="col">
+                    <img [src]="avatar" width="100px" height="100px">
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <i class="fas fa-circle"></i>
+                        <p>{{identifiant}}</p>
+                    </div>
+                    <div class="row">
+                        <p>{{prenom}} {{nom}}</p>
+                    </div>
+                </div>
+                <div class="col txt-align-c">
+                    <i class="fas fa-edit"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col txt-align-c">
+                    <div class="humeur">
+                        <p class="humeur-txt"><i>Je vais bien, tout va bien</i></p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col txt-align-c">
+                    <p>né le {{date_naissance | date:'MM/dd/y'}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col txt-align-c">
+                    <button disabled>Sauvegarder modifications</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col txt-align-c">
+                    <button class="btn btn-info">Retour au menu</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ONGLET HISTORIQUE -->
+        <div class="card-body" *ngIf="isSelected(1)">
+            <p>historique</p>
         </div>
     </div>
 </div>

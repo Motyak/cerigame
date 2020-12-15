@@ -306,6 +306,8 @@ Défauts de l'application :
 -J'utilise pas les sessions
 -J'arrive pas à partager un service dans plusieurs composants différents
     (via le constructeur en private, tout ca)
+-Le component html il a plein de *ngIf sur des booléens, faire une méthode
+    par check dans la classe Component = mieux.
 
 
 

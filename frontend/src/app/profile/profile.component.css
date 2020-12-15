@@ -7,3 +7,35 @@
     height: 400px;
     /* overflow: scroll; */
 }
+
+.txt-align-r {
+    text-align: right;
+}
+
+.txt-align-c {
+    text-align: center;
+}
+
+.fa-circle {
+    color: green;
+    margin-top: 5px;
+    margin-right: 2px;
+}
+
+.humeur {
+    max-width: 375px;
+    height: 7.5ex; /* 2.5ex for each visible line */
+    overflow: hidden;
+}
+
+.humeur-txt {
+    line-height: 2.5ex;
+}
+
+.btn-info {
+    margin-top: 20px;
+}
+
+#header {
+    margin-bottom: 30px;
+}
