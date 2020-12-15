@@ -309,24 +309,14 @@ Défauts de l'application :
 
 
 
-Dans la page profil, faire deux onglets :
--Profil (par défaut)
--Historique
-|
- -> Reprendre la forme du choix de theme, mais dans le header
- mettre les onglets, faire les deux vues dans le même composant
- avec *nfIf.
 
 
-Pouvoir afficher son historique.
-    X           -> Faire une route backend GET
-    ?[-> Stocker l'historique dans le localstorage, dans la clé 'user']
-    -> Afficher historique sous la forme d'une liste scrollable
 
 Pouvoir afficher son profil
-    -> Faire en sorte qu'au moment du login on récupère les infos
-        persos et on les stocke dans le localstorage, clé 'user'->'profil'
-    -> Afficher le profile dans une vue simple (similaire à quiz résultat)
+    -> Afficher le profil dans une vue simple (similaire à quiz résultat)
+
+Pouvoir afficher son historique.
+    -> Afficher historique sous la forme d'une liste scrollable
 
 Pouvoir modifier son profil.
     -> Faire une route backend POST avec uniquement la donnée modifiée

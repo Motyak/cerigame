@@ -74,6 +74,14 @@ app.post('/login', (req, res) => {
                     user["identifiant"] = result.rows[0].identifiant; 
                     user["currentLogin"] = new Date(); data["auth"] = true;
                     user["idDb"] = result.rows[0].id;
+                    user["profile"] = {
+                        "nom": result.rows[0].nom,
+                        "prenom": result.rows[0].prenom,
+                        "date_naissance": result.rows[0].date_naissance,
+                        "avatar": result.rows[0].avatar,
+                        "humeur": result.rows[0].humeur,
+                        "statut_connexion": result.rows[0].statut_connexion
+                    };
                     data["user"] = user;
                     // envoi des données
                     res.json(data);

@@ -38,6 +38,7 @@ export class LoginformComponent implements OnInit {
             user["lastLogin"] = '';
           user["currentLogin"] = response.user.currentLogin;
           user["idDb"] = response.user.idDb;
+          user["profile"] = response.user.profile;
           localStorage.setItem(response.user.identifiant, JSON.stringify(user));
           localStorage.setItem('user', response.user.identifiant);
           this.sendAuthStatusEmitter.emit(new ConStatus("success", "Connexion réussie!"));
