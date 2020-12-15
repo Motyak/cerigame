@@ -51,11 +51,11 @@ export class AppComponent {
   }
 
   sendThemeReq() : Observable<any> {
-    return this.http.get<any>('http://localhost:3037/themes');
+    return this.http.get<any>('http://pedago.univ-avignon.fr:3037/themes');
   }
 
   sendQuizzReq(theme : string) : Observable<any> {
-    return this.http.post<any>('http://localhost:3037/quiz', {theme: theme});
+    return this.http.post<any>('http://pedago.univ-avignon.fr:3037/quiz', {theme: theme});
   }
 
   saveQuizzData(theme : string) : void {

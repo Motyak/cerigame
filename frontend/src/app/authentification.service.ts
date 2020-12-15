@@ -21,7 +21,7 @@ export class AuthentificationService {
   // utilisé par le composant loginform au moment du submit
   verifyId(identifiant: string, pwd: string) : Observable<any> {
 
-    return this.http.post<any>('http://localhost:3037/login', {identifiant: identifiant, pwd: pwd});
+    return this.http.post<any>('http://pedago.univ-avignon.fr:3037/login', {identifiant: identifiant, pwd: pwd});
 
   }
 

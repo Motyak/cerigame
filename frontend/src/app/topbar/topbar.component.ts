@@ -32,7 +32,7 @@ export class TopbarComponent implements OnInit {
   // on devrait faire appel au service authentification
   logoutOnClick() : void {
     // send req but dont wait for response
-    this.http.post('http://localhost:3037/logout', {}).subscribe();
+    this.http.post('http://pedago.univ-avignon.fr:3037/logout', {}).subscribe();
     localStorage.removeItem('user');
     localStorage.removeItem('idDb');
     this.sendAuthStatusEmitter.emit(new ConStatus("info", "Vous êtes déconnecté."));

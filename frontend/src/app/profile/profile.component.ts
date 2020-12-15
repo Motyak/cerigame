@@ -70,7 +70,7 @@ export class ProfileComponent implements OnInit {
     const idDb = user.idDb;
 
     let params = new HttpParams().set("idDb", idDb);
-    this.http.get<any>('http://localhost:3037/histo', {params: params}).subscribe(
+    this.http.get<any>('http://pedago.univ-avignon.fr:3037/histo', {params: params}).subscribe(
       response => {
         this.history = response;
         console.log(this.history);

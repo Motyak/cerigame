@@ -111,7 +111,7 @@ export class QuizzComponent implements OnInit {
     const diffInt = {'Facile':0,'Normal':1,'Difficile':2};
     const user = JSON.parse(localStorage.getItem(localStorage.getItem('user')));
 
-    this.http.post<any>('http://localhost:3037/histo', {
+    this.http.post<any>('http://pedago.univ-avignon.fr:3037/histo', {
       id_user: user.idDb, 
       date_jeu: new Date(), 
       niveau_jeu: diffInt[this.diff], 
