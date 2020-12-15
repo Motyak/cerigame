@@ -314,7 +314,8 @@ Défauts de l'application :
 
 
 
-
+J'ai oublié de mettre le temps de réponse, le mettre à la place
+de l'heure à laquelle il a joué.
 
 
 Pouvoir afficher son historique.
