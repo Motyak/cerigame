@@ -16,6 +16,7 @@ export class AppComponent {
   title = 'frontend';
 
   bannerVisible = false;
+  profileToggled = false;
 
   themeSelected = false;
   diffSelected = false;
@@ -69,6 +70,11 @@ export class AppComponent {
     );
   }
 
+  resetInterface() : void {
+    this.themeSelected = false;
+    this.diffSelected = false;
+  }
+
   onStatusChange = function(status: ConStatus) : void {
     console.log("onStatusChange called");
     if(this.auth.isLogged()) {
@@ -113,9 +119,17 @@ export class AppComponent {
     localStorage.removeItem('thème');
     localStorage.removeItem('diff');
 
-    // update view
-    this.themeSelected = false;
-    this.diffSelected = false;
-    this.quizzHasEnded = true;
+    this.resetInterface();
+  }
+
+  onProfileToggled = function(toggled: boolean) : void {
+    console.log("onProfileToggled called");
+
+    if(toggled) {
+      this.resetInterface();
+      this.profileToggled = true;
+    }
+    else
+      this.profileToggled = false;
   }
 }

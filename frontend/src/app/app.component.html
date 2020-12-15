@@ -1,8 +1,9 @@
 <div class="container">
-  <app-topbar *ngIf="auth.isLogged()" (authStatus)="onStatusChange($event)" [username]="topbarUsername" [lastLoginTime]="topbarLastLoginTime"></app-topbar>
+  <app-topbar *ngIf="auth.isLogged() && !profileToggled" (profileToggle)="onProfileToggled($event)" (authStatus)="onStatusChange($event)" [username]="topbarUsername" [lastLoginTime]="topbarLastLoginTime"></app-topbar>
   <app-loginform *ngIf="!auth.isLogged()" (authStatus)="onStatusChange($event)" [auth]="auth"></app-loginform>
-  <app-themeselection *ngIf="auth.isLogged() && !themeSelected" (selectedTheme)="onThemeSelected($event)" [themes]="themes"></app-themeselection>
-  <app-diffselection *ngIf="auth.isLogged() && themeSelected && !diffSelected" (selectedDiff)="onDifficultySelected($event)"></app-diffselection>
-  <app-quizz *ngIf="auth.isLogged() && diffSelected" (quizzEnded)="onQuizzEnded($event)"></app-quizz>
+  <app-themeselection *ngIf="auth.isLogged() && !themeSelected && !profileToggled" (selectedTheme)="onThemeSelected($event)" [themes]="themes"></app-themeselection>
+  <app-diffselection *ngIf="auth.isLogged() && themeSelected && !diffSelected && !profileToggled" (selectedDiff)="onDifficultySelected($event)"></app-diffselection>
+  <app-quizz *ngIf="auth.isLogged() && diffSelected && !profileToggled" (quizzEnded)="onQuizzEnded($event)"></app-quizz>
   <app-banner *ngIf="bannerVisible" [type]="bannerType" [msg]="bannerMsg"></app-banner>
+  <app-profile *ngIf="profileToggled"></app-profile>
 </div>

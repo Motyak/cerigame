@@ -1,1 +1,17 @@
-<p>profile works!</p>
+<div class="d-flex justify-content-center align-items-center h-100">
+    <div class="card">
+        <div class="card-header text-center">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" [class.active]="isSelected(0)" href="#" (click)="loadProfile()">Profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [class.active]="isSelected(1)" href="#" (click)="loadHistory()">Historique</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <p>des choses</p>
+        </div>
+    </div>
+</div>

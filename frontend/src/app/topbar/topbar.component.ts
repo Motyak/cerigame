@@ -14,12 +14,19 @@ export class TopbarComponent implements OnInit {
   @Input() username: string;
   @Input() lastLoginTime: string;
 
+  @Output('profileToggle')
+  sendProfileToggleEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   @Output('authStatus')
   sendAuthStatusEmitter: EventEmitter<ConStatus> = new EventEmitter<ConStatus>();
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
+  }
+
+  toggleProfile() : void {
+    this.sendProfileToggleEmitter.emit(true);
   }
 
   // on devrait faire appel au service authentification

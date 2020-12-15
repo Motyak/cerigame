@@ -1,10 +1,7 @@
 <div class="top-bar flex-column">
   <div class="d-flex justify-content-end">
     <div class="welcome align-self-center">Bonjour <b>{{username}}</b> !</div>
-    <!-- <form id="logoutBtn" (click)="logoutOnClick()">
-      <input type="submit" value="Se déconnecter">
-    </form> -->
-    <button class="btn btn-secondary">Profil</button>
+    <button class="btn btn-secondary" (click)="toggleProfile()">Profil</button>
     <button class="btn btn-danger" (click)="logoutOnClick()">
       <i class="fas fa-sign-out-alt"></i>
     </button>
