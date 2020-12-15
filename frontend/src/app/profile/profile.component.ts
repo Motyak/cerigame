@@ -16,6 +16,8 @@ export class ProfileComponent implements OnInit {
   @Output('backToMenu')
   sendBackToMenuEmitter: EventEmitter<string> = new EventEmitter<any>();
 
+  diff : string[] = ['Facile', 'Normal', 'Difficile'];
+
   selectedTab : number = Tab.PROFILE;
 
   identifiant: string;
@@ -70,6 +72,7 @@ export class ProfileComponent implements OnInit {
     this.http.get<any>('http://localhost:3037/histo', {params: params}).subscribe(
       response => {
         this.history = response;
+        console.log(this.history);
       },
       error => {
         console.log("err: l'historique n'a pas pu être récupéré");

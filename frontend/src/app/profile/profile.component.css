@@ -6,7 +6,6 @@
 .card-body {
     height: 400px;
     max-width: 385px;
-    /* overflow: scroll; */
 }
 
 .txt-align-r {
@@ -35,6 +34,18 @@
 
 .btn-info {
     margin-top: 20px;
+}
+
+.scrollable {
+    overflow: scroll;
+}
+
+.small-col {
+    height: 30px;
+}
+
+.histo-row {
+    margin-bottom: 20px;
 }
 
 #header {

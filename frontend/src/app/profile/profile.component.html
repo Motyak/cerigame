@@ -55,8 +55,36 @@
         </div>
 
         <!-- ONGLET HISTORIQUE -->
-        <div class="card-body" *ngIf="isSelected(1)">
-            <p>historique</p>
+        <div class="card-body scrollable" *ngIf="isSelected(1)">
+            <div class="row histo-row" *ngFor="let h of history">
+                <div class="row w-100">
+                    <div class="col small-col">
+                        <p>Score: <b>{{h.score}}</b></p>
+                    </div>
+                    <div class="col small-col txt-align-r">
+                        <p><i>{{h.date_jeu | date: 'dd/MM/y'}}</i></p>
+                    </div>
+                </div>
+                <div class="row w-100">
+                    <div class="col small-col">
+                        <p>{{diff[h.niveau_jeu]}}</p>
+                    </div>
+                    <div class="col small-col txt-align-r">
+                        <p><i>{{h.date_jeu | date: 'HH:mm'}}</i></p>
+                    </div>
+                </div>
+                <!-- <div class="col">
+                    <div class="row">
+                        <p>Score: <b>{{h.score}}</b> en {{diff[h.niveau_jeu]}}</p>
+                    </div>
+                    <div class="row">
+                        <p>{{h.theme}}</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <p>{{h.date_jeu | date: 'dd/MM/y à HH:mm'}}</p>
+                </div> -->
+            </div>
         </div>
     </div>
 </div>
