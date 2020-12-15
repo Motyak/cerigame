@@ -4,8 +4,8 @@
 }
 
 .card-body {
-    height: 400px;
     max-width: 385px;
+    height: 400px;
 }
 
 .txt-align-r {
@@ -50,4 +50,12 @@
 
 #profileTab {
     width: 140px;
+}
+
+#histoCardBody {
+    height: 317px;
+}
+
+a {
+    color: black;
 }

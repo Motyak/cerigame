@@ -10,10 +10,6 @@
     text-align: right;
 }
 
-.txt-align-l {
-    text-align: left;
-}
-
 .txt-align-c {
     text-align: center;
 }
@@ -51,8 +47,4 @@ button {
 
 .line-h-1-2 {
     line-height: 2.0ex;
-}
-
-.fa-clock {
-    margin-right: 10px;
 }

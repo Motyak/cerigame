@@ -314,8 +314,7 @@ Défauts de l'application :
 
 
 
-J'ai oublié de mettre le temps de réponse, le mettre à la place
-de l'heure à laquelle il a joué.
+Chaque difficulté aura une couleur associée.
 
 
 Pouvoir afficher son historique.

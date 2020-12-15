@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="col txt-align-c">
-                    <i class="fas fa-edit"></i>
+                    <a href="#"><i class="fas fa-edit"></i></a>
                 </div>
             </div>
             <div class="row">
@@ -55,7 +55,7 @@
         </div>
 
         <!-- ONGLET HISTORIQUE -->
-        <div class="card-body scrollable" *ngIf="isSelected(1)">
+        <div class="card-body scrollable" id="histoCardBody" *ngIf="isSelected(1)">
             <table class="table">
                 <tr scope="col" *ngFor="let h of history">
                     <td>
@@ -80,9 +80,13 @@
                     </td>
                 </tr>
             </table>
-            
-
-            
+        </div>
+        <div class="card-footer" *ngIf="isSelected(1)">
+            <div class="row">
+                <div class="col txt-align-c">
+                    <button class="btn btn-info" (click)="backToMenu()">Retour au menu</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
