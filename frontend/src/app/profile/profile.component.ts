@@ -26,6 +26,7 @@ export class ProfileComponent implements OnInit {
   avatar: string;
   humeur: string;
   date_naissance: Date;
+  temps: string;
 
   history: any[];
 
@@ -41,7 +42,7 @@ export class ProfileComponent implements OnInit {
     this.prenom = profile.prenom;
     this.avatar = profile.avatar;
     this.humeur = profile.humeur;
-    this.date_naissance = profile.date_naissance;
+    this.date_naissance = profile.date_naissance; 
 
     this.getHistoryFromServer();
   }
@@ -78,5 +79,15 @@ export class ProfileComponent implements OnInit {
         console.log("err: l'historique n'a pas pu être récupéré");
       }
     );
+  }
+
+  printTime(seconds : number) : string {
+    const temps_min = Math.floor(seconds / 60);
+    const temps_sec = seconds - temps_min * 60;
+    if(temps_sec < 10)
+      return temps_min.toString() + ':0' + temps_sec.toString();
+    else
+    return temps_min.toString() + ':' + temps_sec.toString();
+    
   }
 }
