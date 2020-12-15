@@ -76,6 +76,17 @@ export class AppComponent {
     this.profileToggled = false;
   }
 
+  shouldAppear(element: string) : boolean {
+    if(element == 'topbar')
+      return this.auth.isLogged() && !this.profileToggled && !this.diffSelected;
+    if(element == 'themeselection')
+      return this.auth.isLogged() && !this.themeSelected && !this.profileToggled;
+    if(element == 'diffselection')
+      return this.auth.isLogged() && this.themeSelected && !this.diffSelected && !this.profileToggled;
+    if(element == 'quizz')
+      return this.auth.isLogged() && this.diffSelected && !this.profileToggled;
+  }
+
   onStatusChange = function(status: ConStatus) : void {
     console.log("onStatusChange called");
     if(this.auth.isLogged()) {

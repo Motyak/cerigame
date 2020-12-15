@@ -306,21 +306,17 @@ Défauts de l'application :
 -J'utilise pas les sessions
 -J'arrive pas à partager un service dans plusieurs composants différents
     (via le constructeur en private, tout ca)
--Le component html il a plein de *ngIf sur des booléens, faire une méthode
-    par check dans la classe Component = mieux.
 -La width de la fenêtre principale au milieu pourrait être plus grande
 (gratuitement en plus)
 
 
 
 
-Chaque difficulté aura une couleur associée.
 
 
-Pouvoir afficher son historique.
-    -> Afficher historique sous la forme d'une liste scrollable
 
-Pouvoir modifier son profil.
+
+[Pouvoir modifier son profil.]
     -> Faire une route backend POST avec uniquement la donnée modifiée
         (pouvoir construire des requetes sql sur mesure?? je sais pas)
     -> Faire en sorte de pouvoir éditer les champs du profil directement
