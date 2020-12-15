@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 enum Tab {
   PROFILE,
@@ -11,6 +11,9 @@ enum Tab {
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+
+  @Output('backToMenu')
+  sendBackToMenuEmitter: EventEmitter<string> = new EventEmitter<any>();
 
   selectedTab : number = Tab.PROFILE;
 
@@ -48,4 +51,8 @@ export class ProfileComponent implements OnInit {
     this.selectedTab = Tab.HISTORY;
   }
 
+  backToMenu() : void {
+    // envoi msg au composant principal
+    this.sendBackToMenuEmitter.emit();
+  }
 }

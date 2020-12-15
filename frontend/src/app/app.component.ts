@@ -73,6 +73,7 @@ export class AppComponent {
   resetInterface() : void {
     this.themeSelected = false;
     this.diffSelected = false;
+    this.profileToggled = false;
   }
 
   onStatusChange = function(status: ConStatus) : void {
@@ -119,6 +120,11 @@ export class AppComponent {
     localStorage.removeItem('thème');
     localStorage.removeItem('diff');
 
+    this.resetInterface();
+  }
+
+  onBackToMenu = function() : void {
+    console.log("onBackToMenu called");
     this.resetInterface();
   }
 

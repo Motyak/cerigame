@@ -5,6 +5,7 @@
 
 .card-body {
     height: 400px;
+    max-width: 385px;
     /* overflow: scroll; */
 }
 

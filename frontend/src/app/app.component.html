@@ -5,5 +5,5 @@
   <app-diffselection *ngIf="auth.isLogged() && themeSelected && !diffSelected && !profileToggled" (selectedDiff)="onDifficultySelected($event)"></app-diffselection>
   <app-quizz *ngIf="auth.isLogged() && diffSelected && !profileToggled" (quizzEnded)="onQuizzEnded($event)"></app-quizz>
   <app-banner *ngIf="bannerVisible" [type]="bannerType" [msg]="bannerMsg"></app-banner>
-  <app-profile *ngIf="profileToggled"></app-profile>
+  <app-profile *ngIf="profileToggled" (backToMenu)="onBackToMenu($event)"></app-profile>
 </div>
