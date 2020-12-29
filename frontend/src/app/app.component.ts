@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { AuthentificationService } from './authentification.service';
 
 import { ConStatus } from './structs/ConStatus';
+import { BannerType } from './enums/BannerType';
+import { WebsocketService } from './websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -26,11 +28,17 @@ export class AppComponent {
 
   themes: string[];
 
-  constructor(auth: AuthentificationService, private http: HttpClient) {
+  constructor(auth: AuthentificationService, private http: HttpClient, private webSocket : WebsocketService) {
     this.auth = auth;
+    this.webSocket = webSocket;
+    // this.webSocket.emit('login', 'Bonjour Serveur !');
   }
 
   ngOnInit() : void {
+    // this.webSocket.listen('response').subscribe((data) => {
+    //   this.bannerPrint(data, BannerType.INFO);
+    // });
+
     if(this.auth.isLogged()) {
       // récupérer infos utilisateur connecté
       const username = localStorage.getItem('user');
@@ -48,6 +56,13 @@ export class AppComponent {
         }
       )
     }
+  }
+
+  bannerPrint = function(msg : String, type : BannerType) {
+    this.bannerVisible = true;
+    this.bannerMsg = msg;
+    this.bannerType = type;
+    setTimeout(() => this.bannerVisible = false, 5000);
   }
 
   sendThemeReq() : Observable<any> {
@@ -95,13 +110,14 @@ export class AppComponent {
       this.topbarUsername = username;
       this.topbarLastLoginTime = user.lastLogin;
     }
-    this.bannerVisible = true;
-    this.bannerType = status.status;
-    this.bannerMsg = status.msg;
+    this.bannerPrint(status.msg, status.status);
+    // this.bannerVisible = true;
+    // this.bannerType = status.status;
+    // this.bannerMsg = status.msg;
 
-    setTimeout(() => {
-      this.bannerVisible = false;
-    }, 5000);
+    // setTimeout(() => {
+    //   this.bannerVisible = false;
+    // }, 5000);
   }
 
   onThemeSelected = function(theme: string) : void {

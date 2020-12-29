@@ -4,16 +4,17 @@ const bodyParser = require('body-parser');          //pour récup params POST
 const session = require('express-session');
 const mongoDBStore = require('connect-mongodb-session')(session);
 const mongo = require('mongodb');
-const path = require('path');                       //pour chemin statique des res
 const sha1 = require('sha1');                       //pour hasher mot de passe
 const pgClient = require('pg');                      //middleware pgsql
 const cors = require('cors');
 
 
 // On instancie l'application express et 
-// on définit le numéro de port sur lequel écouté
+// on définit le numéro de port sur lequel écouter
 const app = express();
 const port = 3037;
+const server = require('http').createServer(app);
+const io = require('socket.io')(server, { cors: { origin: '*' } });
 
 // Permet de lire les query strings (GET) en utilisant 'req.query.xxx'
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -213,8 +214,29 @@ app.get('/histo', (req, res) => {
     });
 });
 
+/* GESTION WEBSOCKETS */
+// gestion de la connexion et des messages reçus de la part d'un client
+io.on('connection', socketClient => {
+    console.log('quelqu\'un s\'est connecté');
+    // // informer qu'un nouvel utilisateur vient de se connecter
+    // io.emit('notification', 'le serveur communique avec l ensemble des clients connectés');
+
+    // socketClient.on('messageClient', data => {
+    //     socketClient.emit('response', 'blabla');
+    // });
+
+    // socketClient.on('login', data => {
+    //     socketClient.emit('login', 'blabla');
+    // });
+});
+
 // On lance le serveur node sous le port assigné, qui va traiter
 // chaque requête HTTP qui lui sera destinée (GET, POST, ..)
-app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`);
+server.listen(port, () => {
+    console.log(`Server listening at http://localhost:${port}`)
 });
+
+
+
+
+

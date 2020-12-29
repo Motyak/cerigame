@@ -15,7 +15,8 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "pg": "^8.5.0",
-    "sha1": "^1.1.1"
+    "sha1": "^1.1.1",
+    "socket.io": "^3.0.4"
   },
   "repository": {
     "type": "git",

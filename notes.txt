@@ -311,7 +311,17 @@ Défauts de l'application :
 
 
 
+-Comprendre le fonctionnement des websockets, comment l'utiliser
+    pour les notifications de connexion/deconnexion d'internautes, etc..
+-Utiliser les variables de session pour savoir si un internaute est connecté
+    ou pas (si la session est ouverte ou non)
+-Gestion de websockets côté frontend et backend
+-Faire les notifications de connexion/deconnexion d'internautes
 
+
+
+-> Afficher un message dans la console serveur lorsqu'un nouvel
+utilisateur se connecte au websocket.
 
 
 
@@ -321,11 +331,16 @@ Défauts de l'application :
         (pouvoir construire des requetes sql sur mesure?? je sais pas)
     -> Faire en sorte de pouvoir éditer les champs du profil directement
 
-Déploiement sur le serveur du CERI.
 
 
 
 
+Pour les services, il faut peut etre virer
+'
+@Injectable({
+  providedIn: 'root'
+})
+'
+=> @Injectable
 
-
-
+Pour pouvoir l'utiliser dans autant de composants souhaités. ??
