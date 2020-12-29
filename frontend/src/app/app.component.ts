@@ -31,20 +31,20 @@ export class AppComponent {
   constructor(auth: AuthentificationService, private http: HttpClient, private webSocket : WebsocketService) {
     this.auth = auth;
     this.webSocket = webSocket;
-    // this.webSocket.emit('login', 'Bonjour Serveur !');
   }
 
   ngOnInit() : void {
-    // this.webSocket.listen('response').subscribe((data) => {
-    //   this.bannerPrint(data, BannerType.INFO);
-    // });
-
     if(this.auth.isLogged()) {
       // récupérer infos utilisateur connecté
       const username = localStorage.getItem('user');
       const user = JSON.parse(localStorage.getItem(username));
       this.topbarUsername = username;
       this.topbarLastLoginTime = user.lastLogin;
+
+      // recevoir les notifications du web socket
+      this.webSocket.listen('notification').subscribe(
+        (data) => this.bannerPrint(data, BannerType.INFO)
+      );
 
       // récupérer les themes dispos
       this.sendThemeReq().subscribe(
@@ -111,13 +111,6 @@ export class AppComponent {
       this.topbarLastLoginTime = user.lastLogin;
     }
     this.bannerPrint(status.msg, status.status);
-    // this.bannerVisible = true;
-    // this.bannerType = status.status;
-    // this.bannerMsg = status.msg;
-
-    // setTimeout(() => {
-    //   this.bannerVisible = false;
-    // }, 5000);
   }
 
   onThemeSelected = function(theme: string) : void {

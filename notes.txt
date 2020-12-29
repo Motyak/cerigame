@@ -320,8 +320,9 @@ Défauts de l'application :
 
 
 
--> Afficher un message dans la console serveur lorsqu'un nouvel
-utilisateur se connecte au websocket.
+
+-> Afficher un message dans la console serveur lorsqu'un
+utilisateur se déconnecte.
 
 
 

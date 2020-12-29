@@ -217,7 +217,7 @@ app.get('/histo', (req, res) => {
 /* GESTION WEBSOCKETS */
 // gestion de la connexion et des messages reçus de la part d'un client
 io.on('connection', socketClient => {
-    console.log('quelqu\'un s\'est connecté');
+    // console.log('quelqu\'un s\'est connecté au web socket');
     // // informer qu'un nouvel utilisateur vient de se connecter
     // io.emit('notification', 'le serveur communique avec l ensemble des clients connectés');
 
@@ -225,9 +225,10 @@ io.on('connection', socketClient => {
     //     socketClient.emit('response', 'blabla');
     // });
 
-    // socketClient.on('login', data => {
-    //     socketClient.emit('login', 'blabla');
-    // });
+    socketClient.on('login', data => {
+        console.log('L\'utilisateur ' + data + ' vient de se connecter!');
+        socketClient.broadcast.emit('notification', 'L\'utilisateur ' + data + ' vient de se connecter !');
+    });
 });
 
 // On lance le serveur node sous le port assigné, qui va traiter

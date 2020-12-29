@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AuthentificationService } from '../authentification.service';
 
 import { ConStatus } from '../structs/ConStatus';
+import { WebsocketService } from '../websocket.service';
 
 @Component({
   selector: 'app-loginform',
@@ -14,6 +15,7 @@ export class LoginformComponent implements OnInit {
   attrNomUtilisateur: string;
   attrPwd: string;
   @Input() auth: AuthentificationService;
+  @Input() webSocket: WebsocketService;
 
   @Output('authStatus')
   sendAuthStatusEmitter: EventEmitter<ConStatus> = new EventEmitter<ConStatus>();
@@ -41,6 +43,8 @@ export class LoginformComponent implements OnInit {
           user["profile"] = response.user.profile;
           localStorage.setItem(response.user.identifiant, JSON.stringify(user));
           localStorage.setItem('user', response.user.identifiant);
+
+          this.webSocket.emit('login', this.attrNomUtilisateur);
           this.sendAuthStatusEmitter.emit(new ConStatus("success", "Connexion réussie!"));
         }
         else

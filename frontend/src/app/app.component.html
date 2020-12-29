@@ -10,7 +10,8 @@
   <app-loginform 
       *ngIf="!auth.isLogged()" 
       (authStatus)="onStatusChange($event)" 
-      [auth]="auth">
+      [auth]="auth"
+      [webSocket]="webSocket">
   </app-loginform>
 
   <app-themeselection 
