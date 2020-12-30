@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ConStatus } from '../structs/ConStatus';
+import { WebsocketService } from '../websocket.service';
 
 @Component({
   selector: 'app-topbar',
@@ -13,6 +14,8 @@ export class TopbarComponent implements OnInit {
 
   @Input() username: string;
   @Input() lastLoginTime: string;
+
+  @Input() webSocket: WebsocketService;
 
   @Output('profileToggle')
   sendProfileToggleEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -35,8 +38,8 @@ export class TopbarComponent implements OnInit {
     this.http.post('http://localhost:3037/logout', {}).subscribe();
     localStorage.removeItem('user');
     localStorage.removeItem('idDb');
+    this.webSocket.emit('logout', this.username);
     this.sendAuthStatusEmitter.emit(new ConStatus("info", "Vous êtes déconnecté."));
-    console.log('logout clicked');
   }
 
 }

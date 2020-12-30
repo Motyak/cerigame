@@ -229,6 +229,11 @@ io.on('connection', socketClient => {
         console.log('L\'utilisateur ' + data + ' vient de se connecter!');
         socketClient.broadcast.emit('notification', 'L\'utilisateur ' + data + ' vient de se connecter !');
     });
+
+    socketClient.on('logout', data => {
+        console.log('L\'utilisateur ' + data + ' s\'est déconnecté');
+        socketClient.broadcast.emit('notification', 'L\'utilisateur ' + data + ' s\'est déconnecté');
+    });
 });
 
 // On lance le serveur node sous le port assigné, qui va traiter

@@ -41,11 +41,6 @@ export class AppComponent {
       this.topbarUsername = username;
       this.topbarLastLoginTime = user.lastLogin;
 
-      // recevoir les notifications du web socket
-      this.webSocket.listen('notification').subscribe(
-        (data) => this.bannerPrint(data, BannerType.INFO)
-      );
-
       // récupérer les themes dispos
       this.sendThemeReq().subscribe(
         response => {
@@ -56,6 +51,14 @@ export class AppComponent {
         }
       )
     }
+
+    // recevoir les notifications du web socket
+    this.webSocket.listen('notification').subscribe(
+      (data) => {
+        if(this.auth.isLogged())
+          this.bannerPrint(data, BannerType.INFO)
+      }
+    );
   }
 
   bannerPrint = function(msg : String, type : BannerType) {

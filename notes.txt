@@ -336,12 +336,3 @@ utilisateur se déconnecte.
 
 
 
-Pour les services, il faut peut etre virer
-'
-@Injectable({
-  providedIn: 'root'
-})
-'
-=> @Injectable
-
-Pour pouvoir l'utiliser dans autant de composants souhaités. ??

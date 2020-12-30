@@ -4,7 +4,8 @@
       (profileToggle)="onProfileToggled($event)" 
       (authStatus)="onStatusChange($event)" 
       [username]="topbarUsername" 
-      [lastLoginTime]="topbarLastLoginTime">
+      [lastLoginTime]="topbarLastLoginTime"
+      [webSocket]="webSocket">
   </app-topbar>
 
   <app-loginform 
