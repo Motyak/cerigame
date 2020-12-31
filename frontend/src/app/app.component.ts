@@ -42,14 +42,7 @@ export class AppComponent {
       this.topbarLastLoginTime = user.lastLogin;
 
       // récupérer les themes dispos
-      this.sendThemeReq().subscribe(
-        response => {
-          this.themes = response;
-        },
-        error => {
-          this.onStatusChange(new ConStatus("error", "La récupération des thèmes a échouée!"));
-        }
-      )
+      this.getAvailableThemes();
     }
 
     // recevoir les notifications du web socket
@@ -66,6 +59,17 @@ export class AppComponent {
     this.bannerMsg = msg;
     this.bannerType = type;
     setTimeout(() => this.bannerVisible = false, 5000);
+  }
+
+  getAvailableThemes() : void {
+    this.sendThemeReq().subscribe(
+      response => {
+        this.themes = response;
+      },
+      error => {
+        this.onStatusChange(new ConStatus("error", "La récupération des thèmes a échouée!"));
+      }
+    );
   }
 
   sendThemeReq() : Observable<any> {
@@ -112,6 +116,10 @@ export class AppComponent {
       const user = JSON.parse(localStorage.getItem(username));
       this.topbarUsername = username;
       this.topbarLastLoginTime = user.lastLogin;
+
+      // on récupère les themes dispos si ça n'est pas déjà fait
+      if(!this.themes)
+        this.getAvailableThemes();
     }
     this.bannerPrint(status.msg, status.status);
   }
