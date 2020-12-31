@@ -106,6 +106,7 @@ export class QuizzComponent implements OnInit {
       {
         this.stopTimer();
         this.calculateScore();
+        localStorage.setItem('score', this.score.toString());
         this.sendResultToServer();
       }
   }

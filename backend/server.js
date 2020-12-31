@@ -270,6 +270,21 @@ app.get('/players', (req, res) => {
     });
 });
 
+// Route pour sauvegarder un défi
+app.post('/defi', (req, res) => {
+    var MongoClient = mongo.MongoClient;
+
+    MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+		if (err) throw err;
+			var db = client.db('db');
+      
+		db.collection('defi').insertOne(req.body, (err, result) => {
+			if (err) throw err;
+			res.send();
+		});
+    });
+});
+
 /* GESTION WEBSOCKETS */
 // gestion de la connexion et des messages reçus de la part d'un client
 io.on('connection', socketClient => {

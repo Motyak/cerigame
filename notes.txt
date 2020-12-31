@@ -330,11 +330,16 @@ Le défi se fait sur le même quiz (le quizz défi est stocké dans bdd mongo).
 On ne peut défier qu'une personne (ca retourne vers le menu du coup).
 
 
+Envoyer une requete POST au backend contenant le quizz, la difficulté,
+    l'idDb du joueur défiant, l'idDb du joueur défié et le score du joueur
+    défiant.
+
+Faire une route POST sur le backend pour faire l'ajout du defi à la
+collection mongodb.
 
 
 
-
-
+Stocker le score dans le local storage
 
 
 

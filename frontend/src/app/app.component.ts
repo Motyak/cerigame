@@ -101,6 +101,13 @@ export class AppComponent {
     this.playersListVisible = false;
   }
 
+  cleanLocalStorage() : void {
+    localStorage.removeItem('quiz');
+    localStorage.removeItem('thème');
+    localStorage.removeItem('diff');
+    localStorage.removeItem('score');
+  }
+
   shouldAppear(element: string) : boolean {
     if(element == 'topbar')
       return this.auth.isLogged() && !this.profileToggled && !this.diffSelected && !this.playersListVisible;
@@ -148,12 +155,7 @@ export class AppComponent {
 
   onQuizzEnded = function() : void {
     console.log("onQuizzEnded called");
-
-    // clean up local storage
-    localStorage.removeItem('quiz');
-    localStorage.removeItem('thème');
-    localStorage.removeItem('diff');
-
+    this.cleanLocalStorage();
     this.resetInterface();
   }
 
@@ -165,9 +167,24 @@ export class AppComponent {
 
   onPlayerChallenged = function(idDb: number) : void {
     console.log("onPlayerChallenged called with value " + idDb);
-    // envoyer une demande de défi
+    const username = localStorage.getItem('user');
+    const user = JSON.parse(localStorage.getItem(username));
 
-    // retourner au menu et afficher banniere comme quoi défi bien envoyé
+    /* Ajouter le defi a la collection */
+    const data = {};
+    data['idUserDefiant'] = user.idDb;
+    data['idUserDefie'] =  idDb;
+    data['scoreDefiant'] = localStorage.getItem('score');
+    data['diff'] = localStorage.getItem('diff');
+    data['quiz'] = JSON.parse(localStorage.getItem('quiz'));
+    this.http.post('http://localhost:3037/defi', data).subscribe();
+
+    // Envoyer une notification au joueur défié
+
+    // ...
+
+    /* retourner au menu et afficher banniere comme quoi défi bien envoyé */
+    this.cleanLocalStorage();
     this.resetInterface();
     this.bannerPrint('Défi bien envoyé !', BannerType.INFO);
   }
