@@ -308,21 +308,36 @@ Défauts de l'application :
     (via le constructeur en private, tout ca)
 -La width de la fenêtre principale au milieu pourrait être plus grande
 (gratuitement en plus)
+-Manque d'animations
+-Un milliard de ngIf* pour l'affichage SPA
+
+
+-> Ajout de la fonctionnalité "lancement d'un défi" à la fin d'un quiz vers
+    un utilisateur authentifié ciblé.
+|
+'->Comment récupérer la liste des utilisateurs connectés (authentifiés) ?
+'->Comment émettre un message vers un utilisateur en particulier ?
+
+1- Modifier le statut de connexion d'un utilisateur dans la BDD Postgre
+    lorsqu'il se connecte.
+
+2- Côté backend, faire une route GET qui renvoie tous les utilisateurs
+    connectés (à partir des infos bdd psql)
+
+3- Côté frontend, lorsqu'on clique sur 'Défier un joueur' => affichage
+    d'une carte avec la liste des joueurs connectés avec pour chacun
+    devant leur pseudo un bouton avec deux épées (genre duel). 
+    
+4- Lorsqu'on clique sur un pseudo ça affiche un message dans la console
+    et ça renvoie vers le menu principal en mettant comme bandeau
+    info : défi envoyé à <pseudo joueur>.
 
 
 
--Comprendre le fonctionnement des websockets, comment l'utiliser
-    pour les notifications de connexion/deconnexion d'internautes, etc..
--Utiliser les variables de session pour savoir si un internaute est connecté
-    ou pas (si la session est ouverte ou non)
--Gestion de websockets côté frontend et backend
--Faire les notifications de connexion/deconnexion d'internautes
 
 
 
 
--> Afficher un message dans la console serveur lorsqu'un
-utilisateur se déconnecte.
 
 
 

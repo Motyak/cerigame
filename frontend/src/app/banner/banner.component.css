@@ -46,6 +46,11 @@
 
 .banner #text {
   display: inline-block;
+  max-width: 80%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: bottom;
 }
 
 .banner #close {
