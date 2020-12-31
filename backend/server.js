@@ -239,6 +239,37 @@ app.get('/histo', (req, res) => {
     });
 });
 
+// route pour récupérer la liste des joueurs connectés
+app.get('/players', (req, res) => {
+
+    const idDb = req.query.idDb;
+
+    const sqlReq = "select identifiant from fredouil.users where id<>" 
+        + idDb + " order by identifiant asc limit 50;"
+    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+    //         password: 'depolX', port: 5432});
+    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
+            password: 'passe', port: 5432});
+    pool.connect((err, client) => {
+        if(err)
+            console.log('Erreur connexion au serv pg ' + err.stack);
+        else {
+            client.query(sqlReq, (err, result) => {
+                if(err) {
+                    // envoi des données
+                    res.json();
+                    console.log('err execution requete sql ' + err.stack);
+                }
+                else {
+                    // envoi des données
+                    res.json(result.rows);
+                }
+            })
+            client.release();
+        }
+    });
+});
+
 /* GESTION WEBSOCKETS */
 // gestion de la connexion et des messages reçus de la part d'un client
 io.on('connection', socketClient => {

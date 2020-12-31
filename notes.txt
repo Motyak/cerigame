@@ -318,11 +318,8 @@ Défauts de l'application :
 '->Comment récupérer la liste des utilisateurs connectés (authentifiés) ?
 '->Comment émettre un message vers un utilisateur en particulier ?
 
-1- Modifier le statut de connexion d'un utilisateur dans la BDD Postgre
-    lorsqu'il se connecte/déconnecte. Modifier profil du coup.
-
-2- Côté backend, faire une route GET qui renvoie tous les utilisateurs
-    connectés (à partir des infos bdd psql)
+1- Côté backend, faire une route GET qui renvoie tous les utilisateurs
+    connectés (à part celui qui fait la demande)
 
 3- Côté frontend, lorsqu'on clique sur 'Défier un joueur' => affichage
     d'une carte avec la liste des joueurs connectés avec pour chacun
