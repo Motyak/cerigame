@@ -34,10 +34,12 @@ export class TopbarComponent implements OnInit {
 
   // on devrait faire appel au service authentification
   logoutOnClick() : void {
+    const username = localStorage.getItem('user');
+    const user = JSON.parse(localStorage.getItem(username));
+
     // send req but dont wait for response
-    this.http.post('http://localhost:3037/logout', {}).subscribe();
+    this.http.post('http://localhost:3037/logout', {idDb: user.idDb}).subscribe();
     localStorage.removeItem('user');
-    localStorage.removeItem('idDb');
     this.webSocket.emit('logout', this.username);
     this.sendAuthStatusEmitter.emit(new ConStatus("info", "Vous êtes déconnecté."));
   }

@@ -319,7 +319,7 @@ Défauts de l'application :
 '->Comment émettre un message vers un utilisateur en particulier ?
 
 1- Modifier le statut de connexion d'un utilisateur dans la BDD Postgre
-    lorsqu'il se connecte.
+    lorsqu'il se connecte/déconnecte. Modifier profil du coup.
 
 2- Côté backend, faire une route GET qui renvoie tous les utilisateurs
     connectés (à partir des infos bdd psql)

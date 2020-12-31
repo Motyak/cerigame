@@ -38,6 +38,27 @@ app.use(session({
     cookie: {maxAge: 24 * 3600 * 1000}
 }));
 
+// Permet de changer le statut de connexion d'un utilisateur
+function changeStatus(idDb, status) {
+    const sqlReq = "update fredouil.users set statut_connexion=" + 
+            status + "where id=" + idDb + ";";
+    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+    //         password: 'depolX', port: 5432});
+    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
+    password: 'passe', port: 5432});
+    pool.connect((err, client) => {
+        if(err)
+            console.log('Erreur connexion au serv pg ' + err.stack);
+        else {
+            client.query(sqlReq, (err, result) => {
+                if(err)
+                    console.log('err execution requete sql ' + err.stack);
+            })
+            client.release();
+        }
+    });
+}
+
 // Route permettant d'authentifier un utilisateur
 app.post('/login', (req, res) => {
     // récupération des données POST
@@ -84,6 +105,8 @@ app.post('/login', (req, res) => {
                         "statut_connexion": result.rows[0].statut_connexion
                     };
                     data["user"] = user;
+                    // changement du statut de connexion
+                    changeStatus(result.rows[0].id, "1");
                     // envoi des données
                     res.json(data);
                 }
@@ -98,8 +121,10 @@ app.post('/login', (req, res) => {
     });
 });
 
-// route pour logout (détruire la session)
+// route pour logout
 app.post('/logout', (req, res) => {
+    // changement du statut de connexion
+    changeStatus(req.body.idDb, "0");
     req.session.destroy();
     console.log('session destroyed');
     res.send();
