@@ -244,7 +244,7 @@ app.get('/players', (req, res) => {
 
     const idDb = req.query.idDb;
 
-    const sqlReq = "select identifiant from fredouil.users where id<>" 
+    const sqlReq = "select id,identifiant from fredouil.users where id<>" 
         + idDb + " order by identifiant asc limit 50;"
     // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
     //         password: 'depolX', port: 5432});

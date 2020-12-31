@@ -310,6 +310,12 @@ Défauts de l'application :
 (gratuitement en plus)
 -Manque d'animations
 -Un milliard de ngIf* pour l'affichage SPA
+-Faudra vraiment tout refactor parce que c'est le bordel, 
+    ca aurait pu être beaucoup beaucoup plus simple. Y'a trop
+    de composants qui se ressemblent, trop d'émission de messages
+    entre les composants fils et principal. N'importe quelle classe
+    envoie des requetes HTTP ca n'a aucun putain de sens.
+    Faire un service pour les requetes HTTP déjà.
 
 
 -> Ajout de la fonctionnalité "lancement d'un défi" à la fin d'un quiz vers
@@ -318,17 +324,10 @@ Défauts de l'application :
 '->Comment récupérer la liste des utilisateurs connectés (authentifiés) ?
 '->Comment émettre un message vers un utilisateur en particulier ?
 
-1- Côté backend, faire une route GET qui renvoie tous les utilisateurs
-    connectés (à part celui qui fait la demande)
 
-3- Côté frontend, lorsqu'on clique sur 'Défier un joueur' => affichage
-    d'une carte avec la liste des joueurs connectés avec pour chacun
-    devant leur pseudo un bouton avec deux épées (genre duel). 
-    
-4- Lorsqu'on clique sur un pseudo ça affiche un message dans la console
-    et ça renvoie vers le menu principal en mettant comme bandeau
-    info : défi envoyé à <pseudo joueur>.
 
+Le défi se fait sur le même quiz (le quizz défi est stocké dans bdd mongo).
+On ne peut défier qu'une personne (ca retourne vers le menu du coup).
 
 
 

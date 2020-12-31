@@ -3,10 +3,11 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { AuthentificationService } from './authentification.service';
+import { WebsocketService } from './websocket.service';
 
 import { ConStatus } from './structs/ConStatus';
 import { BannerType } from './enums/BannerType';
-import { WebsocketService } from './websocket.service';
+
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ export class AppComponent {
 
   bannerVisible = false;
   profileToggled = false;
+  playersListVisible = false;
 
   themeSelected = false;
   diffSelected = false;
@@ -96,17 +98,18 @@ export class AppComponent {
     this.themeSelected = false;
     this.diffSelected = false;
     this.profileToggled = false;
+    this.playersListVisible = false;
   }
 
   shouldAppear(element: string) : boolean {
     if(element == 'topbar')
-      return this.auth.isLogged() && !this.profileToggled && !this.diffSelected;
+      return this.auth.isLogged() && !this.profileToggled && !this.diffSelected && !this.playersListVisible;
     if(element == 'themeselection')
-      return this.auth.isLogged() && !this.themeSelected && !this.profileToggled;
+      return this.auth.isLogged() && !this.themeSelected && !this.profileToggled && !this.playersListVisible;
     if(element == 'diffselection')
-      return this.auth.isLogged() && this.themeSelected && !this.diffSelected && !this.profileToggled;
+      return this.auth.isLogged() && this.themeSelected && !this.diffSelected && !this.profileToggled && !this.playersListVisible;
     if(element == 'quizz')
-      return this.auth.isLogged() && this.diffSelected && !this.profileToggled;
+      return this.auth.isLogged() && this.diffSelected && !this.profileToggled && !this.playersListVisible;
   }
 
   onStatusChange = function(status: ConStatus) : void {
@@ -152,6 +155,21 @@ export class AppComponent {
     localStorage.removeItem('diff');
 
     this.resetInterface();
+  }
+
+  onPlayersListRequested = function() : void {
+    console.log("onPlayersListRequested called");
+    this.resetInterface();
+    this.playersListVisible = true;
+  }
+
+  onPlayerChallenged = function(idDb: number) : void {
+    console.log("onPlayerChallenged called with value " + idDb);
+    // envoyer une demande de défi
+
+    // retourner au menu et afficher banniere comme quoi défi bien envoyé
+    this.resetInterface();
+    this.bannerPrint('Défi bien envoyé !', BannerType.INFO);
   }
 
   onBackToMenu = function() : void {

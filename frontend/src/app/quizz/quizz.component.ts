@@ -11,6 +11,9 @@ export class QuizzComponent implements OnInit {
   @Output('quizzEnded')
   sendQuizzEndedEmitter: EventEmitter<string> = new EventEmitter<any>();
 
+  @Output('playersListRequested')
+  sendPlayersListRequestedEmitter: EventEmitter<string> = new EventEmitter<any>();
+
   nbOfProp : any = {
     'Facile':     2,
     'Normal':     3,
@@ -124,6 +127,11 @@ export class QuizzComponent implements OnInit {
   backToMenu() : void {
     // envoi msg au composant principal
     this.sendQuizzEndedEmitter.emit();
+  }
+
+  showPlayersList() : void {
+    // dire au composant principal que la liste doit etre visible
+    this.sendPlayersListRequestedEmitter.emit();
   }
 
   stopTimer() : void {

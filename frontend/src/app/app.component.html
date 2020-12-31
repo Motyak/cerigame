@@ -28,7 +28,8 @@
 
   <app-quizz 
       *ngIf="shouldAppear('quizz')" 
-      (quizzEnded)="onQuizzEnded($event)">
+      (quizzEnded)="onQuizzEnded($event)"
+      (playersListRequested)="onPlayersListRequested($event)">
   </app-quizz>
 
   <app-banner 
@@ -41,4 +42,9 @@
       *ngIf="profileToggled" 
       (backToMenu)="onBackToMenu($event)">
   </app-profile>
+
+  <app-playerslist
+     *ngIf="playersListVisible"
+     (challengedPlayer)="onPlayerChallenged($event)">
+  </app-playerslist>
 </div>

@@ -1,0 +1,13 @@
+.card {
+    font-size: larger;
+}
+
+.card-body {
+    height: 400px;
+    overflow: scroll;
+}
+
+.btn {
+    margin-bottom: 10px;
+    width: 100%;
+}

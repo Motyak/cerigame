@@ -14,6 +14,7 @@ import { ThemeselectionComponent } from './themeselection/themeselection.compone
 import { QuizzComponent } from './quizz/quizz.component';
 import { DiffselectionComponent } from './diffselection/diffselection.component';
 import { ProfileComponent } from './profile/profile.component';
+import { PlayerslistComponent } from './playerslist/playerslist.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { ProfileComponent } from './profile/profile.component';
     QuizzComponent,
     DiffselectionComponent,
     ProfileComponent,
+    PlayerslistComponent,
   ],
   imports: [
     BrowserModule,
