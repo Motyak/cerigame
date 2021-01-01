@@ -1,10 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { AuthentificationService } from '../authentification.service';
+import { AuthenticationService } from '../authentication.service';
 import { WebsocketService } from '../websocket.service';
+import { PersistenceService } from '../persistence.service';
 
-import { ConStatus } from '../structs/ConStatus';
+import { ConStatus } from '../ConStatus';
 
 @Component({
   selector: 'app-loginform',
@@ -19,7 +19,7 @@ export class LoginformComponent implements OnInit {
   @Output('authStatus')
   sendAuthStatusEmitter: EventEmitter<ConStatus> = new EventEmitter<ConStatus>();
 
-  constructor(private router : Router, private auth : AuthentificationService, private webSocket : WebsocketService) {}
+  constructor(private auth : AuthenticationService, private webSocket : WebsocketService, private persistence : PersistenceService) {}
 
   ngOnInit(): void {}
 
@@ -27,7 +27,8 @@ export class LoginformComponent implements OnInit {
     this.auth.verifyId(this.attrUsername, this.attrPwd).subscribe(
       response => {
         if(response.auth) {
-          const prev = JSON.parse(localStorage.getItem(response.user.identifiant));
+          const prev = this.persistence.getUser(response.user.identifiant);
+
           var user = {};
           if(prev)
             user["lastLogin"] = prev.currentLogin;
@@ -36,12 +37,10 @@ export class LoginformComponent implements OnInit {
           user["currentLogin"] = response.user.currentLogin;
           user["idDb"] = response.user.idDb;
           user["profile"] = response.user.profile;
-          localStorage.setItem(response.user.identifiant, JSON.stringify(user));
-          localStorage.setItem('user', response.user.identifiant);
 
+          this.persistence.setUser(response.user.identifiant, JSON.stringify(user));
           this.webSocket.emit('login', this.attrUsername);
           this.sendAuthStatusEmitter.emit(new ConStatus("success", "Connexion réussie!"));
-          this.router.navigate(['/theme-selection']);
         }
         else
           this.sendAuthStatusEmitter.emit(new ConStatus("error", "Identifiants incorrects!"));

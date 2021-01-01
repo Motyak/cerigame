@@ -81,7 +81,7 @@ Services :
 Composants :
     TopbarComponent
     BannerComponent
-    LoginformComponent
+    LoginformComponent              services OK
     ThemeselectionComponent
     ThemecardComponent
     QuizzComponent
@@ -90,3 +90,17 @@ Composants :
 Classes utilitaires :
     BannerType (enum)
     ConStatus (struct)
+
+__________________________________________
+
+Pour AuthenticationService :
+    -Faire appel à HttpService pour les requetes HTTP
+
+Pour le component loginform :
+    -Faire appel à PersistenceService pour stocker les infos utilisateur
+    -Faire appel à WebSocketService pour le websocket
+
+Changer AuthentificationService en AuthenticationService
+
+Pour le component app :
+    -Faire appel à HttpService pour la requete themes etc..

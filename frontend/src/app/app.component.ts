@@ -9,13 +9,13 @@ import { ConStatus } from './structs/ConStatus';
 import { BannerType } from './enums/BannerType';
 
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  auth: AuthentificationService;
   title = 'frontend';
 
   bannerVisible = false;
@@ -30,9 +30,7 @@ export class AppComponent {
 
   themes: string[];
 
-  constructor(auth: AuthentificationService, private http: HttpClient, private webSocket : WebsocketService) {
-    this.auth = auth;
-    this.webSocket = webSocket;
+  constructor(private auth: AuthentificationService, private http: HttpClient, private webSocket : WebsocketService) {
   }
 
   ngOnInit() : void {
@@ -65,12 +63,8 @@ export class AppComponent {
 
   getAvailableThemes() : void {
     this.sendThemeReq().subscribe(
-      response => {
-        this.themes = response;
-      },
-      error => {
-        this.onStatusChange(new ConStatus("error", "La récupération des thèmes a échouée!"));
-      }
+      response => this.themes = response,
+      error => this.onStatusChange(new ConStatus("error", "La récupération des thèmes a échouée!"))
     );
   }
 
@@ -130,6 +124,8 @@ export class AppComponent {
       // on récupère les themes dispos si ça n'est pas déjà fait
       if(!this.themes)
         this.getAvailableThemes();
+
+      this.router.navigate(['/theme-selection', this.themes]);
     }
     this.bannerPrint(status.msg, status.status);
   }

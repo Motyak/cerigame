@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, throwError, Subscriber } from 'rxjs';
+import { Observable } from 'rxjs';
 
-// import { catchError, retry } from 'rxjs/operators';
+import { HttpService } from './http.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthentificationService {
+export class AuthenticationService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http : HttpService) {}
 
   isLogged(): boolean {
     if(localStorage.getItem('user'))
@@ -20,9 +19,7 @@ export class AuthentificationService {
 
   // utilisé par le composant loginform au moment du submit
   verifyId(identifiant: string, pwd: string) : Observable<any> {
-
-    return this.http.post<any>('http://localhost:3037/login', {identifiant: identifiant, pwd: pwd});
-
+    return this.http.postLogin(identifiant, pwd);
   }
 
   // logout() : void {
