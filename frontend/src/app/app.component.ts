@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-import { AuthentificationService } from './authentification.service';
+import { AuthenticationService } from './authentication.service';
 import { WebsocketService } from './websocket.service';
 
-import { ConStatus } from './structs/ConStatus';
-import { BannerType } from './enums/BannerType';
+import { ConStatus } from './ConStatus';
+import { BannerType } from './BannerType';
 
 
 
@@ -30,7 +30,7 @@ export class AppComponent {
 
   themes: string[];
 
-  constructor(private auth: AuthentificationService, private http: HttpClient, private webSocket : WebsocketService) {
+  constructor(public auth: AuthenticationService, private http: HttpClient, private webSocket : WebsocketService) {
   }
 
   ngOnInit() : void {
@@ -124,8 +124,6 @@ export class AppComponent {
       // on récupère les themes dispos si ça n'est pas déjà fait
       if(!this.themes)
         this.getAvailableThemes();
-
-      this.router.navigate(['/theme-selection', this.themes]);
     }
     this.bannerPrint(status.msg, status.status);
   }

@@ -79,12 +79,14 @@ Services :
 
 
 Composants :
-    TopbarComponent
-    BannerComponent
+    TopbarComponent                 services OK
+    BannerComponent                    /
     LoginformComponent              services OK
-    ThemeselectionComponent
-    ThemecardComponent
-    QuizzComponent
+    ThemeselectionComponent             /
+    ThemecardComponent                  /
+    QuizzComponent                  services OK
+    ProfileComponent                services OK
+    PlayerslistComponent            services OK
 
 
 Classes utilitaires :

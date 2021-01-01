@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+
+import { HttpService } from '../http.service';
+import { PersistenceService } from '../persistence.service';
 
 enum Tab {
   PROFILE,
@@ -30,11 +32,11 @@ export class ProfileComponent implements OnInit {
 
   history: any[];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpService, private persi: PersistenceService) { }
 
   ngOnInit(): void {
-    const username = localStorage.getItem('user');
-    const user = JSON.parse(localStorage.getItem(username));
+    const username = this.persi.getConnection();
+    const user = this.persi.getConnectedUser();
     const profile = user.profile;
 
     this.identifiant = username;
@@ -69,8 +71,7 @@ export class ProfileComponent implements OnInit {
     const user = JSON.parse(localStorage.getItem(username));
     const idDb = user.idDb;
 
-    let params = new HttpParams().set("idDb", idDb);
-    this.http.get<any>('http://localhost:3037/histo', {params: params}).subscribe(
+    this.http.getHisto(idDb).subscribe(
       response => {
         this.history = response;
         console.log(this.history);

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+
+import { HttpService } from '../http.service';
+import { PersistenceService } from '../persistence.service';
 
 @Component({
   selector: 'app-playerslist',
@@ -14,7 +15,7 @@ export class PlayerslistComponent implements OnInit {
   @Output('challengedPlayer')
   sendChallengedPlayerEmitter: EventEmitter<string> = new EventEmitter<any>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpService, private persi: PersistenceService) { }
 
   ngOnInit(): void {
     // récupérer la liste de joueurs connectés
@@ -22,12 +23,9 @@ export class PlayerslistComponent implements OnInit {
   }
 
   getPlayers() : void {
-    const username = localStorage.getItem('user');
-    const user = JSON.parse(localStorage.getItem(username));
-    const idDb = user.idDb;
+    const user = this.persi.getConnectedUser();
 
-    let params = new HttpParams().set("idDb", idDb);
-    this.http.get<any>('http://localhost:3037/players', {params: params}).subscribe(
+    this.http.getPlayersList(user.idDb).subscribe(
       response => {
         this.players = response;
         console.log(this.players);

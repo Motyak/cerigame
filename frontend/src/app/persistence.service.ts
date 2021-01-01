@@ -12,11 +12,23 @@ export class PersistenceService {
   }
 
   getConnectedUser() : any {
-    this.getUser(this.getConnectedUsername());
+    return this.getUser(this.getConnection());
   }
 
   getUser(identifiant : string) : any {
     return JSON.parse(localStorage.getItem(identifiant));
+  }
+
+  getTheme() : string {
+    return localStorage.getItem('thème');
+  }
+
+  getDiff() : string {
+    return localStorage.getItem('diff');
+  }
+
+  getQuizz() : any {
+    return JSON.parse(localStorage.getItem('quiz'));
   }
 
   setUser(identifiant : string, user) {
@@ -24,7 +36,13 @@ export class PersistenceService {
     localStorage.setItem(identifiant, user);
   }
 
+  setScore(score : number) {
+    localStorage.setItem('score', score.toString());
+  }
+
   deleteConnection() {
     localStorage.removeItem('user');;
   }
+
+  
 }

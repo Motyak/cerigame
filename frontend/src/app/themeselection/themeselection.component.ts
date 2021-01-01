@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-themeselection',
@@ -8,16 +7,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ThemeselectionComponent implements OnInit {
 
-  themes: string[];
+  @Input() themes: string[];
 
   @Output('selectedTheme')
   sendSelectedThemeEmitter: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(private route: ActivatedRoute) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this.route.snapshot.paramMap.get('themes');
-  }
+  ngOnInit(): void {}
 
   onThemeSelected = function(theme: string) : void {
     this.sendSelectedThemeEmitter.emit(theme);
