@@ -1,5 +1,5 @@
 <div class="container">
-  <app-topbar 
+  <!-- <app-topbar 
       *ngIf="shouldAppear('topbar')" 
       (profileToggle)="onProfileToggled($event)" 
       (authStatus)="onStatusChange($event)" 
@@ -46,5 +46,7 @@
   <app-playerslist
      *ngIf="playersListVisible"
      (challengedPlayer)="onPlayerChallenged($event)">
-  </app-playerslist>
+  </app-playerslist> -->
+
+  <router-outlet></router-outlet>
 </div>

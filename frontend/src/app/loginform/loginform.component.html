@@ -7,8 +7,8 @@
       <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
         <div class="input-group form-group">
           <i class="fa fa-user"></i>
-          <input type="text" name="nomUtilisateur" #nomUtilisateur="ngModel" class="form-control" 
-              [(ngModel)]="attrNomUtilisateur" pattern="^\S{1,40}$" placeholder="Nom d'utilisateur" required/>
+          <input type="text" name="username" #username="ngModel" class="form-control" 
+              [(ngModel)]="attrUsername" pattern="^\S{1,40}$" placeholder="Nom d'utilisateur" required/>
         </div>
         <div class="input-group form-group">
           <i class="fa fa-lock"></i>
@@ -20,9 +20,9 @@
           <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
         </div>
         <!-- form error handling -->
-        <div *ngIf="nomUtilisateur.invalid && (nomUtilisateur.dirty || nomUtilisateur.touched)"
+        <div *ngIf="username.invalid && (username.dirty || username.touched)"
               class="alert alert-danger">
-            <div *ngIf="nomUtilisateur.errors.required; else elseBlock">Nom d'utilisateur vide!</div>
+            <div *ngIf="username.errors.required; else elseBlock">Nom d'utilisateur vide!</div>
             <ng-template #elseBlock>Format incorrect!</ng-template>
         </div>
         <!-- submission -->

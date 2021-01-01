@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { BannerComponent } from './banner/banner.component';
@@ -33,7 +34,15 @@ import { PlayerslistComponent } from './playerslist/playerslist.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot([
+      {path: '', redirectTo: '/login', pathMatch: 'full'},
+      {path: 'login', component: LoginformComponent},
+      {path: 'theme-selection', component: ThemeselectionComponent},
+      {path: 'diff-selection', component: DiffselectionComponent},
+      {path: 'quizz', component: QuizzComponent},
+      {path: 'profile', component: ProfileComponent},
+    ]),
   ],
   providers: [AuthentificationService],
   bootstrap: [AppComponent]

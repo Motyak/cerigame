@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AuthentificationService } from '../authentification.service';
+import { WebsocketService } from '../websocket.service';
 
 import { ConStatus } from '../structs/ConStatus';
-import { WebsocketService } from '../websocket.service';
 
 @Component({
   selector: 'app-loginform',
@@ -12,24 +13,18 @@ import { WebsocketService } from '../websocket.service';
 })
 export class LoginformComponent implements OnInit {
 
-  attrNomUtilisateur: string;
+  attrUsername: string;
   attrPwd: string;
-  @Input() auth: AuthentificationService;
-  @Input() webSocket: WebsocketService;
 
   @Output('authStatus')
   sendAuthStatusEmitter: EventEmitter<ConStatus> = new EventEmitter<ConStatus>();
 
-  constructor() { }
+  constructor(private router : Router, private auth : AuthentificationService, private webSocket : WebsocketService) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 
   onSubmit(): void {
-    console.log(this.attrNomUtilisateur + ":" + this.attrPwd);
-
-    this.auth.verifyId(this.attrNomUtilisateur, this.attrPwd).subscribe(
+    this.auth.verifyId(this.attrUsername, this.attrPwd).subscribe(
       response => {
         if(response.auth) {
           const prev = JSON.parse(localStorage.getItem(response.user.identifiant));
@@ -44,8 +39,9 @@ export class LoginformComponent implements OnInit {
           localStorage.setItem(response.user.identifiant, JSON.stringify(user));
           localStorage.setItem('user', response.user.identifiant);
 
-          this.webSocket.emit('login', this.attrNomUtilisateur);
+          this.webSocket.emit('login', this.attrUsername);
           this.sendAuthStatusEmitter.emit(new ConStatus("success", "Connexion réussie!"));
+          this.router.navigate(['/theme-selection']);
         }
         else
           this.sendAuthStatusEmitter.emit(new ConStatus("error", "Identifiants incorrects!"));
