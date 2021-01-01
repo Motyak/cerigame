@@ -19,7 +19,7 @@ export class LoginformComponent implements OnInit {
   @Output('authStatus')
   sendAuthStatusEmitter: EventEmitter<ConStatus> = new EventEmitter<ConStatus>();
 
-  constructor(private auth : AuthenticationService, private webSocket : WebsocketService, private persistence : PersistenceService) {}
+  constructor(private auth : AuthenticationService, private webSocket : WebsocketService, private persi : PersistenceService) {}
 
   ngOnInit(): void {}
 
@@ -27,7 +27,7 @@ export class LoginformComponent implements OnInit {
     this.auth.verifyId(this.attrUsername, this.attrPwd).subscribe(
       response => {
         if(response.auth) {
-          const prev = this.persistence.getUser(response.user.identifiant);
+          const prev = this.persi.getUser(response.user.identifiant);
 
           var user = {};
           if(prev)
@@ -38,7 +38,7 @@ export class LoginformComponent implements OnInit {
           user["idDb"] = response.user.idDb;
           user["profile"] = response.user.profile;
 
-          this.persistence.setUser(response.user.identifiant, JSON.stringify(user));
+          this.persi.setUser(response.user.identifiant, JSON.stringify(user));
           this.webSocket.emit('login', this.attrUsername);
           this.sendAuthStatusEmitter.emit(new ConStatus("success", "Connexion réussie!"));
         }

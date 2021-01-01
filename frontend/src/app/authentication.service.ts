@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { HttpService } from './http.service';
-
+import { PersistenceService } from './persistence.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  constructor(private http : HttpService) {}
+  constructor(private http : HttpService, private persi : PersistenceService) {}
 
   isLogged(): boolean {
-    if(localStorage.getItem('user'))
+    if(this.persi.getConnection())
       return true;
     return false;
   }
@@ -22,8 +22,7 @@ export class AuthenticationService {
     return this.http.postLogin(identifiant, pwd);
   }
 
-  // logout() : void {
-  //   // send req but dont wait for response
-  //   this.http.post('http://localhost:3037/logout', {}).subscribe();
-  // }
+  logout(idDb : number) : Observable<any> {
+    return this.http.postLogout(idDb);
+  }
 }

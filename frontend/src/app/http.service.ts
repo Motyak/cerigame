@@ -12,4 +12,8 @@ export class HttpService {
   postLogin(identifiant : string, pwd : string) : Observable<any> {
     return this.http.post<any>('http://localhost:3037/login', {identifiant: identifiant, pwd: pwd});
   }
+
+  postLogout(idDb : number) : Observable<any> {
+    return this.http.post('http://localhost:3037/logout', {idDb: idDb});
+  }
 }
