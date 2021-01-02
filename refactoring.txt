@@ -97,9 +97,6 @@ Classes utilitaires :
 __________________________________________
 
 Refactorer app component
-'-> Services            OK
-'-> shouldAppear
-Refactorer les eventemitter
 Refactorer les composants (essayer de faire des composants plus
     réutilisables, utiliser l'héritage, de manière à pouvoir
     terminer les vues manquantes rapidement)

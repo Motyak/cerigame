@@ -71,10 +71,14 @@ export class AppComponent {
   }
 
   resetInterface() : void {
-    if(this.auth.isLogged())
+    if(this.auth.isLogged()) {
+      this.topbarVisible = true;
       this.loadView('themeselection');
-    else
+    }
+    else {
+      this.topbarVisible = false;
       this.loadView('loginform');
+    }
   }
 
   cleanLocalStorage() : void {
@@ -122,6 +126,7 @@ export class AppComponent {
     else {
       console.log('onDifficultySelected : ' + diff);
       this.persi.setDiff(diff);
+      this.topbarVisible = false;
       this.loadView('quizz');
     }
   }
@@ -134,7 +139,6 @@ export class AppComponent {
 
   onPlayersListRequested = function() : void {
     console.log("onPlayersListRequested called");
-    this.resetInterface();
     this.loadView('playerslist');
   }
 
@@ -168,7 +172,6 @@ export class AppComponent {
 
   onProfileToggled = function() : void {
     console.log("onProfileToggled called");
-    this.resetInterface();
-    this.profileToggled = true;
+    this.loadView('profile');
   }
 }
