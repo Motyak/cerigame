@@ -15,6 +15,9 @@ export class PlayerslistComponent implements OnInit {
   @Output('challengedPlayer')
   sendChallengedPlayerEmitter: EventEmitter<string> = new EventEmitter<any>();
 
+  @Output('quizzEnded')
+  sendQuizzEndedEmitter: EventEmitter<string> = new EventEmitter<any>();
+
   constructor(private http: HttpService, private persi: PersistenceService) { }
 
   ngOnInit(): void {
@@ -36,10 +39,14 @@ export class PlayerslistComponent implements OnInit {
     );
   }
 
-  select(player : string) : void {
+  select(player : string) {
     console.log(player + ' clicked');
 
     this.sendChallengedPlayerEmitter.emit(player);
+  }
+
+  backToMenu() {
+    this.sendQuizzEndedEmitter.emit();
   }
 
 }

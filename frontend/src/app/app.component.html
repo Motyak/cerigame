@@ -40,8 +40,9 @@
   </app-profile>
 
   <app-playerslist
-     *ngIf="activeView == 'playerslist'"
-     (challengedPlayer)="onPlayerChallenged($event)">
+      *ngIf="activeView == 'playerslist'"
+      (challengedPlayer)="onPlayerChallenged($event)"
+      (quizzEnded)="onQuizzEnded($event)">
   </app-playerslist>
   <!--------------------------------------------------------------->
 

@@ -14,7 +14,7 @@ export class QuizzComponent implements OnInit {
   sendQuizzEndedEmitter: EventEmitter<string> = new EventEmitter<any>();
 
   @Output('playersListRequested')
-  sendPlayersListRequestedEmitter: EventEmitter<string> = new EventEmitter<any>();
+  sendPlayersListRequestedEmitter: EventEmitter<void> = new EventEmitter<any>();
 
   nbOfProp : any = {
     'Facile':     2,

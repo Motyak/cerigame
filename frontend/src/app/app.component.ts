@@ -29,11 +29,11 @@ export class AppComponent {
   ngOnInit() : void {
     if(this.auth.isLogged()) {
       this.getAvailableThemes();
-      this.activeView = 'themeselection';
+      this.loadView('themeselection');
       this.topbarVisible = true;
     }
     else
-      this.activeView = 'loginform';
+      this.loadView('loginform');
 
     // recevoir les notifications du web socket
     this.webSocket.listen('notification').subscribe(
@@ -44,7 +44,16 @@ export class AppComponent {
     );
   }
 
-  loadView(component : string) { this.activeView = component; }
+  loadView(component : string) { 
+    this.previousView = this.activeView;
+    this.activeView = component; 
+  }
+
+  loadPreviousView() {
+    var tmp = this.activeView;
+    this.activeView = this.previousView;
+    this.previousView = tmp;
+  }
 
   bannerPrint(type : BannerType, msg : string) {
     this.bannerVisible = true;
@@ -173,5 +182,10 @@ export class AppComponent {
   onProfileToggled = function() : void {
     console.log("onProfileToggled called");
     this.loadView('profile');
+  }
+
+  onPreviousViewRequested = function() : void {
+    console.log("onPreviousViewRequested called");
+    this.loadPreviousView();
   }
 }
