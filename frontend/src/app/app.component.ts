@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
 
 import { AuthenticationService } from './authentication.service';
 import { WebsocketService } from './websocket.service';
@@ -9,40 +8,45 @@ import { PersistenceService } from './persistence.service';
 import { ConStatus } from './ConStatus';
 import { BannerType } from './BannerType';
 
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  bannerVisible = false;
-  profileToggled = false;
-  playersListVisible = false;
-
-  themeSelected = false;
-  diffSelected = false;
+  /* navigation between views */
+  activeView : string;
+  previousView : string;
 
   themes: string[];
+  bannerType: BannerType;
+  bannerMsg: string;
+  bannerVisible = false;
+  topbarVisible = false;
 
-  constructor(public auth: AuthenticationService, private http: HttpService, private webSocket : WebsocketService, private persi : PersistenceService) {
-  }
+  constructor(public auth: AuthenticationService, private http: HttpService, private webSocket : WebsocketService, private persi : PersistenceService) {}
 
   ngOnInit() : void {
-    if(this.auth.isLogged())
+    if(this.auth.isLogged()) {
       this.getAvailableThemes();
+      this.activeView = 'themeselection';
+      this.topbarVisible = true;
+    }
+    else
+      this.activeView = 'loginform';
 
     // recevoir les notifications du web socket
     this.webSocket.listen('notification').subscribe(
       (data) => {
         if(this.auth.isLogged())
-          this.bannerPrint(data, BannerType.INFO)
+          this.bannerPrint(BannerType.INFO, data)
       }
     );
   }
 
-  bannerPrint = function(msg : String, type : BannerType) {
+  loadView(component : string) { this.activeView = component; }
+
+  bannerPrint(type : BannerType, msg : string) {
     this.bannerVisible = true;
     this.bannerMsg = msg;
     this.bannerType = type;
@@ -52,27 +56,25 @@ export class AppComponent {
   getAvailableThemes() : void {
     this.http.getThemes().subscribe(
       response => this.themes = response,
-      error => this.onStatusChange(new ConStatus("error", "La récupération des thèmes a échouée!"))
+      error => this.bannerPrint(BannerType.ERROR, 'La récupération des thèmes a échouée!')
     );
   }
 
-  saveQuizzData(theme : string) : void {
+  fetchQuizz(theme : string) : void {
     this.http.postQuizz(theme).subscribe(
       response => {
         this.persi.setQuizz(response);
         this.persi.setTheme(theme);
       },
-      error => {
-        this.onStatusChange(new ConStatus("error", "La récupération des données du quiz a échouée!"));
-      }
+      error => this.bannerPrint(BannerType.ERROR, 'La récupération des données du quiz a échouée!')
     );
   }
 
   resetInterface() : void {
-    this.themeSelected = false;
-    this.diffSelected = false;
-    this.profileToggled = false;
-    this.playersListVisible = false;
+    if(this.auth.isLogged())
+      this.loadView('themeselection');
+    else
+      this.loadView('loginform');
   }
 
   cleanLocalStorage() : void {
@@ -82,48 +84,45 @@ export class AppComponent {
     this.persi.deleteScore();
   }
 
-  shouldAppear(element: string) : boolean {
-    if(element == 'topbar')
-      return this.auth.isLogged() && !this.profileToggled && !this.diffSelected && !this.playersListVisible;
-    if(element == 'themeselection')
-      return this.auth.isLogged() && !this.themeSelected && !this.profileToggled && !this.playersListVisible;
-    if(element == 'diffselection')
-      return this.auth.isLogged() && this.themeSelected && !this.diffSelected && !this.profileToggled && !this.playersListVisible;
-    if(element == 'quizz')
-      return this.auth.isLogged() && this.diffSelected && !this.profileToggled && !this.playersListVisible;
-  }
+/* EVENT HANDLERS */
 
   onStatusChange = function(status: ConStatus) : void {
     console.log("onStatusChange called");
+    // connexion réussie
     if(this.auth.isLogged()) {
-      // const username = localStorage.getItem('user');
-      // const user = JSON.parse(localStorage.getItem(username));
-      // this.topbarUsername = username;
-      // this.topbarLastLoginTime = user.lastLogin;
-
-      // on récupère les themes dispos si ça n'est pas déjà fait
       if(!this.themes)
         this.getAvailableThemes();
+      this.topbarVisible = true;
+      this.loadView('themeselection');
+      this.bannerPrint(BannerType.SUCCESS, status.msg);
     }
-    this.bannerPrint(status.msg, status.status);
+    // deconnexion réussie
+    else if(status.status == 'info') {
+      this.topbarVisible = false;
+      this.loadView('loginform');
+      this.bannerPrint(BannerType.INFO, status.msg);
+    }
+    // erreur connexion ou deconnexion
+    else
+      this.bannerPrint(BannerType.ERROR, status.msg);
   }
 
   onThemeSelected = function(theme: string) : void {
     console.log("onThemeSelected called");
 
     // enregistrer 10 questions aléatoires basées sur le theme
-    this.saveQuizzData(theme);
+    this.fetchQuizz(theme);
 
-    this.themeSelected = true;
+    this.loadView('diffselection');
   }
 
   onDifficultySelected = function(diff: string) : void {
     if(diff == 'back')
-      this.themeSelected = false;
+      this.resetInterface();
     else {
       console.log('onDifficultySelected : ' + diff);
-      this.diffSelected = true;
       this.persi.setDiff(diff);
+      this.loadView('quizz');
     }
   }
 
@@ -136,7 +135,7 @@ export class AppComponent {
   onPlayersListRequested = function() : void {
     console.log("onPlayersListRequested called");
     this.resetInterface();
-    this.playersListVisible = true;
+    this.loadView('playerslist');
   }
 
   onPlayerChallenged = function(idDb: number) : void {
@@ -159,7 +158,7 @@ export class AppComponent {
     /* retourner au menu et afficher banniere comme quoi défi bien envoyé */
     this.cleanLocalStorage();
     this.resetInterface();
-    this.bannerPrint('Défi bien envoyé !', BannerType.INFO);
+    this.bannerPrint(BannerType.INFO, 'Défi bien envoyé !');
   }
 
   onBackToMenu = function() : void {
@@ -167,14 +166,9 @@ export class AppComponent {
     this.resetInterface();
   }
 
-  onProfileToggled = function(toggled: boolean) : void {
+  onProfileToggled = function() : void {
     console.log("onProfileToggled called");
-
-    if(toggled) {
-      this.resetInterface();
-      this.profileToggled = true;
-    }
-    else
-      this.profileToggled = false;
+    this.resetInterface();
+    this.profileToggled = true;
   }
 }

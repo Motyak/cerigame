@@ -32,7 +32,7 @@ export class TopbarComponent implements OnInit {
   }
 
   toggleProfile() : void {
-    this.sendProfileToggleEmitter.emit(true);
+    this.sendProfileToggleEmitter.emit();
   }
 
   logoutOnClick() : void {

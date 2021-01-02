@@ -1,50 +1,56 @@
 <div class="container">
+
+  <!---------------------------TOPBAR------------------------------>
   <app-topbar 
-      *ngIf="shouldAppear('topbar')" 
+      *ngIf="topbarVisible"
       (profileToggle)="onProfileToggled($event)" 
       (authStatus)="onStatusChange($event)" 
       [username]="topbarUsername" 
-      [lastLoginTime]="topbarLastLoginTime"
-      [webSocket]="webSocket">
+      [lastLoginTime]="topbarLastLoginTime">
   </app-topbar>
+  <!--------------------------------------------------------------->
 
+
+  <!---------------------------VIEWS------------------------------->
   <app-loginform 
-      *ngIf="!auth.isLogged()" 
-      (authStatus)="onStatusChange($event)" 
-      [auth]="auth"
-      [webSocket]="webSocket">
+      *ngIf="activeView == 'loginform'"
+      (authStatus)="onStatusChange($event)">
   </app-loginform>
 
   <app-themeselection 
-      *ngIf="shouldAppear('themeselection')" 
+      *ngIf="activeView == 'themeselection'" 
       (selectedTheme)="onThemeSelected($event)" 
       [themes]="themes">
   </app-themeselection>
 
   <app-diffselection 
-      *ngIf="shouldAppear('diffselection')" 
+      *ngIf="activeView == 'diffselection'" 
       (selectedDiff)="onDifficultySelected($event)">
   </app-diffselection>
 
   <app-quizz 
-      *ngIf="shouldAppear('quizz')" 
+      *ngIf="activeView == 'quizz'" 
       (quizzEnded)="onQuizzEnded($event)"
       (playersListRequested)="onPlayersListRequested($event)">
   </app-quizz>
 
+  <app-profile 
+      *ngIf="activeView == 'profile'" 
+      (backToMenu)="onBackToMenu($event)">
+  </app-profile>
+
+  <app-playerslist
+     *ngIf="activeView == 'playerslist'"
+     (challengedPlayer)="onPlayerChallenged($event)">
+  </app-playerslist>
+  <!--------------------------------------------------------------->
+
+  <!---------------------------BANNER------------------------------>
   <app-banner 
       *ngIf="bannerVisible" 
       [type]="bannerType" 
       [msg]="bannerMsg">
   </app-banner>
+  <!--------------------------------------------------------------->
 
-  <app-profile 
-      *ngIf="profileToggled" 
-      (backToMenu)="onBackToMenu($event)">
-  </app-profile>
-
-  <app-playerslist
-     *ngIf="playersListVisible"
-     (challengedPlayer)="onPlayerChallenged($event)">
-  </app-playerslist>
 </div>
