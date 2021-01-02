@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 
 import { AuthenticationService } from './authentication.service';
 import { WebsocketService } from './websocket.service';
+import { HttpService } from './http.service';
+import { PersistenceService } from './persistence.service';
 
 import { ConStatus } from './ConStatus';
 import { BannerType } from './BannerType';
@@ -16,8 +17,6 @@ import { BannerType } from './BannerType';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'frontend';
-
   bannerVisible = false;
   profileToggled = false;
   playersListVisible = false;
@@ -25,25 +24,14 @@ export class AppComponent {
   themeSelected = false;
   diffSelected = false;
 
-  topbarUsername: string;
-  topbarLastLoginTime: string;
-
   themes: string[];
 
-  constructor(public auth: AuthenticationService, private http: HttpClient, private webSocket : WebsocketService) {
+  constructor(public auth: AuthenticationService, private http: HttpService, private webSocket : WebsocketService, private persi : PersistenceService) {
   }
 
   ngOnInit() : void {
-    if(this.auth.isLogged()) {
-      // récupérer infos utilisateur connecté
-      const username = localStorage.getItem('user');
-      const user = JSON.parse(localStorage.getItem(username));
-      this.topbarUsername = username;
-      this.topbarLastLoginTime = user.lastLogin;
-
-      // récupérer les themes dispos
+    if(this.auth.isLogged())
       this.getAvailableThemes();
-    }
 
     // recevoir les notifications du web socket
     this.webSocket.listen('notification').subscribe(
@@ -62,25 +50,17 @@ export class AppComponent {
   }
 
   getAvailableThemes() : void {
-    this.sendThemeReq().subscribe(
+    this.http.getThemes().subscribe(
       response => this.themes = response,
       error => this.onStatusChange(new ConStatus("error", "La récupération des thèmes a échouée!"))
     );
   }
 
-  sendThemeReq() : Observable<any> {
-    return this.http.get<any>('http://localhost:3037/themes');
-  }
-
-  sendQuizzReq(theme : string) : Observable<any> {
-    return this.http.post<any>('http://localhost:3037/quiz', {theme: theme});
-  }
-
   saveQuizzData(theme : string) : void {
-    this.sendQuizzReq(theme).subscribe(
+    this.http.postQuizz(theme).subscribe(
       response => {
-        localStorage.setItem('quiz', JSON.stringify(response));
-        localStorage.setItem('thème', theme);
+        this.persi.setQuizz(response);
+        this.persi.setTheme(theme);
       },
       error => {
         this.onStatusChange(new ConStatus("error", "La récupération des données du quiz a échouée!"));
@@ -96,10 +76,10 @@ export class AppComponent {
   }
 
   cleanLocalStorage() : void {
-    localStorage.removeItem('quiz');
-    localStorage.removeItem('thème');
-    localStorage.removeItem('diff');
-    localStorage.removeItem('score');
+    this.persi.deleteQuizz();
+    this.persi.deleteTheme();
+    this.persi.deleteDiff();
+    this.persi.deleteScore();
   }
 
   shouldAppear(element: string) : boolean {
@@ -116,10 +96,10 @@ export class AppComponent {
   onStatusChange = function(status: ConStatus) : void {
     console.log("onStatusChange called");
     if(this.auth.isLogged()) {
-      const username = localStorage.getItem('user');
-      const user = JSON.parse(localStorage.getItem(username));
-      this.topbarUsername = username;
-      this.topbarLastLoginTime = user.lastLogin;
+      // const username = localStorage.getItem('user');
+      // const user = JSON.parse(localStorage.getItem(username));
+      // this.topbarUsername = username;
+      // this.topbarLastLoginTime = user.lastLogin;
 
       // on récupère les themes dispos si ça n'est pas déjà fait
       if(!this.themes)
@@ -143,7 +123,7 @@ export class AppComponent {
     else {
       console.log('onDifficultySelected : ' + diff);
       this.diffSelected = true;
-      localStorage.setItem('diff', diff);
+      this.persi.setDiff(diff);
     }
   }
 
@@ -161,17 +141,16 @@ export class AppComponent {
 
   onPlayerChallenged = function(idDb: number) : void {
     console.log("onPlayerChallenged called with value " + idDb);
-    const username = localStorage.getItem('user');
-    const user = JSON.parse(localStorage.getItem(username));
+    const user = this.persi.getConnectedUser();
 
     /* Ajouter le defi a la collection */
-    const data = {};
-    data['idUserDefiant'] = user.idDb;
-    data['idUserDefie'] =  idDb;
-    data['scoreDefiant'] = localStorage.getItem('score');
-    data['diff'] = localStorage.getItem('diff');
-    data['quiz'] = JSON.parse(localStorage.getItem('quiz'));
-    this.http.post('http://localhost:3037/defi', data).subscribe();
+    const defi = {};
+    defi['idUserDefiant'] = user.idDb;
+    defi['idUserDefie'] =  idDb;
+    defi['scoreDefiant'] = this.persi.getScore();
+    defi['diff'] = this.persi.getDiff();
+    defi['quiz'] = this.persi.getQuizz();
+    this.http.postDefi(defi).subscribe();
 
     // Envoyer une notification au joueur défié
 

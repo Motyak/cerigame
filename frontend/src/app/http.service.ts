@@ -17,7 +17,7 @@ export class HttpService {
     return this.http.post('http://localhost:3037/logout', {idDb: idDb});
   }
 
-  postHisto(id_user: number, date_jeu: Date, niveau_jeu: number, nb_reponses_corr: number, temps: number, score: number) {
+  postHisto(id_user: number, date_jeu: Date, niveau_jeu: number, nb_reponses_corr: number, temps: number, score: number) : Observable<any> {
     return this.http.post<any>('http://localhost:3037/histo', {
       id_user: id_user, 
       date_jeu: date_jeu, 
@@ -28,12 +28,24 @@ export class HttpService {
     });
   }
 
-  getHisto(idDb: string) {
+  postDefi(defi) : Observable<any> {
+    return this.http.post('http://localhost:3037/defi', defi);
+  }
+
+  postQuizz(theme : string) : Observable<any> {
+    return this.http.post<any>('http://localhost:3037/quiz', {theme: theme});
+  }
+
+  getThemes() : Observable<any> {
+    return this.http.get<any>('http://localhost:3037/themes');
+  }
+
+  getHisto(idDb: string) : Observable<any> {
     let params = new HttpParams().set("idDb", idDb);
     return this.http.get<any>('http://localhost:3037/histo', {params: params});
   }
 
-  getPlayersList(idDb: string) {
+  getPlayersList(idDb: string) : Observable<any> {
     let params = new HttpParams().set("idDb", idDb);
     return this.http.get<any>('http://localhost:3037/players', {params: params});
   }

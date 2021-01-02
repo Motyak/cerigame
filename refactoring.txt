@@ -79,6 +79,7 @@ Services :
 
 
 Composants :
+    AppComponent
     TopbarComponent                 services OK
     BannerComponent                    /
     LoginformComponent              services OK
@@ -95,14 +96,8 @@ Classes utilitaires :
 
 __________________________________________
 
-Pour AuthenticationService :
-    -Faire appel à HttpService pour les requetes HTTP
-
-Pour le component loginform :
-    -Faire appel à PersistenceService pour stocker les infos utilisateur
-    -Faire appel à WebSocketService pour le websocket
-
-Changer AuthentificationService en AuthenticationService
-
-Pour le component app :
-    -Faire appel à HttpService pour la requete themes etc..
+Refactorer app component
+Refactorer les eventemitter
+Refactorer les composants (essayer de faire des composants plus
+    réutilisables, utiliser l'héritage, de manière à pouvoir
+    terminer les vues manquantes rapidement)
