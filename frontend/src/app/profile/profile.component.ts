@@ -49,17 +49,10 @@ export class ProfileComponent implements OnInit {
     this.getHistoryFromServer();
   }
 
-  isSelected(tab: number) : boolean {
-    return this.selectedTab == tab;
-  }
+  isSelected(tab: number) : boolean { return this.selectedTab == tab; }
 
-  selectProfile() : void {
-    this.selectedTab = Tab.PROFILE;
-  }
-
-  selectHistory() : void {
-    this.selectedTab = Tab.HISTORY;
-  }
+  selectProfile() : void { this.selectedTab = Tab.PROFILE; }
+  selectHistory() : void { this.selectedTab = Tab.HISTORY; }
 
   backToMenu() : void {
     // envoi msg au composant principal
@@ -67,11 +60,9 @@ export class ProfileComponent implements OnInit {
   }
 
   getHistoryFromServer() : void {
-    const username = localStorage.getItem('user');
-    const user = JSON.parse(localStorage.getItem(username));
-    const idDb = user.idDb;
+    const user = this.persi.getConnectedUser();
 
-    this.http.getHisto(idDb).subscribe(
+    this.http.getHisto(user.idDb).subscribe(
       response => {
         this.history = response;
         console.log(this.history);

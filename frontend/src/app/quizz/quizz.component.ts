@@ -136,9 +136,7 @@ export class QuizzComponent implements OnInit {
     this.sendPlayersListRequestedEmitter.emit();
   }
 
-  stopTimer() : void {
-    clearInterval(this.interval);
-  }
+  stopTimer() : void { clearInterval(this.interval); }
 
   calculateScore() : void {
     const MAX_SCORE = 10000;
