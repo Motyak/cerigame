@@ -40,8 +40,9 @@ export class TopbarComponent implements OnInit {
 
     // send req but dont wait for response
     this.auth.logout(user.idDb).subscribe();
+    this.webSocket.emit('logout', {idDb: user.idDb, username: this.username});
     this.persi.deleteConnection();
-    this.webSocket.emit('logout', this.username);
+    
     this.sendAuthStatusEmitter.emit(new ConStatus("info", "Vous êtes déconnecté."));
   }
 }

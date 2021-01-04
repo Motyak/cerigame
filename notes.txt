@@ -309,13 +309,6 @@ Défauts de l'application :
 -La width de la fenêtre principale au milieu pourrait être plus grande
 (gratuitement en plus)
 -Manque d'animations
--Un milliard de ngIf* pour l'affichage SPA
--Faudra vraiment tout refactor parce que c'est le bordel, 
-    ca aurait pu être beaucoup beaucoup plus simple. Y'a trop
-    de composants qui se ressemblent, trop d'émission de messages
-    entre les composants fils et principal. N'importe quelle classe
-    envoie des requetes HTTP ca n'a aucun putain de sens.
-    Faire un service pour les requetes HTTP déjà.
 
 
 -> Ajout de la fonctionnalité "lancement d'un défi" à la fin d'un quiz vers
@@ -324,6 +317,11 @@ Défauts de l'application :
 '->Comment récupérer la liste des utilisateurs connectés (authentifiés) ?
 '->Comment émettre un message vers un utilisateur en particulier ?
 
+
+A chaque fois qu'un utilisateur authentifié se connecte au web socket,
+il émet son idDb et socket id et reçoit une liste de idDb - socketId.
+(Stockés dans le service WebSocket).
+Comme ça on peut émettre à un idDb en ayant son socketId associé.
 
 
 

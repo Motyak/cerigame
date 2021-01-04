@@ -286,24 +286,31 @@ app.post('/defi', (req, res) => {
 });
 
 /* GESTION WEBSOCKETS */
+let users = new Map();
 // gestion de la connexion et des messages reçus de la part d'un client
 io.on('connection', socketClient => {
-    // console.log('quelqu\'un s\'est connecté au web socket');
-    // // informer qu'un nouvel utilisateur vient de se connecter
-    // io.emit('notification', 'le serveur communique avec l ensemble des clients connectés');
-
-    // socketClient.on('messageClient', data => {
-    //     socketClient.emit('response', 'blabla');
-    // });
-
     socketClient.on('login', data => {
         console.log('L\'utilisateur ' + data + ' vient de se connecter!');
         socketClient.broadcast.emit('notification', 'L\'utilisateur ' + data + ' vient de se connecter !');
     });
 
+    socketClient.on('id', data => {
+        users[data] = socketClient.id;
+        console.log(users);
+        // renvoyer au client la liste des sockets connectés
+        socketClient.emit('ids', users);
+        socketClient.broadcast.emit('ids', users);       
+    });
+
+    socketClient.on('defi', data => {
+        socketClient.to(users[data.idUserDefie]).emit('defi', data);
+    })
+
     socketClient.on('logout', data => {
-        console.log('L\'utilisateur ' + data + ' s\'est déconnecté');
-        socketClient.broadcast.emit('notification', 'L\'utilisateur ' + data + ' s\'est déconnecté');
+        console.log('L\'utilisateur ' + data.username + ' s\'est déconnecté');
+        console.log(users.delete(data.idDb));
+        console.log(users);
+        socketClient.broadcast.emit('notification', 'L\'utilisateur ' + data.username + ' s\'est déconnecté');
     });
 });
 

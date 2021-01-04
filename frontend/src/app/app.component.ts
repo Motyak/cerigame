@@ -29,11 +29,30 @@ export class AppComponent {
   ngOnInit() : void {
     if(this.auth.isLogged()) {
       this.getAvailableThemes();
+
+      const user = this.persi.getConnectedUser();
+      this.webSocket.emit('id', user.idDb);
+
       this.loadView('themeselection');
       this.topbarVisible = true;
     }
     else
       this.loadView('loginform');
+
+    // // recevoir les socket id de tous les autres utilisateurs
+    // this.webSocket.listen('ids').subscribe(
+    //   (data) => {
+    //     if(this.auth.isLogged())
+    //       this.webSocket.setUsers(data);
+    //   }
+    // )
+
+    // recevoir les défis
+    this.webSocket.listen('defi').subscribe(
+      (data) => {
+        console.log(data);
+      }
+    )
 
     // recevoir les notifications du web socket
     this.webSocket.listen('notification').subscribe(
@@ -101,11 +120,14 @@ export class AppComponent {
 
   onStatusChange = function(status: ConStatus) : void {
     console.log("onStatusChange called");
+    const user = this.persi.getConnectedUser();
+
     // connexion réussie
     if(this.auth.isLogged()) {
       if(!this.themes)
         this.getAvailableThemes();
-      this.topbarVisible = true;
+      this.topbarVisible = true;  
+      this.webSocket.emit('id', user.idDb);
       this.loadView('themeselection');
       this.bannerPrint(BannerType.SUCCESS, status.msg);
     }
@@ -161,10 +183,12 @@ export class AppComponent {
     defi['idUserDefie'] =  idDb;
     defi['scoreDefiant'] = this.persi.getScore();
     defi['diff'] = this.persi.getDiff();
+    defi['theme'] = this.persi.getTheme();
     defi['quiz'] = this.persi.getQuizz();
     this.http.postDefi(defi).subscribe();
 
-    // Envoyer une notification au joueur défié
+    // Envoyer un defi
+    this.webSocket.emit('defi', defi);
 
     // ...
 
