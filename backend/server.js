@@ -207,13 +207,13 @@ app.post('/quiz', (req, res) => {
     });
 });
 
-// route pour récupérer l'historique de parties
+// route pour récupérer l'historique de parties solo
 app.get('/histo', (req, res) => {
 
     const idDb = req.query.idDb;
 
     // récupération des 10 dernières parties du joueur
-    const sqlReq = "select * from fredouil.historique where id_user=" 
+    const sqlReqSolo = "select * from fredouil.historique where id_user=" 
         + idDb + " order by date_jeu desc limit 10;"
     // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
     //         password: 'depolX', port: 5432});
@@ -223,7 +223,7 @@ app.get('/histo', (req, res) => {
         if(err)
             console.log('Erreur connexion au serv pg ' + err.stack);
         else {
-            client.query(sqlReq, (err, result) => {
+            client.query(sqlReqSolo, (err, result) => {
                 if(err) {
                     // envoi des données
                     res.json();
@@ -237,6 +237,36 @@ app.get('/histo', (req, res) => {
             client.release();
         }
     });
+});
+
+// route pour récupérer l'historique de défis
+app.get('/defis', (req, res) => {
+  const idDb = req.query.idDb;
+
+  const sqlReqDefis = "select * from fredouil.hist_defi where id_user_gagnant=" 
+      + idDb + " or id_user_perdant=" + idDb + "order by date_defi desc limit 10;"
+  // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+  //         password: 'depolX', port: 5432});
+  var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
+      password: 'passe', port: 5432});
+  pool.connect((err, client) => {
+    if(err)
+        console.log('Erreur connexion au serv pg ' + err.stack);
+    else {
+        client.query(sqlReqDefis, (err, result) => {
+            if(err) {
+                // envoi des données
+                res.json();
+                console.log('err execution requete sql ' + err.stack);
+            }
+            else {
+                // envoi des données
+                res.json(result.rows);
+            }
+        })
+        client.release();
+    }
+  });
 });
 
 // route pour récupérer la liste des joueurs connectés
