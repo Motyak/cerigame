@@ -317,6 +317,9 @@ des parties Solo ET des Défis (deux onglets différents).
 '-> Faire en sorte d'afficher, dans l'onglet historique, 
     un onglet Solo et un onglet Défis.
 
+Faire en sorte que histo_defi renvoie l'identifiant du joueur
+défié (jointure de tables SQL)
+
 Faire en sorte que lorsqu'un défi est reçu, ça affiche
 une boîte de dialogue présentant le défi dans laquelle on
 peut soit accepter soit refuser.

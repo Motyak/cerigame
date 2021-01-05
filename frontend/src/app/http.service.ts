@@ -40,9 +40,14 @@ export class HttpService {
     return this.http.get<any>('http://localhost:3037/themes');
   }
 
-  getHisto(idDb: string) : Observable<any> {
+  getHistoSolo(idDb: string) : Observable<any> {
     let params = new HttpParams().set("idDb", idDb);
     return this.http.get<any>('http://localhost:3037/histo', {params: params});
+  }
+
+  getHistoDefis(idDb: string) : Observable<any> {
+    let params = new HttpParams().set("idDb", idDb);
+    return this.http.get<any>('http://localhost:3037/defis', {params: params});
   }
 
   getPlayersList(idDb: string) : Observable<any> {

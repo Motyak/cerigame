@@ -242,9 +242,14 @@ app.get('/histo', (req, res) => {
 // route pour récupérer l'historique de défis
 app.get('/defis', (req, res) => {
   const idDb = req.query.idDb;
-
-  const sqlReqDefis = "select * from fredouil.hist_defi where id_user_gagnant=" 
-      + idDb + " or id_user_perdant=" + idDb + "order by date_defi desc limit 10;"
+  const sqlReqDefis = 
+      "select u1.identifiant as gagnant,u2.identifiant as perdant,date_defi " +
+      "from fredouil.hist_defi " +
+      "join fredouil.users u1 on fredouil.hist_defi.id_user_gagnant=u1.id " +
+      "join fredouil.users u2 on fredouil.hist_defi.id_user_perdant=u2.id " +
+      "where id_user_gagnant=" + idDb + "or id_user_perdant=" + idDb +
+      " order by date_defi desc" +
+      " limit 10"; 
   // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
   //         password: 'depolX', port: 5432});
   var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 

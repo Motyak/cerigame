@@ -8,6 +8,11 @@ enum Tab {
   HISTORY
 };
 
+enum HistoTab {
+  SOLO,
+  DEFIS
+}
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -19,8 +24,10 @@ export class ProfileComponent implements OnInit {
   sendBackToMenuEmitter: EventEmitter<string> = new EventEmitter<any>();
 
   diff : string[] = ['Facile', 'Normal', 'Difficile'];
+  idDbUser : number = this.persi.getConnectedUser().idDb;
 
   selectedTab : number = Tab.PROFILE;
+  selectedHistoTab : number = HistoTab.SOLO;
 
   identifiant: string;
   nom: string;
@@ -30,7 +37,8 @@ export class ProfileComponent implements OnInit {
   date_naissance: Date;
   temps: string;
 
-  history: any[];
+  historySolo: any[];
+  historyDefis: any[];
 
   constructor(private http: HttpService, private persi: PersistenceService) { }
 
@@ -50,9 +58,12 @@ export class ProfileComponent implements OnInit {
   }
 
   isSelected(tab: number) : boolean { return this.selectedTab == tab; }
+  isSelectedHisto(tab: number) : boolean { return this.selectedHistoTab == tab; }
 
   selectProfile() : void { this.selectedTab = Tab.PROFILE; }
   selectHistory() : void { this.selectedTab = Tab.HISTORY; }
+  selectSolo() : void { this.selectedHistoTab = HistoTab.SOLO; }
+  selectDefis() : void { this.selectedHistoTab = HistoTab.DEFIS; }
 
   backToMenu() : void {
     // envoi msg au composant principal
@@ -62,13 +73,25 @@ export class ProfileComponent implements OnInit {
   getHistoryFromServer() : void {
     const user = this.persi.getConnectedUser();
 
-    this.http.getHisto(user.idDb).subscribe(
+    // Récupérer l'historique des parties solo
+    this.http.getHistoSolo(user.idDb).subscribe(
       response => {
-        this.history = response;
-        console.log(this.history);
+        this.historySolo = response;
+        console.log(this.historySolo);
       },
       error => {
         console.log("err: l'historique n'a pas pu être récupéré");
+      }
+    );
+
+    // récupérer l'historique des défis
+    this.http.getHistoDefis(user.idDb).subscribe(
+      response => {
+        this.historyDefis = response;
+        console.log(this.historyDefis);
+      },
+      error => {
+        console.log("err: l'historique des défis n'a pas pu être récupéré");
       }
     );
   }
