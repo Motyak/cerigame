@@ -295,11 +295,11 @@ io.on('connection', socketClient => {
     });
 
     socketClient.on('id', data => {
-        users[data] = socketClient.id;
+        users.set(data, socketClient.id);
         console.log(users);
         // renvoyer au client la liste des sockets connectés
         socketClient.emit('ids', users);
-        socketClient.broadcast.emit('ids', users);       
+        socketClient.broadcast.emit('ids', users);
     });
 
     socketClient.on('defi', data => {
@@ -308,7 +308,7 @@ io.on('connection', socketClient => {
 
     socketClient.on('logout', data => {
         console.log('L\'utilisateur ' + data.username + ' s\'est déconnecté');
-        console.log(users.delete(data.idDb));
+        users.delete(data.idDb);
         console.log(users);
         socketClient.broadcast.emit('notification', 'L\'utilisateur ' + data.username + ' s\'est déconnecté');
     });

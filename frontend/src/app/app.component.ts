@@ -126,7 +126,7 @@ export class AppComponent {
     if(this.auth.isLogged()) {
       if(!this.themes)
         this.getAvailableThemes();
-      this.topbarVisible = true;  
+      this.topbarVisible = true;
       this.webSocket.emit('id', user.idDb);
       this.loadView('themeselection');
       this.bannerPrint(BannerType.SUCCESS, status.msg);
@@ -189,8 +189,6 @@ export class AppComponent {
 
     // Envoyer un defi
     this.webSocket.emit('defi', defi);
-
-    // ...
 
     /* retourner au menu et afficher banniere comme quoi défi bien envoyé */
     this.cleanLocalStorage();

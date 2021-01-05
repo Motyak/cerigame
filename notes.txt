@@ -311,17 +311,14 @@ Défauts de l'application :
 -Manque d'animations
 
 
--> Ajout de la fonctionnalité "lancement d'un défi" à la fin d'un quiz vers
-    un utilisateur authentifié ciblé.
-|
-'->Comment récupérer la liste des utilisateurs connectés (authentifiés) ?
-'->Comment émettre un message vers un utilisateur en particulier ?
-
-
-A chaque fois qu'un utilisateur authentifié se connecte au web socket,
-il émet son idDb et socket id et reçoit une liste de idDb - socketId.
-(Stockés dans le service WebSocket).
-Comme ça on peut émettre à un idDb en ayant son socketId associé.
+Faire en sorte que lorsqu'un défi est reçu, ça affiche
+une boîte de dialogue présentant le défi dans laquelle on
+peut soit accepter soit refuser.
+Si on refuse ça ferme la boîte de dialogue et envoie un 
+message retour au défiant.
+Si on accepte, le quizz se lance et à la fin du quizz
+ca affiche le résultat, et ajout à l'historique de chacun
+la partie.
 
 
 
