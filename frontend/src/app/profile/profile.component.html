@@ -96,8 +96,8 @@
                         <div class="row">
                             <div class="row w-100">
                                 <div class="col small-col">
-                                    <p *ngIf="h.id_user_gagnant == idDbUser"><b>VICTOIRE</b></p>
-                                    <p *ngIf="h.id_user_perdant == idDbUser"><b>DÉFAITE</b></p>
+                                    <p class="color-green" *ngIf="h.gagnant == identifiant"><b>VICTOIRE</b></p>
+                                    <p class="color-red" *ngIf="h.perdant == identifiant"><b>DÉFAITE</b></p>
                                 </div>
                                 <div class="col small-col txt-align-r">
                                     <p><i>{{h.date_defi | date: 'dd/MM/y'}}</i></p>
@@ -105,7 +105,7 @@
                             </div>
                             <div class="row w-100">
                                 <div class="col small-col">
-                                    <p>contre BLABLABLA</p>
+                                    <p>contre {{h.gagnant == identifiant ? h.perdant : h.gagnant}}</p>
                                 </div>
                             </div>
                         </div>

@@ -24,7 +24,6 @@ export class ProfileComponent implements OnInit {
   sendBackToMenuEmitter: EventEmitter<string> = new EventEmitter<any>();
 
   diff : string[] = ['Facile', 'Normal', 'Difficile'];
-  idDbUser : number = this.persi.getConnectedUser().idDb;
 
   selectedTab : number = Tab.PROFILE;
   selectedHistoTab : number = HistoTab.SOLO;

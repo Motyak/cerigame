@@ -310,16 +310,6 @@ Défauts de l'application :
 (gratuitement en plus)
 -Manque d'animations
 
-Faire en sorte qu'on puisse afficher l'historique
-des parties Solo ET des Défis (deux onglets différents).
-'-> Ajouter la table hist_defi dans la base psql                X
-'-> Faire en sorte qu'on ait une route GET defis                X
-'-> Faire en sorte d'afficher, dans l'onglet historique, 
-    un onglet Solo et un onglet Défis.
-
-Faire en sorte que histo_defi renvoie l'identifiant du joueur
-défié (jointure de tables SQL)
-
 Faire en sorte que lorsqu'un défi est reçu, ça affiche
 une boîte de dialogue présentant le défi dans laquelle on
 peut soit accepter soit refuser.

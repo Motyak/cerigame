@@ -60,7 +60,7 @@ a {
     color: black;
 }
 
-.diff0 {
+.diff0, .color-green {
     color: green;
 }
 
@@ -68,6 +68,6 @@ a {
     color: orange;
 }
 
-.diff2 {
+.diff2, .color-red {
     color: red;
 }
