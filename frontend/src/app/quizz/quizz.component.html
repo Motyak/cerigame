@@ -89,12 +89,12 @@
         </div>
 
         <!-- Défis -->
-        <div class="row">
+        <div class="row" *ngIf="!defi">
           <div class="col small-col txt-align-c">
             <button disabled>Défier un ami</button>
           </div>
           <div class="col small-col txt-align-c">
-            <button (click)="showPlayersList()" [disabled]="defi">Défier un joueur</button>
+            <button (click)="showPlayersList()">Défier un joueur</button>
           </div>
         </div>
 

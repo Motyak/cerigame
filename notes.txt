@@ -325,7 +325,16 @@ la partie.
 '-> Si il accepte, on lance le quiz
     '-> Faire un attribut Input spécifique au quiz defi
         '-> dans template html : si (quizDefi) => lancer quiz defi  X
-'->..
+'-> A l'issue d'un défi, le défi est ajouté à l'historique.
+
+1) Ajouter l'ajout à l'historique des défis à l'issue d'un défi
+2) Ajouter la correction (réponses fausses), à ne montrer que
+    si le nb de bonnes réponses < 10
+3) Pouvoir afficher le classement global du site
+4) Refactor le code server.js (notamment les appels et créations
+    des clients SGBD)
+5) Déploiement sur le serveur du CERI
+6) Enregistrer démo vidéo
 
 
 
