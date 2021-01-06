@@ -21,6 +21,9 @@ export class AppComponent {
   themes: string[];
   bannerType: BannerType;
   bannerMsg: string;
+  defiTheme: string;
+  defiDiff: string;
+  defiDefiant: string;
   bannerVisible = false;
   topbarVisible = false;
   defiVisible = false;
@@ -43,7 +46,10 @@ export class AppComponent {
     // recevoir les défis
     this.webSocket.listen('defi').subscribe(
       (data) => {
-        console.log(data);
+        this.defiDiff = data.diff;
+        this.defiTheme = data.theme;
+        this.defiDefiant = data.identifiantDefiant;
+        this.defiVisible = true;
       }
     )
 

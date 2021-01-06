@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 enum Difficulte {
   FACILE,
@@ -13,13 +13,14 @@ enum Difficulte {
 })
 export class DefiComponent implements OnInit {
 
-  identifiantDefiant: string;
-  theme: string;
-  diff: Difficulte;
+  @Input() identifiantDefiant: string;
+  @Input() theme: string;
+  @Input() diff: Difficulte;
 
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.theme + ";" + this.diff);
   }
 
 }

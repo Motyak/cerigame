@@ -4,9 +4,7 @@
   <app-topbar 
       *ngIf="topbarVisible"
       (profileToggle)="onProfileToggled($event)" 
-      (authStatus)="onStatusChange($event)" 
-      [username]="topbarUsername" 
-      [lastLoginTime]="topbarLastLoginTime">
+      (authStatus)="onStatusChange($event)">
   </app-topbar>
   <!--------------------------------------------------------------->
 
@@ -48,7 +46,10 @@
 
   <!----------------------DEFI MODAL DIALOG------------------------>
   <app-defi
-        *ngIf="defiVisible">
+        *ngIf="defiVisible"
+        [identifiantDefiant]="defiDefiant"
+        [theme]="defiTheme"
+        [diff]="defiDiff">
   </app-defi>
   <!--------------------------------------------------------------->
 

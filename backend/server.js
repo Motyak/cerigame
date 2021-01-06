@@ -311,7 +311,7 @@ app.post('/defi', (req, res) => {
 
     MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 		if (err) throw err;
-			var db = client.db('db');
+		var db = client.db('db');
       
 		db.collection('defi').insertOne(req.body, (err, result) => {
 			if (err) throw err;
@@ -338,7 +338,27 @@ io.on('connection', socketClient => {
     });
 
     socketClient.on('defi', data => {
-        socketClient.to(users.get(data.idUserDefie)).emit('defi', data);
+        /* Ajouter l'identifiantDefiant à data */
+        const sqlReq = "select identifiant from fredouil.users where id=" + data.idUserDefiant;
+        // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+        //         password: 'depolX', port: 5432});
+        var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
+                password: 'passe', port: 5432});
+        pool.connect((err, client) => {
+            if(err) console.log('Erreur connexion au serv pg ' + err.stack);
+            else {
+                client.query(sqlReq, (err, result) => {
+                    if(err) console.log('err execution requete sql ' + err.stack);
+                    else {
+                        data['identifiantDefiant'] = result.rows[0].identifiant;
+                        socketClient.to(users.get(data.idUserDefie)).emit('defi', data);
+                    }
+                })
+                client.release();
+            }
+        });
+
+        
     })
 
     socketClient.on('logout', data => {
