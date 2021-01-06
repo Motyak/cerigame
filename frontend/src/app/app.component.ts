@@ -40,14 +40,6 @@ export class AppComponent {
     else
       this.loadView('loginform');
 
-    // // recevoir les socket id de tous les autres utilisateurs
-    // this.webSocket.listen('ids').subscribe(
-    //   (data) => {
-    //     if(this.auth.isLogged())
-    //       this.webSocket.setUsers(data);
-    //   }
-    // )
-
     // recevoir les défis
     this.webSocket.listen('defi').subscribe(
       (data) => {

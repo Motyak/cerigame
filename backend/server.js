@@ -338,7 +338,7 @@ io.on('connection', socketClient => {
     });
 
     socketClient.on('defi', data => {
-        socketClient.to(users[data.idUserDefie]).emit('defi', data);
+        socketClient.to(users.get(data.idUserDefie)).emit('defi', data);
     })
 
     socketClient.on('logout', data => {
