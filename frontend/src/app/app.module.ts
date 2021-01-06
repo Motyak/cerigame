@@ -18,6 +18,7 @@ import { HttpService } from './http.service';
 import { WebsocketService } from './websocket.service';
 import { PersistenceService } from './persistence.service';
 import { AuthenticationService } from './authentication.service';
+import { DefiComponent } from './defi/defi.component';
 
 
 
@@ -33,6 +34,7 @@ import { AuthenticationService } from './authentication.service';
     DiffselectionComponent,
     ProfileComponent,
     PlayerslistComponent,
+    DefiComponent,
   ],
   imports: [
     BrowserModule,

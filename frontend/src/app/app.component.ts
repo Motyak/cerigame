@@ -23,6 +23,7 @@ export class AppComponent {
   bannerMsg: string;
   bannerVisible = false;
   topbarVisible = false;
+  defiVisible = false;
 
   constructor(public auth: AuthenticationService, private http: HttpService, private webSocket : WebsocketService, private persi : PersistenceService) {}
 
@@ -181,14 +182,15 @@ export class AppComponent {
     const defi = {};
     defi['idUserDefiant'] = user.idDb;
     defi['idUserDefie'] =  idDb;
-    defi['scoreDefiant'] = this.persi.getScore();
     defi['diff'] = this.persi.getDiff();
     defi['theme'] = this.persi.getTheme();
-    defi['quiz'] = this.persi.getQuizz();
-    this.http.postDefi(defi).subscribe();
-
+    defi['scoreDefiant'] = this.persi.getScore();
     // Envoyer un defi
     this.webSocket.emit('defi', defi);
+
+    defi['quiz'] = this.persi.getQuizz();
+    // Stockage du défi avec quiz
+    this.http.postDefi(defi).subscribe();
 
     /* retourner au menu et afficher banniere comme quoi défi bien envoyé */
     this.cleanLocalStorage();
