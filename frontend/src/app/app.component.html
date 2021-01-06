@@ -29,7 +29,8 @@
   <app-quizz 
       *ngIf="activeView == 'quizz'" 
       (quizzEnded)="onQuizzEnded($event)"
-      (playersListRequested)="onPlayersListRequested($event)">
+      (playersListRequested)="onPlayersListRequested($event)"
+      [defi]="defi">
   </app-quizz>
 
   <app-profile 
@@ -44,7 +45,7 @@
   </app-playerslist>
   <!--------------------------------------------------------------->
 
-  <!----------------------DEFI MODAL DIALOG------------------------>
+  <!---------------------------DEFI MODAL-------------------------->
   <app-defi
         *ngIf="defiVisible"
         (challengeResponse)="onChallengeResponse($event)"

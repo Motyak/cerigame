@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 import { HttpService } from '../http.service';
 import { PersistenceService } from '../persistence.service';
@@ -9,6 +9,8 @@ import { PersistenceService } from '../persistence.service';
   styleUrls: ['./quizz.component.css']
 })
 export class QuizzComponent implements OnInit {
+
+  @Input() defi: any;
 
   @Output('quizzEnded')
   sendQuizzEndedEmitter: EventEmitter<string> = new EventEmitter<any>();
@@ -39,9 +41,16 @@ export class QuizzComponent implements OnInit {
   constructor(private http: HttpService, private persi : PersistenceService) { }
 
   ngOnInit(): void {
-    this.theme = this.persi.getTheme();
-    this.diff = this.persi.getDiff();
-    this.quizz = this.persi.getQuizz();
+    if(this.defi) {
+      this.theme = this.defi.theme;
+      this.diff = this.defi.diff;
+      this.quizz = this.defi.quiz;
+    }
+    else {
+      this.theme = this.persi.getTheme();
+      this.diff = this.persi.getDiff();
+      this.quizz = this.persi.getQuizz();
+    }
     this.setupQuizz();
     this.answers = new Array(10);
     this.interval = setInterval(() => { 
@@ -78,7 +87,10 @@ export class QuizzComponent implements OnInit {
       }
     };
 
-    var quiz = this.persi.getQuizz();
+    // prendre un clone de this.quizz
+    var quiz = Object.assign({}, this.quizz);
+    // var quiz = this.persi.getQuizz();
+    
     for(var z = 0 ; z < 10 ; ++z)
     {
       const réponse = quiz[z].quizz.réponse;
@@ -109,6 +121,7 @@ export class QuizzComponent implements OnInit {
         this.calculateScore();
         this.persi.setScore(this.score)
         this.sendResultToServer();
+        this.defi = undefined;
       }
   }
 

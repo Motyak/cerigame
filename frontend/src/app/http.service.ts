@@ -28,8 +28,13 @@ export class HttpService {
     });
   }
 
-  postDefi(defi) : Observable<any> {
-    return this.http.post('http://localhost:3037/defi', defi);
+  getDefiTmp(idUserDefiant: number, idUserDefie: number) : Observable<any> {
+    let params = new HttpParams().set("idUserDefiant", idUserDefiant.toString()).set("idUserDefie", idUserDefie.toString());
+    return this.http.get<any>('http://localhost:3037/defiTmp', {params: params});
+  }
+
+  postDefiTmp(defi) : Observable<any> {
+    return this.http.post<any>('http://localhost:3037/defiTmp', defi);
   }
 
   postQuizz(theme : string) : Observable<any> {

@@ -184,7 +184,7 @@ export class AppComponent {
 
     defi['quiz'] = this.persi.getQuizz();
     // Stockage du défi avec quiz
-    this.http.postDefi(defi).subscribe();
+    this.http.postDefiTmp(defi).subscribe();
 
     /* retourner au menu et afficher banniere comme quoi défi bien envoyé */
     this.cleanLocalStorage();
@@ -198,7 +198,15 @@ export class AppComponent {
 
     // si defi accepté => lancer le quiz
     if(accept) {
-      // charger le quiz de mongodb (ajouter attribut quizzDefi en Input)
+      // charger le quiz de mongodb
+      this.http.getDefiTmp(this.defi.idUserDefiant, this.defi.idUserDefie).subscribe(
+        response => {
+          this.defi = response;
+          this.topbarVisible = false;
+          this.loadView('quizz');
+        },
+        error => this.bannerPrint(BannerType.ERROR, 'La récupération du défi a échouée!')
+      );
     }
 
     // envoyer requete http pour delete le quiz dans mongodb
