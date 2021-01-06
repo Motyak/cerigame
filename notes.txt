@@ -324,7 +324,7 @@ la partie.
         '-> route DELETE pour supprimer quiz mongodb                X
 '-> Si il accepte, on lance le quiz
     '-> Faire un attribut Input spécifique au quiz defi
-        '-> dans template html : si (quizDefi) => lancer quiz defi
+        '-> dans template html : si (quizDefi) => lancer quiz defi  X
 '->..
 
 
