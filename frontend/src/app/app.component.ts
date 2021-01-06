@@ -21,9 +21,7 @@ export class AppComponent {
   themes: string[];
   bannerType: BannerType;
   bannerMsg: string;
-  defiTheme: string;
-  defiDiff: string;
-  defiDefiant: string;
+  defi: any;
   bannerVisible = false;
   topbarVisible = false;
   defiVisible = false;
@@ -46,9 +44,7 @@ export class AppComponent {
     // recevoir les défis
     this.webSocket.listen('defi').subscribe(
       (data) => {
-        this.defiDiff = data.diff;
-        this.defiTheme = data.theme;
-        this.defiDefiant = data.identifiantDefiant;
+        this.defi = data;
         this.defiVisible = true;
       }
     )
@@ -194,6 +190,19 @@ export class AppComponent {
     this.cleanLocalStorage();
     this.resetInterface();
     this.bannerPrint(BannerType.INFO, 'Défi bien envoyé !');
+  }
+
+  onChallengeResponse = function(accept: boolean): void {
+    console.log('onChallengeResponse called');
+    this.defiVisible = false;
+
+    // si defi accepté => lancer le quiz
+    if(accept) {
+      // charger le quiz de mongodb (ajouter attribut quizzDefi en Input)
+    }
+
+    // envoyer requete http pour delete le quiz dans mongodb
+    this.http.delTmpQuizz(this.defi.idUserDefiant, this.defi.idUserDefie).subscribe();
   }
 
   onBackToMenu = function() : void {

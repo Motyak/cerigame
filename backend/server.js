@@ -305,7 +305,7 @@ app.get('/players', (req, res) => {
     });
 });
 
-// Route pour sauvegarder un défi
+// Route pour sauvegarder un défi (temporairement)
 app.post('/defi', (req, res) => {
     var MongoClient = mongo.MongoClient;
 
@@ -317,6 +317,21 @@ app.post('/defi', (req, res) => {
 			if (err) throw err;
 			res.send();
 		});
+    });
+});
+
+// Route pour supprimer défi temporaire
+app.delete('/defi', (req, res) => {
+    var MongoClient = mongo.MongoClient;
+
+    MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+		if (err) throw err;
+		var db = client.db('db');
+      
+        db.collection('defi').deleteMany({"idUserDefiant": req.body.idUserDefiant, "idUserDefie": req.body.idUserDefie}, (err, result) => {
+            if (err) throw err;
+			res.send();
+        });
     });
 });
 

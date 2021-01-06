@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 enum Difficulte {
   FACILE,
@@ -13,14 +13,19 @@ enum Difficulte {
 })
 export class DefiComponent implements OnInit {
 
-  @Input() identifiantDefiant: string;
-  @Input() theme: string;
-  @Input() diff: Difficulte;
+  @Input() defi: any;
+
+  @Output('challengeResponse')
+  sendChallengeResponse: EventEmitter<boolean> = new EventEmitter<any>();
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.theme + ";" + this.diff);
+    
+  }
+
+  response(accept : boolean) {
+    this.sendChallengeResponse.emit(accept);
   }
 
 }

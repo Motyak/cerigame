@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -53,5 +53,16 @@ export class HttpService {
   getPlayersList(idDb: string) : Observable<any> {
     let params = new HttpParams().set("idDb", idDb);
     return this.http.get<any>('http://localhost:3037/players', {params: params});
+  }
+
+  delTmpQuizz(idUserDefiant: number, idUserDefie: number) : Observable<any> {
+    let options = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'}),
+      body: {
+        idUserDefiant: idUserDefiant,
+        idUserDefie: idUserDefie
+      }
+    };
+    return this.http.delete<any>('http://localhost:3037/defi', options);
   }
 }

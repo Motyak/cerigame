@@ -318,9 +318,10 @@ message retour au défiant.
 Si on accepte, le quizz se lance et à la fin du quizz
 ca affiche le résultat, et ajout à l'historique de chacun
 la partie.
-'-> Afficher la boite de dialogue sur l'écran du joueur défié.
+'-> Afficher la boite de dialogue sur l'écran du joueur défié.      X
 '-> Selon l'acceptation ou refus on gère la suite, on supprime
     le quiz de la collection mongodb
+        '-> route DELETE pour supprimer quiz mongodb                X
 '-> Si il accepte, on lance le quiz
 '->..
 

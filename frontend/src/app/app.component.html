@@ -47,9 +47,8 @@
   <!----------------------DEFI MODAL DIALOG------------------------>
   <app-defi
         *ngIf="defiVisible"
-        [identifiantDefiant]="defiDefiant"
-        [theme]="defiTheme"
-        [diff]="defiDiff">
+        (challengeResponse)="onChallengeResponse($event)"
+        [defi]="defi">
   </app-defi>
   <!--------------------------------------------------------------->
 
