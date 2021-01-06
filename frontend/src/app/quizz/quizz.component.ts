@@ -41,6 +41,7 @@ export class QuizzComponent implements OnInit {
   constructor(private http: HttpService, private persi : PersistenceService) { }
 
   ngOnInit(): void {
+    console.log(this.defi);//debug
     if(this.defi) {
       this.theme = this.defi.theme;
       this.diff = this.defi.diff;
@@ -121,7 +122,6 @@ export class QuizzComponent implements OnInit {
         this.calculateScore();
         this.persi.setScore(this.score)
         this.sendResultToServer();
-        this.defi = undefined;
       }
   }
 

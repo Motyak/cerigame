@@ -160,6 +160,7 @@ export class AppComponent {
   onQuizzEnded = function() : void {
     console.log("onQuizzEnded called");
     this.cleanLocalStorage();
+    this.defi = undefined;
     this.resetInterface();
   }
 
