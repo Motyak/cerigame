@@ -311,8 +311,20 @@ Défauts de l'application :
 -Manque d'animations
 
 
--Faire l'historique des défis               X
--Calcul du nb de médailles dans Profil
+-Faire l'historique des défis                   X
+-Afficher le nb de médailles dans Profil        X
+-Faire un menu à la place du bouton Profil
+    pour avoir accès à Profil, Joueurs et 
+    Top 10
+-Afficher le top 10 des meilleurs scores
+-Afficher la liste des joueurs connectés
+-Pouvoir consulter le profil d'un joueur
+    depuis la liste des joueurs connectés
+-Pouvoir modifier son humeur dans Profil
+-Afficher une correction (réponses fausses)
+-Déploiement CERI
+-Enregistrement démo
+
 
 
 
