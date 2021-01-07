@@ -3,7 +3,7 @@
   <!---------------------------TOPBAR------------------------------>
   <app-topbar 
       *ngIf="topbarVisible"
-      (profileToggle)="onProfileToggled($event)" 
+      (menuItemSelection)="onMenuItemSelected($event)" 
       (authStatus)="onStatusChange($event)">
   </app-topbar>
   <!--------------------------------------------------------------->
@@ -40,6 +40,7 @@
 
   <app-playerslist
       *ngIf="activeView == 'playerslist'"
+      [challenge]="challenge"
       (challengedPlayer)="onPlayerChallenged($event)"
       (quizzEnded)="onQuizzEnded($event)">
   </app-playerslist>

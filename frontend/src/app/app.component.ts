@@ -18,10 +18,14 @@ export class AppComponent {
   activeView : string;
   previousView : string;
 
+  /* Inputs for sub components */
   themes: string[];
   bannerType: BannerType;
   bannerMsg: string;
   defi: any;
+  challenge: boolean = false;
+
+  /* flags for stackable components */
   bannerVisible = false;
   topbarVisible = false;
   defiVisible = false;
@@ -153,6 +157,7 @@ export class AppComponent {
       console.log('onDifficultySelected : ' + diff);
       this.persi.setDiff(diff);
       this.topbarVisible = false;
+      this.challenge = true; //playerslist permet de défier
       this.loadView('quizz');
     }
   }
@@ -161,6 +166,7 @@ export class AppComponent {
     console.log("onQuizzEnded called");
     this.cleanLocalStorage();
     this.defi = undefined;
+    this.challenge = false; //playerslist permet de check profil
     this.resetInterface();
   }
 
@@ -221,9 +227,9 @@ export class AppComponent {
     this.resetInterface();
   }
 
-  onProfileToggled = function() : void {
+  onMenuItemSelected = function(selection: string) : void {
     console.log("onProfileToggled called");
-    this.loadView('profile');
+    this.loadView(selection);
   }
 
   onPreviousViewRequested = function() : void {

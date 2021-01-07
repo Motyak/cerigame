@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 import { HttpService } from '../http.service';
 import { PersistenceService } from '../persistence.service';
@@ -12,11 +12,13 @@ export class PlayerslistComponent implements OnInit {
 
   players: any[];
 
+  @Input() challenge: boolean;
+
   @Output('challengedPlayer')
   sendChallengedPlayerEmitter: EventEmitter<string> = new EventEmitter<any>();
 
   @Output('quizzEnded')
-  sendQuizzEndedEmitter: EventEmitter<string> = new EventEmitter<any>();
+  sendQuizzEndedEmitter: EventEmitter<void> = new EventEmitter<any>();
 
   constructor(private http: HttpService, private persi: PersistenceService) { }
 
@@ -41,8 +43,10 @@ export class PlayerslistComponent implements OnInit {
 
   select(player : string) {
     console.log(player + ' clicked');
-
-    this.sendChallengedPlayerEmitter.emit(player);
+    if(this.challenge)
+      this.sendChallengedPlayerEmitter.emit(player);
+    else
+      console.log('afficher profil de ' + player);
   }
 
   backToMenu() {

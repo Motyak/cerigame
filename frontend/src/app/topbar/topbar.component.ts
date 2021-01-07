@@ -16,8 +16,8 @@ export class TopbarComponent implements OnInit {
   username: string;
   lastLoginTime: string;
 
-  @Output('profileToggle')
-  sendProfileToggleEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output('menuItemSelection')
+  sendMenuItemSelectionEmitter: EventEmitter<string> = new EventEmitter<any>();
 
   @Output('authStatus')
   sendAuthStatusEmitter: EventEmitter<ConStatus> = new EventEmitter<ConStatus>();
@@ -32,7 +32,15 @@ export class TopbarComponent implements OnInit {
   }
 
   toggleProfile() : void {
-    this.sendProfileToggleEmitter.emit();
+    this.sendMenuItemSelectionEmitter.emit('profile');
+  }
+
+  togglePlayersList() : void {
+    this.sendMenuItemSelectionEmitter.emit('playerslist');
+  }
+
+  toggleTopTen() : void {
+    // this.sendMenuItemSelectionEmitter.emit('profile');
   }
 
   logoutOnClick() : void {

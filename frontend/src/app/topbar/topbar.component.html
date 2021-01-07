@@ -7,9 +7,9 @@
         Menu
       </button>
       <div class="dropdown-menu" *dropdownMenu>
-        <a class="dropdown-item" href="#">Profil</a>
-        <a class="dropdown-item" href="#">Joueurs</a>
-        <a class="dropdown-item" href="#">Top 10</a>
+        <a class="dropdown-item" href="#" (click)="toggleProfile()">Profil</a>
+        <a class="dropdown-item" href="#" (click)="togglePlayersList()">Joueurs</a>
+        <a class="dropdown-item" href="#" (click)="toggleTopTen()">Top 10</a>
       </div>
     </div>
     <button class="btn btn-danger" (click)="logoutOnClick()">
