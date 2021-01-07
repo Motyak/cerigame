@@ -2,11 +2,11 @@
   <div class="d-flex justify-content-end">
     <div class="welcome align-self-center">Bonjour <b>{{username}}</b> !</div>
     <!-- <button class="btn btn-secondary" (click)="toggleProfile()">Profil</button> -->
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="dropdown" dropdown>
+      <button dropdownToggle class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Menu
       </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <div class="dropdown-menu" *dropdownMenu>
         <a class="dropdown-item" href="#">Profil</a>
         <a class="dropdown-item" href="#">Joueurs</a>
         <a class="dropdown-item" href="#">Top 10</a>

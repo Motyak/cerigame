@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { WebsocketService } from '../websocket.service';
 import { AuthenticationService } from '../authentication.service';
