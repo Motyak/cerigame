@@ -311,8 +311,8 @@ Défauts de l'application :
 -Manque d'animations
 
 
--Faire l'historique des défis
-    '-> Ajouter défi à l'historique des 2 participants
+-Faire l'historique des défis               X
+-Calcul du nb de médailles dans Profil
 
 
 

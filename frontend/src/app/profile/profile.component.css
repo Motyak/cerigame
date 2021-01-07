@@ -71,3 +71,20 @@ a {
 .diff2, .color-red {
     color: red;
 }
+
+.avatar {
+    position: relative;
+}
+
+#medailles-container {
+    position: absolute;
+    bottom: 2px;
+    right: 15px;
+
+    font-size: large;
+}
+
+#medailles-container p{
+    color: yellow;
+    background-color: rgba(0, 0, 0, 0.5);
+}
