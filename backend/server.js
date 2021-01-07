@@ -130,6 +130,7 @@ app.post('/logout', (req, res) => {
     res.send();
 });
 
+// Route pour ajouter une partie à l'historique
 app.post('/histo', (req, res) => {
     // récupération des données POST
     const id_user = req.body.id_user;
@@ -157,7 +158,37 @@ app.post('/histo', (req, res) => {
                 if(err)
                     console.log('err execution requete sql ' + err.stack);
                 else
-                    console.log('sql insert success');
+                    console.log('sql insert histo success');
+            })
+            client.release();
+        }
+    });
+});
+
+// Route pour ajouter un défi à l'historique
+app.post('/defi', (req, res) => {
+    // récupération des données POST
+    const id_user_gagnant = req.body.id_user_gagnant;
+    const id_user_perdant = req.body.id_user_perdant;
+    const date_defi = req.body.date_defi;
+
+    // ajout du défi dans la base de données
+    const sqlReq = "insert into fredouil.hist_defi(id_user_gagnant,id_user_perdant,date_defi) values (" +
+            id_user_gagnant + "," + id_user_perdant + ",'" + date_defi + "');";
+
+    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+    //         password: 'depolX', port: 5432});
+    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
+            password: 'passe', port: 5432});
+    pool.connect((err, client) => {
+        if(err)
+            console.log('Erreur connexion au serv pg ' + err.stack);
+        else {
+            client.query(sqlReq, (err, result) => {
+                if(err)
+                    console.log('err execution requete sql ' + err.stack);
+                else
+                    console.log('sql insert hist_defi success');
             })
             client.release();
         }

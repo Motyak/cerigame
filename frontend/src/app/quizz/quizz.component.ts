@@ -120,7 +120,7 @@ export class QuizzComponent implements OnInit {
       {
         this.stopTimer();
         this.calculateScore();
-        this.persi.setScore(this.score)
+        this.persi.setScore(this.score);
         this.sendResultToServer();
       }
   }
@@ -129,6 +129,7 @@ export class QuizzComponent implements OnInit {
     const diffInt = {'Facile':0,'Normal':1,'Difficile':2};
     const user = this.persi.getConnectedUser();
 
+    // ajout de la partie dans l'historique (avec score etc..)
     this.http.postHisto(
       user.idDb, 
       new Date(), 
@@ -137,6 +138,21 @@ export class QuizzComponent implements OnInit {
       this.timerMin * 60 + this.timerSec,
       this.score
     ).subscribe();
+
+    if(this.defi) {
+      // ajout du défi dans l'historique (qui a gagné, etc..)
+      let id_user_gagnant, id_user_perdant;
+      if(this.defi.scoreDefiant > this.score) {
+        id_user_gagnant = this.defi.idUserDefiant;
+        id_user_perdant = user.idDb;
+      }
+      else {
+        id_user_gagnant = user.idDb;
+        id_user_perdant = this.defi.idUserDefiant;
+      }
+      this.http.postDefi(id_user_gagnant, id_user_perdant, new Date()).subscribe();
+    }
+    
   }
 
   backToMenu() : void {

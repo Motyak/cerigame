@@ -23,8 +23,16 @@ export class HttpService {
       date_jeu: date_jeu, 
       niveau_jeu: niveau_jeu, 
       nb_reponses_corr: nb_reponses_corr, 
-      temps: temps, 
+      temps: temps,
       score: score
+    });
+  }
+
+  postDefi(id_user_gagnant: number, id_user_perdant: number, date_defi: Date) : Observable<any> {
+    return this.http.post<any>('http://localhost:3037/defi', {
+      id_user_gagnant: id_user_gagnant, 
+      id_user_perdant: id_user_perdant,
+      date_defi: date_defi
     });
   }
 
