@@ -238,6 +238,35 @@ app.post('/quiz', (req, res) => {
     });
 });
 
+// route pour récupérer le nb de médailles d'un joueur
+app.get('/medals', (req, res) => {
+    const idDb = req.query.idDb;
+
+    const sqlReq = "select count(id) from fredouil.hist_defi where id_user_gagnant=" + idDb + ";";
+    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+    //         password: 'depolX', port: 5432});
+    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
+            password: 'passe', port: 5432});
+    pool.connect((err, client) => {
+        if(err)
+            console.log('Erreur connexion au serv pg ' + err.stack);
+        else {
+            client.query(sqlReq, (err, result) => {
+                if(err) {
+                    // envoi des données
+                    res.json();
+                    console.log('err execution requete sql ' + err.stack);
+                }
+                else {
+                    // envoi des données
+                    res.json(result.rows);
+                }
+            })
+            client.release();
+        }
+    });
+});
+
 // route pour récupérer l'historique de parties solo
 app.get('/histo', (req, res) => {
 

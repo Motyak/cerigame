@@ -53,6 +53,11 @@ export class HttpService {
     return this.http.get<any>('http://localhost:3037/themes');
   }
 
+  getMedals(idDb: string) : Observable<any> {
+    let params = new HttpParams().set("idDb", idDb);
+    return this.http.get<any>('http://localhost:3037/medals', {params: params});
+  }
+
   getHistoSolo(idDb: string) : Observable<any> {
     let params = new HttpParams().set("idDb", idDb);
     return this.http.get<any>('http://localhost:3037/histo', {params: params});

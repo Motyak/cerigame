@@ -34,6 +34,7 @@ export class ProfileComponent implements OnInit {
   avatar: string;
   humeur: string;
   date_naissance: Date;
+  medailles: number;
   temps: string;
 
   historySolo: any[];
@@ -53,6 +54,7 @@ export class ProfileComponent implements OnInit {
     this.humeur = profile.humeur;
     this.date_naissance = profile.date_naissance; 
 
+    this.getMedalsFromServer();
     this.getHistoryFromServer();
   }
 
@@ -67,6 +69,16 @@ export class ProfileComponent implements OnInit {
   backToMenu() : void {
     // envoi msg au composant principal
     this.sendBackToMenuEmitter.emit();
+  }
+
+  getMedalsFromServer() : void {
+    const user = this.persi.getConnectedUser();
+    this.http.getMedals(user.idDb).subscribe(
+      response => this.medailles = response[0].count,
+      error => {
+        console.log("err: le nb de medailles n'a pas pu être récupéré");
+      }
+    )
   }
 
   getHistoryFromServer() : void {
