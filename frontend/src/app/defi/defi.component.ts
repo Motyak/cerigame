@@ -1,11 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
-enum Difficulte {
-  FACILE,
-  NORMAL,
-  DIFFICILE
-}
-
 @Component({
   selector: 'app-defi',
   templateUrl: './defi.component.html',

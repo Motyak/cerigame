@@ -209,6 +209,8 @@ export class AppComponent {
         error => this.bannerPrint(BannerType.ERROR, 'La récupération du défi a échouée!')
       );
     }
+    else /* rejected */
+      this.defi = undefined;
 
     // envoyer requete http pour delete le quiz dans mongodb
     this.http.delTmpQuizz(this.defi.idUserDefiant, this.defi.idUserDefie).subscribe();
