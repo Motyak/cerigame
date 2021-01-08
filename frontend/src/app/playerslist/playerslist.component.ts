@@ -17,6 +17,9 @@ export class PlayerslistComponent implements OnInit {
   @Output('challengedPlayer')
   sendChallengedPlayerEmitter: EventEmitter<string> = new EventEmitter<any>();
 
+  @Output('selectedPlayer')
+  sendSelectedPlayerEmitter: EventEmitter<void> = new EventEmitter<any>();
+
   @Output('quizzEnded')
   sendQuizzEndedEmitter: EventEmitter<void> = new EventEmitter<any>();
 
@@ -45,8 +48,24 @@ export class PlayerslistComponent implements OnInit {
     console.log(player + ' clicked');
     if(this.challenge)
       this.sendChallengedPlayerEmitter.emit(player);
-    else
+    else {
       console.log('afficher profil de ' + player);
+      // envoyer requete GET du profile du joueur sélectionné
+      this.http.getProfile(player).subscribe(
+        response => {
+          // importer profil d'un joueur
+          this.persi.setPlayer(response);
+          this.sendSelectedPlayerEmitter.emit();
+        },
+        error => {
+          console.log("err: le profil n'a pas pu être récupéré");
+        }
+        
+      );
+      
+
+    }
+      
   }
 
   backToMenu() {

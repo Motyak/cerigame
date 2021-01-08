@@ -15,7 +15,7 @@
         <div class="card-body" *ngIf="isSelected(0)">
             <div class="row" id="header">
                 <div class="col avatar">
-                    <img [src]="avatar" width="100px" height="100px">
+                    <img [src]="this.profile.avatar" width="100px" height="100px">
                     <div id="medailles-container">
                         <p><i class="fas fa-medal"></i><b>{{medailles}}</b></p>
                     </div>
@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col txt-align-c">
                     <div class="humeur">
-                        <p class="humeur-txt"><i>Je vais bien, tout va bien</i></p>
+                        <p class="humeur-txt"><i>{{humeur}}</i></p>
                     </div>
                 </div>
             </div>

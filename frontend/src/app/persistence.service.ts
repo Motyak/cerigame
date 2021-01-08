@@ -14,6 +14,7 @@ export class PersistenceService {
   getDiff() : string { return localStorage.getItem('diff'); }
   getQuizz() : any { return JSON.parse(localStorage.getItem('quiz')); }
   getScore() : string { return localStorage.getItem('score'); }
+  getPlayer() : any { return JSON.parse(localStorage.getItem('player')); }
   
   setUser(identifiant : string, user) {
     localStorage.setItem('user', identifiant);
@@ -23,6 +24,7 @@ export class PersistenceService {
   setDiff(diff : string) { localStorage.setItem('diff', diff); }
   setQuizz(quizz) { localStorage.setItem('quiz', JSON.stringify(quizz)); }
   setScore(score : number) { localStorage.setItem('score', score.toString()); }
+  setPlayer(player: string) { localStorage.setItem('player', JSON.stringify(player)); }
 
 
   deleteConnection() { localStorage.removeItem('user'); }

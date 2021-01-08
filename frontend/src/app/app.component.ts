@@ -23,6 +23,7 @@ export class AppComponent {
   bannerType: BannerType;
   bannerMsg: string;
   defi: any;
+  player: boolean = false;
   challenge: boolean = false;
 
   /* flags for stackable components */
@@ -175,6 +176,12 @@ export class AppComponent {
     this.loadView('playerslist');
   }
 
+  OnSelectedPlayer = function() : void {
+    // on avertit qu'il s'agit d'un profil joueur et non du notre
+    this.player = true;
+    this.loadView('profile');
+  }
+
   onPlayerChallenged = function(idDb: number) : void {
     console.log("onPlayerChallenged called with value " + idDb);
     const user = this.persi.getConnectedUser();
@@ -228,7 +235,9 @@ export class AppComponent {
   }
 
   onMenuItemSelected = function(selection: string) : void {
-    console.log("onProfileToggled called");
+    console.log("onMenuItemSelected called");
+    if(selection == 'profile')
+      this.player = false;
     this.loadView(selection);
   }
 

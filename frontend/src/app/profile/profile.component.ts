@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 import { HttpService } from '../http.service';
 import { PersistenceService } from '../persistence.service';
@@ -20,6 +20,8 @@ enum HistoTab {
 })
 export class ProfileComponent implements OnInit {
 
+  @Input() player: boolean;
+
   @Output('backToMenu')
   sendBackToMenuEmitter: EventEmitter<string> = new EventEmitter<any>();
 
@@ -28,6 +30,7 @@ export class ProfileComponent implements OnInit {
   selectedTab : number = Tab.PROFILE;
   selectedHistoTab : number = HistoTab.SOLO;
 
+  profile: any;
   identifiant: string;
   nom: string;
   prenom: string;
@@ -43,16 +46,21 @@ export class ProfileComponent implements OnInit {
   constructor(private http: HttpService, private persi: PersistenceService) { }
 
   ngOnInit(): void {
-    const username = this.persi.getConnection();
-    const user = this.persi.getConnectedUser();
-    const profile = user.profile;
-
-    this.identifiant = username;
-    this.nom = profile.nom;
-    this.prenom = profile.prenom;
-    this.avatar = profile.avatar;
-    this.humeur = profile.humeur;
-    this.date_naissance = profile.date_naissance; 
+    if(this.player)
+      this.profile = this.persi.getPlayer();
+    else {/* utilisateur connecté */
+      const user = this.persi.getConnectedUser();
+      this.profile = user.profile;
+      this.profile['identifiant'] = this.persi.getConnection();
+      this.profile['idDb'] = user.idDb;
+    }
+    
+    this.identifiant = this.profile.identifiant;
+    this.nom = this.profile.nom;
+    this.prenom = this.profile.prenom;
+    this.avatar = this.profile.avatar;
+    this.humeur = this.profile.humeur;
+    this.date_naissance = this.profile.date_naissance; 
 
     this.getMedalsFromServer();
     this.getHistoryFromServer();
@@ -72,8 +80,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getMedalsFromServer() : void {
-    const user = this.persi.getConnectedUser();
-    this.http.getMedals(user.idDb).subscribe(
+    this.http.getMedals(this.profile.idDb).subscribe(
       response => this.medailles = response[0].count,
       error => {
         console.log("err: le nb de medailles n'a pas pu être récupéré");
@@ -82,10 +89,8 @@ export class ProfileComponent implements OnInit {
   }
 
   getHistoryFromServer() : void {
-    const user = this.persi.getConnectedUser();
-
     // Récupérer l'historique des parties solo
-    this.http.getHistoSolo(user.idDb).subscribe(
+    this.http.getHistoSolo(this.profile.idDb).subscribe(
       response => {
         this.historySolo = response;
         console.log(this.historySolo);
@@ -96,7 +101,7 @@ export class ProfileComponent implements OnInit {
     );
 
     // récupérer l'historique des défis
-    this.http.getHistoDefis(user.idDb).subscribe(
+    this.http.getHistoDefis(this.profile.idDb).subscribe(
       response => {
         this.historyDefis = response;
         console.log(this.historyDefis);

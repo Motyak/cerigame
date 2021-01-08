@@ -299,6 +299,39 @@ app.get('/histo', (req, res) => {
     });
 });
 
+// route pour récupérer le profil d'un utilisateur
+app.get('/profile', (req, res) => {
+    const sqlReq = 
+        "select id,identifiant,nom,prenom,date_naissance,avatar,humeur,statut_connexion "
+                + "from fredouil.users where id='" + req.query.idDb + "';"; 
+    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+    //         password: 'depolX', port: 5432});
+    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
+        password: 'passe', port: 5432});
+    pool.connect((err, client) => {
+      if(err)
+          console.log('Erreur connexion au serv pg ' + err.stack);
+      else {
+          client.query(sqlReq, (err, result) => {
+              if(err) {
+                  // envoi des données
+                  res.json();
+                  console.log('err execution requete sql ' + err.stack);
+              }
+              else {
+                  // renaming property 'id' => 'idDb'
+                  var profile = result.rows[0];
+                  profile.idDb = profile.id;
+                  delete profile.id;
+                  // envoi des données
+                  res.json(profile);
+              }
+          })
+          client.release();
+      }
+    });
+  });
+
 // route pour récupérer le classement des meilleurs scores
 app.get('/topten', (req, res) => {
     const sqlReq = 

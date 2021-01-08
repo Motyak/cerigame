@@ -34,13 +34,15 @@
   </app-quizz>
 
   <app-profile 
-      *ngIf="activeView == 'profile'" 
+      *ngIf="activeView == 'profile'"
+      [player]="player"
       (backToMenu)="onBackToMenu($event)">
   </app-profile>
 
   <app-playerslist
       *ngIf="activeView == 'playerslist'"
       [challenge]="challenge"
+      (selectedPlayer)="OnSelectedPlayer($event)"
       (challengedPlayer)="onPlayerChallenged($event)"
       (quizzEnded)="onQuizzEnded($event)">
   </app-playerslist>
