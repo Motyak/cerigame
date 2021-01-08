@@ -322,7 +322,7 @@ app.get('/profile', (req, res) => {
 // route pour récupérer le classement des meilleurs scores
 app.get('/topten', (req, res) => {
     const sqlReq = 
-        "select u.identifiant,score " +
+        "select distinct u.identifiant,score " +
         "from fredouil.historique " +
         "join fredouil.users u on fredouil.historique.id_user=u.id " +
         "order by score desc " +
