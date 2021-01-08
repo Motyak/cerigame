@@ -10,7 +10,7 @@ export class WebsocketService {
 	socket;
 
  	constructor() {
-		this.socket = io('http://localhost:3037');
+		this.socket = io('http://pedago.univ-avignon.fr:3037');
 	}
 	
 	listen(eventname : string) : Observable<any> {

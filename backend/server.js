@@ -13,6 +13,7 @@ const cors = require('cors');
 // on définit le numéro de port sur lequel écouter
 const app = express();
 const port = 3037;
+const host = 'pedago.univ-avignon.fr';
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { cors: { origin: '*' } });
 
@@ -42,10 +43,8 @@ app.use(session({
 function changeStatus(idDb, status) {
     const sqlReq = "update fredouil.users set statut_connexion=" + 
             status + "where id=" + idDb + ";";
-    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
-    //         password: 'depolX', port: 5432});
-    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
-    password: 'passe', port: 5432});
+    var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+            password: 'depolX', port: 5432});
     pool.connect((err, client) => {
         if(err)
             console.log('Erreur connexion au serv pg ' + err.stack);
@@ -69,10 +68,8 @@ app.post('/login', (req, res) => {
     // vérifier les identifiants dans bdd...
     const sqlReq = "select * from fredouil.users where identifiant='" + identifiant +
             "' and motpasse='" + sha1(pwd) + "' limit 1;";
-    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
-    //         password: 'depolX', port: 5432});
-    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
-            password: 'passe', port: 5432});
+    var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+            password: 'depolX', port: 5432});
     pool.connect((err, client) => {
         if(err)
             console.log('Erreur connexion au serv pg ' + err.stack);
@@ -146,10 +143,8 @@ app.post('/histo', (req, res) => {
         "values(" + id_user + ",'" + date_jeu + "'," + niveau_jeu + "," + 
         nb_reponses_corr + "," + temps + "," + score + ");";
 
-    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
-    //         password: 'depolX', port: 5432});
-    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
-            password: 'passe', port: 5432});
+    var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+            password: 'depolX', port: 5432});
     pool.connect((err, client) => {
         if(err)
             console.log('Erreur connexion au serv pg ' + err.stack);
@@ -176,10 +171,8 @@ app.post('/defi', (req, res) => {
     const sqlReq = "insert into fredouil.hist_defi(id_user_gagnant,id_user_perdant,date_defi) values (" +
             id_user_gagnant + "," + id_user_perdant + ",'" + date_defi + "');";
 
-    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
-    //         password: 'depolX', port: 5432});
-    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
-            password: 'passe', port: 5432});
+    var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+            password: 'depolX', port: 5432});
     pool.connect((err, client) => {
         if(err)
             console.log('Erreur connexion au serv pg ' + err.stack);
@@ -200,11 +193,11 @@ app.get('/themes', (req, res) => {
 
     var MongoClient = mongo.MongoClient;
 
-    MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+    MongoClient.connect('mongodb://127.0.0.1:27017', (err, client) => {
       if (err) throw err;
       var db = client.db('db');
       
-      db.collection('quiz').distinct('thème', (err, result) => {
+      db.collection('quizz').distinct('thème', (err, result) => {
         if (err) throw err;
         res.json(result);
       });
@@ -218,7 +211,7 @@ app.post('/quiz', (req, res) => {
 
     var MongoClient = mongo.MongoClient;
 
-    MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+    MongoClient.connect('mongodb://127.0.0.1:27017', (err, client) => {
       if (err) throw err;
       var db = client.db('db');
       
@@ -229,7 +222,7 @@ app.post('/quiz', (req, res) => {
         {'$sample': {'size': 10}}
       ];
 
-      db.collection('quiz').aggregate(pipeline).toArray((err, result) => {
+      db.collection('quizz').aggregate(pipeline).toArray((err, result) => {
         if (err) throw err;
         res.json(result);
       });
@@ -243,10 +236,8 @@ app.get('/medals', (req, res) => {
     const idDb = req.query.idDb;
 
     const sqlReq = "select count(id) from fredouil.hist_defi where id_user_gagnant=" + idDb + ";";
-    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
-    //         password: 'depolX', port: 5432});
-    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
-            password: 'passe', port: 5432});
+    var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+            password: 'depolX', port: 5432});
     pool.connect((err, client) => {
         if(err)
             console.log('Erreur connexion au serv pg ' + err.stack);
@@ -275,10 +266,8 @@ app.get('/histo', (req, res) => {
     // récupération des 10 dernières parties du joueur
     const sqlReqSolo = "select * from fredouil.historique where id_user=" 
         + idDb + " order by date_jeu desc limit 10;"
-    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
-    //         password: 'depolX', port: 5432});
-    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
-            password: 'passe', port: 5432});
+    var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+            password: 'depolX', port: 5432});
     pool.connect((err, client) => {
         if(err)
             console.log('Erreur connexion au serv pg ' + err.stack);
@@ -304,10 +293,8 @@ app.get('/profile', (req, res) => {
     const sqlReq = 
         "select id,identifiant,nom,prenom,date_naissance,avatar,humeur,statut_connexion "
                 + "from fredouil.users where id='" + req.query.idDb + "';"; 
-    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
-    //         password: 'depolX', port: 5432});
-    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
-        password: 'passe', port: 5432});
+    var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+            password: 'depolX', port: 5432});
     pool.connect((err, client) => {
       if(err)
           console.log('Erreur connexion au serv pg ' + err.stack);
@@ -340,10 +327,8 @@ app.get('/topten', (req, res) => {
         "join fredouil.users u on fredouil.historique.id_user=u.id " +
         "order by score desc " +
         "limit 10;"; 
-    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
-    //         password: 'depolX', port: 5432});
-    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
-        password: 'passe', port: 5432});
+    var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+            password: 'depolX', port: 5432});
     pool.connect((err, client) => {
       if(err)
           console.log('Erreur connexion au serv pg ' + err.stack);
@@ -375,10 +360,8 @@ app.get('/defis', (req, res) => {
       "where id_user_gagnant=" + idDb + "or id_user_perdant=" + idDb +
       " order by date_defi desc" +
       " limit 10"; 
-  // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
-  //         password: 'depolX', port: 5432});
-  var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
-      password: 'passe', port: 5432});
+  var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+          password: 'depolX', port: 5432});
   pool.connect((err, client) => {
     if(err)
         console.log('Erreur connexion au serv pg ' + err.stack);
@@ -406,10 +389,8 @@ app.get('/players', (req, res) => {
 
     const sqlReq = "select id,identifiant from fredouil.users where id<>" 
         + idDb + " and statut_connexion=1 order by identifiant asc limit 50;"
-    // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
-    //         password: 'depolX', port: 5432});
-    var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
-            password: 'passe', port: 5432});
+    var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+            password: 'depolX', port: 5432});
     pool.connect((err, client) => {
         if(err)
             console.log('Erreur connexion au serv pg ' + err.stack);
@@ -434,7 +415,7 @@ app.get('/players', (req, res) => {
 app.get('/defiTmp', (req, res) => {
     var MongoClient = mongo.MongoClient;
 
-    MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+    MongoClient.connect('mongodb://127.0.0.1:27017', (err, client) => {
 		if (err) throw err;
 		var db = client.db('db');
       
@@ -449,7 +430,7 @@ app.get('/defiTmp', (req, res) => {
 app.post('/defiTmp', (req, res) => {
     var MongoClient = mongo.MongoClient;
 
-    MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+    MongoClient.connect('mongodb://127.0.0.1:27017', (err, client) => {
 		if (err) throw err;
 		var db = client.db('db');
       
@@ -464,7 +445,7 @@ app.post('/defiTmp', (req, res) => {
 app.delete('/defi', (req, res) => {
     var MongoClient = mongo.MongoClient;
 
-    MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+    MongoClient.connect('mongodb://127.0.0.1:27017', (err, client) => {
 		if (err) throw err;
 		var db = client.db('db');
       
@@ -495,10 +476,8 @@ io.on('connection', socketClient => {
     socketClient.on('defi', data => {
         /* Ajouter l'identifiantDefiant à data */
         const sqlReq = "select identifiant from fredouil.users where id=" + data.idUserDefiant;
-        // var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
-        //         password: 'depolX', port: 5432});
-        var pool = new pgClient.Pool({user: 'motyak', host: '127.0.0.1', database: 'etd', 
-                password: 'passe', port: 5432});
+        var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+                password: 'depolX', port: 5432});
         pool.connect((err, client) => {
             if(err) console.log('Erreur connexion au serv pg ' + err.stack);
             else {
@@ -526,8 +505,8 @@ io.on('connection', socketClient => {
 
 // On lance le serveur node sous le port assigné, qui va traiter
 // chaque requête HTTP qui lui sera destinée (GET, POST, ..)
-server.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`)
+server.listen(port, host, () => {
+    console.log(`Server listening at http://${host}:${port}`)
 });
 
 
