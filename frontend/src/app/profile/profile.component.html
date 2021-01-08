@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="col txt-align-c">
-                    <a href="#" (click)="editProfile()"><i class="fas fa-edit"></i></a>
+                    <a href="#" *ngIf="!player" (click)="editProfile()"><i class="fas fa-edit"></i></a>
                 </div>
             </div>
             <div class="row">
