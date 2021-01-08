@@ -36,6 +36,13 @@ export class HttpService {
     });
   }
 
+  postProfile(idDb: string, humeur: string) : Observable<any> {
+    return this.http.post<any>('http://pedago.univ-avignon.fr:3037/profile', {
+      idDb: idDb,
+      humeur: humeur
+    });
+  }
+
   getDefiTmp(idUserDefiant: number, idUserDefie: number) : Observable<any> {
     let params = new HttpParams().set("idUserDefiant", idUserDefiant.toString()).set("idUserDefie", idUserDefie.toString());
     return this.http.get<any>('http://pedago.univ-avignon.fr:3037/defiTmp', {params: params});

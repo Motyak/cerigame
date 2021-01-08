@@ -29,6 +29,7 @@ export class ProfileComponent implements OnInit {
 
   selectedTab : number = Tab.PROFILE;
   selectedHistoTab : number = HistoTab.SOLO;
+  editionMode: boolean = false;
 
   profile: any;
   identifiant: string;
@@ -73,6 +74,21 @@ export class ProfileComponent implements OnInit {
   selectHistory() : void { this.selectedTab = Tab.HISTORY; }
   selectSolo() : void { this.selectedHistoTab = HistoTab.SOLO; }
   selectDefis() : void { this.selectedHistoTab = HistoTab.DEFIS; }
+
+  editProfile() : void {
+    this.editionMode = true;
+  }
+
+  saveModifications() : void {
+    this.editionMode = false;
+    this.humeur = (<HTMLInputElement>document.getElementById("humeur")).innerText;
+    // sauvegarder en local
+    let user = this.persi.getConnectedUser();
+    user.profile['humeur'] = this.humeur;
+    this.persi.setUser(this.persi.getConnection(), JSON.stringify(user));
+    // sauvegarde sur le serveur
+    this.http.postProfile(this.persi.getConnectedUser().idDb, this.humeur).subscribe();
+  }
 
   backToMenu() : void {
     // envoi msg au composant principal

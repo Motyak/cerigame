@@ -30,13 +30,13 @@
                     </div>
                 </div>
                 <div class="col txt-align-c">
-                    <a href="#"><i class="fas fa-edit"></i></a>
+                    <a href="#" (click)="editProfile()"><i class="fas fa-edit"></i></a>
                 </div>
             </div>
             <div class="row">
                 <div class="col txt-align-c">
                     <div class="humeur">
-                        <p class="humeur-txt"><i>{{humeur}}</i></p>
+                        <p [contentEditable]="editionMode" id="humeur" class="humeur-txt"><i>{{humeur}}</i></p>
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
             </div>
             <div class="row">
                 <div class="col txt-align-c">
-                    <button disabled>Sauvegarder modifications</button>
+                    <button [disabled]="!editionMode" (click)="saveModifications()">Sauvegarder modifications</button>
                 </div>
             </div>
             <div class="row">

@@ -426,6 +426,28 @@ app.get('/defiTmp', (req, res) => {
     });
 });
 
+// route pour sauvegarder le profil d'un utilisateur (humeur)
+app.post('/profile', (req, res) => {
+    const sqlReq = 
+        "update fredouil.users set humeur='" + req.body.humeur + 
+                "' where id=" + req.body.idDb + ";";
+    var pool = new pgClient.Pool({user: 'uapv1903668', host: '127.0.0.1', database: 'etd', 
+            password: 'depolX', port: 5432});
+    pool.connect((err, client) => {
+        if(err)
+            console.log('Erreur connexion au serv pg ' + err.stack);
+        else {
+            client.query(sqlReq, (err, result) => {
+                if(err)
+                    console.log('err execution requete sql ' + err.stack);
+                else
+                    console.log('sql update users success');
+            })
+            client.release();
+        }
+    });
+  });
+
 // Route pour sauvegarder un défi (temporairement)
 app.post('/defiTmp', (req, res) => {
     var MongoClient = mongo.MongoClient;
