@@ -46,6 +46,12 @@
       (challengedPlayer)="onPlayerChallenged($event)"
       (quizzEnded)="onQuizzEnded($event)">
   </app-playerslist>
+
+  <app-topten
+      *ngIf="activeView == 'topten'"
+      (backToMenu)="onBackToMenu($event)">
+
+  </app-topten>
   <!--------------------------------------------------------------->
 
   <!---------------------------DEFI MODAL-------------------------->

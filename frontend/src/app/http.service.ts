@@ -78,6 +78,10 @@ export class HttpService {
     return this.http.get<any>('http://localhost:3037/players', {params: params});
   }
 
+  getTopTen(): Observable<any> {
+    return this.http.get<any>('http://localhost:3037/topten');
+  }
+
   delTmpQuizz(idUserDefiant: number, idUserDefie: number) : Observable<any> {
     let options = {
       headers: new HttpHeaders({'Content-Type': 'application/json'}),

@@ -40,7 +40,7 @@ export class TopbarComponent implements OnInit {
   }
 
   toggleTopTen() : void {
-    // this.sendMenuItemSelectionEmitter.emit('profile');
+    this.sendMenuItemSelectionEmitter.emit('topten');
   }
 
   logoutOnClick() : void {

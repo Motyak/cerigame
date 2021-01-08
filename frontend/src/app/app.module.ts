@@ -21,6 +21,7 @@ import { WebsocketService } from './websocket.service';
 import { PersistenceService } from './persistence.service';
 import { AuthenticationService } from './authentication.service';
 import { DefiComponent } from './defi/defi.component';
+import { ToptenComponent } from './topten/topten.component';
 
 
 
@@ -37,6 +38,7 @@ import { DefiComponent } from './defi/defi.component';
     ProfileComponent,
     PlayerslistComponent,
     DefiComponent,
+    ToptenComponent,
   ],
   imports: [
     BrowserModule,

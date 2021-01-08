@@ -317,11 +317,10 @@ Défauts de l'application :
     pour avoir accès à Profil, Joueurs et 
     Top 10
 -Afficher la liste des joueurs connectés        X
--Pouvoir consulter le profil d'un joueur
+-Pouvoir consulter le profil d'un joueur        X
     depuis la liste des joueurs connectés
 -Afficher le top 10 des meilleurs scores
--Pouvoir modifier son humeur dans Profil
--Afficher une correction (réponses fausses)
+
 -Déploiement CERI
 -Enregistrement démo
 
