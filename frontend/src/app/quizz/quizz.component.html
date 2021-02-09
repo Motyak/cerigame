@@ -39,6 +39,18 @@
     <div class="card-body d-flex align-items-center" *ngIf="questionNb == 10">
       <div class="col">
 
+        <!-- DEFI GAGNE / PERDU -->
+        <div *ngIf="defi" class="row">
+          <div class="col small-col txt-align-c">
+            <p>
+              <b>Défi </b>
+              <b *ngIf="score > defi.scoreDefiant">gagné!</b>
+              <b *ngIf="score <= defi.scoreDefiant">perdu!</b>
+              (score adverse : {{defi.scoreDefiant}})
+            </p>
+          </div>
+        </div>
+
         <!-- Bonnes reponses : xxx -->
         <div class="row">
           <div class="col small-col">
@@ -77,19 +89,19 @@
         </div>
 
         <!-- Défis -->
-        <div class="row">
+        <div class="row" *ngIf="!defi">
           <div class="col small-col txt-align-c">
             <button disabled>Défier un ami</button>
           </div>
           <div class="col small-col txt-align-c">
-            <button disabled>Défier un joueur</button>
+            <button (click)="showPlayersList()">Défier un joueur</button>
           </div>
         </div>
 
         <!-- Voir correction -->
         <div class="row">
           <div class="col small-col txt-align-c">
-            <button>Voir la correction</button>
+            <button disabled>Voir la correction</button>
           </div>
         </div>
 

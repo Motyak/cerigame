@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-diffselection',
@@ -10,27 +10,16 @@ export class DiffselectionComponent implements OnInit {
   @Output('selectedDiff')
   sendSelectedDiffEmitter: EventEmitter<string> = new EventEmitter<string>();
 
-  selectEasy(): void {
-    this.sendSelectedDiffEmitter.emit('Facile');
-  }
+  selectEasy(): void { this.sendSelectedDiffEmitter.emit('Facile'); }
 
-  selectNormal(): void {
-    this.sendSelectedDiffEmitter.emit('Normal');
-  }
+  selectNormal(): void { this.sendSelectedDiffEmitter.emit('Normal'); }
 
-  selectHard(): void {
-    this.sendSelectedDiffEmitter.emit('Difficile');
-  }
+  selectHard(): void { this.sendSelectedDiffEmitter.emit('Difficile'); }
 
-  goBack(): void {
-    localStorage.removeItem('quiz');
-    localStorage.removeItem('thème');
-    this.sendSelectedDiffEmitter.emit('back');
-  }
+  goBack(): void { this.sendSelectedDiffEmitter.emit('back'); }
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }

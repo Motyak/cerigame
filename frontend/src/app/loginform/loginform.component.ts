@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { AuthentificationService } from '../authentification.service';
+import { AuthenticationService } from '../authentication.service';
+import { WebsocketService } from '../websocket.service';
+import { PersistenceService } from '../persistence.service';
 
-import { ConStatus } from '../structs/ConStatus';
+import { ConStatus } from '../ConStatus';
 
 @Component({
   selector: 'app-loginform',
@@ -11,26 +13,22 @@ import { ConStatus } from '../structs/ConStatus';
 })
 export class LoginformComponent implements OnInit {
 
-  attrNomUtilisateur: string;
+  attrUsername: string;
   attrPwd: string;
-  @Input() auth: AuthentificationService;
 
   @Output('authStatus')
   sendAuthStatusEmitter: EventEmitter<ConStatus> = new EventEmitter<ConStatus>();
 
-  constructor() { }
+  constructor(private auth : AuthenticationService, private webSocket : WebsocketService, private persi : PersistenceService) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 
   onSubmit(): void {
-    console.log(this.attrNomUtilisateur + ":" + this.attrPwd);
-
-    this.auth.verifyId(this.attrNomUtilisateur, this.attrPwd).subscribe(
+    this.auth.verifyId(this.attrUsername, this.attrPwd).subscribe(
       response => {
         if(response.auth) {
-          const prev = JSON.parse(localStorage.getItem(response.user.identifiant));
+          const prev = this.persi.getUser(response.user.identifiant);
+
           var user = {};
           if(prev)
             user["lastLogin"] = prev.currentLogin;
@@ -39,8 +37,9 @@ export class LoginformComponent implements OnInit {
           user["currentLogin"] = response.user.currentLogin;
           user["idDb"] = response.user.idDb;
           user["profile"] = response.user.profile;
-          localStorage.setItem(response.user.identifiant, JSON.stringify(user));
-          localStorage.setItem('user', response.user.identifiant);
+
+          this.persi.setUser(response.user.identifiant, JSON.stringify(user));
+          this.webSocket.emit('login', this.attrUsername);
           this.sendAuthStatusEmitter.emit(new ConStatus("success", "Connexion réussie!"));
         }
         else

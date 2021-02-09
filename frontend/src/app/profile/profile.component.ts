@@ -1,10 +1,17 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+
+import { HttpService } from '../http.service';
+import { PersistenceService } from '../persistence.service';
 
 enum Tab {
   PROFILE,
   HISTORY
 };
+
+enum HistoTab {
+  SOLO,
+  DEFIS
+}
 
 @Component({
   selector: 'app-profile',
@@ -13,50 +20,74 @@ enum Tab {
 })
 export class ProfileComponent implements OnInit {
 
+  @Input() player: boolean;
+
   @Output('backToMenu')
   sendBackToMenuEmitter: EventEmitter<string> = new EventEmitter<any>();
 
   diff : string[] = ['Facile', 'Normal', 'Difficile'];
 
   selectedTab : number = Tab.PROFILE;
+  selectedHistoTab : number = HistoTab.SOLO;
+  editionMode: boolean = false;
 
+  profile: any;
   identifiant: string;
   nom: string;
   prenom: string;
   avatar: string;
   humeur: string;
   date_naissance: Date;
+  medailles: number;
   temps: string;
 
-  history: any[];
+  historySolo: any[];
+  historyDefis: any[];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpService, private persi: PersistenceService) { }
 
   ngOnInit(): void {
-    const username = localStorage.getItem('user');
-    const user = JSON.parse(localStorage.getItem(username));
-    const profile = user.profile;
+    if(this.player)
+      this.profile = this.persi.getPlayer();
+    else {/* utilisateur connecté */
+      const user = this.persi.getConnectedUser();
+      this.profile = user.profile;
+      this.profile['identifiant'] = this.persi.getConnection();
+      this.profile['idDb'] = user.idDb;
+    }
+    
+    this.identifiant = this.profile.identifiant;
+    this.nom = this.profile.nom;
+    this.prenom = this.profile.prenom;
+    this.avatar = this.profile.avatar;
+    this.humeur = this.profile.humeur;
+    this.date_naissance = this.profile.date_naissance; 
 
-    this.identifiant = username;
-    this.nom = profile.nom;
-    this.prenom = profile.prenom;
-    this.avatar = profile.avatar;
-    this.humeur = profile.humeur;
-    this.date_naissance = profile.date_naissance; 
-
+    this.getMedalsFromServer();
     this.getHistoryFromServer();
   }
 
-  isSelected(tab: number) : boolean {
-    return this.selectedTab == tab;
+  isSelected(tab: number) : boolean { return this.selectedTab == tab; }
+  isSelectedHisto(tab: number) : boolean { return this.selectedHistoTab == tab; }
+
+  selectProfile() : void { this.selectedTab = Tab.PROFILE; }
+  selectHistory() : void { this.selectedTab = Tab.HISTORY; }
+  selectSolo() : void { this.selectedHistoTab = HistoTab.SOLO; }
+  selectDefis() : void { this.selectedHistoTab = HistoTab.DEFIS; }
+
+  editProfile() : void {
+    this.editionMode = true;
   }
 
-  selectProfile() : void {
-    this.selectedTab = Tab.PROFILE;
-  }
-
-  selectHistory() : void {
-    this.selectedTab = Tab.HISTORY;
+  saveModifications() : void {
+    this.editionMode = false;
+    this.humeur = (<HTMLInputElement>document.getElementById("humeur")).innerText;
+    // sauvegarder en local
+    let user = this.persi.getConnectedUser();
+    user.profile['humeur'] = this.humeur;
+    this.persi.setUser(this.persi.getConnection(), JSON.stringify(user));
+    // sauvegarde sur le serveur
+    this.http.postProfile(this.persi.getConnectedUser().idDb, this.humeur).subscribe();
   }
 
   backToMenu() : void {
@@ -64,19 +95,35 @@ export class ProfileComponent implements OnInit {
     this.sendBackToMenuEmitter.emit();
   }
 
-  getHistoryFromServer() : void {
-    const username = localStorage.getItem('user');
-    const user = JSON.parse(localStorage.getItem(username));
-    const idDb = user.idDb;
+  getMedalsFromServer() : void {
+    this.http.getMedals(this.profile.idDb).subscribe(
+      response => this.medailles = response[0].count,
+      error => {
+        console.log("err: le nb de medailles n'a pas pu être récupéré");
+      }
+    )
+  }
 
-    let params = new HttpParams().set("idDb", idDb);
-    this.http.get<any>('http://pedago.univ-avignon.fr:3037/histo', {params: params}).subscribe(
+  getHistoryFromServer() : void {
+    // Récupérer l'historique des parties solo
+    this.http.getHistoSolo(this.profile.idDb).subscribe(
       response => {
-        this.history = response;
-        console.log(this.history);
+        this.historySolo = response;
+        console.log(this.historySolo);
       },
       error => {
         console.log("err: l'historique n'a pas pu être récupéré");
+      }
+    );
+
+    // récupérer l'historique des défis
+    this.http.getHistoDefis(this.profile.idDb).subscribe(
+      response => {
+        this.historyDefis = response;
+        console.log(this.historyDefis);
+      },
+      error => {
+        console.log("err: l'historique des défis n'a pas pu être récupéré");
       }
     );
   }

@@ -1,0 +1,31 @@
+<div class="d-flex justify-content-center align-items-center h-100">
+    <div class="card">
+        <div class="card-header text-center">
+            <h3>Top 10 :</h3>
+        </div>
+        <div class="card-body">
+            <p *ngIf="classement?.length == 0" class="placeholder"><i>Aucun joueur</i></p>
+            <table class="table">
+                <tr scope="col" *ngFor="let p of classement; index as i">
+                    <td>
+                        <div class="row w-100">
+                            <div class="col small-col">
+                                <p><b>{{i + 1}}°</b><br>{{p.identifiant}}</p>
+                            </div>
+                            <div class="col small-col d-flex align-items-center justify-content-end">
+                                <p>{{p.score}}</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col small-col txt-align-c">
+                  <button class="btn btn-info" (click)="backToMenu()">Retour au menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

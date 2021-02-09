@@ -1,0 +1,35 @@
+.card {
+    font-size: larger;
+    width: 385px;
+}
+
+.card-body {
+    height: 327px;
+    overflow: scroll;
+}
+
+.btn {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.placeholder {
+    font-size: medium;
+    text-align: center;
+}
+
+.txt-align-r {
+    text-align: right;
+}
+
+.txt-align-c {
+    text-align: center;
+}
+
+.scrollable {
+    overflow: scroll;
+}
+
+.small-col {
+    height: 60px;
+}

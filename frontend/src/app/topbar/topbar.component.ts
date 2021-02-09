@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
+import { WebsocketService } from '../websocket.service';
+import { AuthenticationService } from '../authentication.service';
+import { PersistenceService } from '../persistence.service';
 
-import { ConStatus } from '../structs/ConStatus';
+import { ConStatus } from '../ConStatus';
 
 @Component({
   selector: 'app-topbar',
@@ -11,32 +13,44 @@ import { ConStatus } from '../structs/ConStatus';
 })
 export class TopbarComponent implements OnInit {
 
-  @Input() username: string;
-  @Input() lastLoginTime: string;
+  username: string;
+  lastLoginTime: string;
 
-  @Output('profileToggle')
-  sendProfileToggleEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output('menuItemSelection')
+  sendMenuItemSelectionEmitter: EventEmitter<string> = new EventEmitter<any>();
 
   @Output('authStatus')
   sendAuthStatusEmitter: EventEmitter<ConStatus> = new EventEmitter<ConStatus>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private auth : AuthenticationService, private persi : PersistenceService, private webSocket : WebsocketService) {}
 
   ngOnInit(): void {
+    const user = this.persi.getConnectedUser();
+
+    this.username = this.persi.getConnection();
+    this.lastLoginTime = user.lastLogin;
   }
 
   toggleProfile() : void {
-    this.sendProfileToggleEmitter.emit(true);
+    this.sendMenuItemSelectionEmitter.emit('profile');
   }
 
-  // on devrait faire appel au service authentification
+  togglePlayersList() : void {
+    this.sendMenuItemSelectionEmitter.emit('playerslist');
+  }
+
+  toggleTopTen() : void {
+    this.sendMenuItemSelectionEmitter.emit('topten');
+  }
+
   logoutOnClick() : void {
-    // send req but dont wait for response
-    this.http.post('http://pedago.univ-avignon.fr:3037/logout', {}).subscribe();
-    localStorage.removeItem('user');
-    localStorage.removeItem('idDb');
-    this.sendAuthStatusEmitter.emit(new ConStatus("info", "Vous êtes déconnecté."));
-    console.log('logout clicked');
-  }
+    const user = this.persi.getConnectedUser();
 
+    // send req but dont wait for response
+    this.auth.logout(user.idDb).subscribe();
+    this.webSocket.emit('logout', {idDb: user.idDb, username: this.username});
+    this.persi.deleteConnection();
+    
+    this.sendAuthStatusEmitter.emit(new ConStatus("info", "Vous êtes déconnecté."));
+  }
 }

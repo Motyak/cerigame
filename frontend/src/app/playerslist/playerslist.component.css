@@ -1,0 +1,18 @@
+.card {
+    font-size: larger;
+}
+
+.card-body {
+    height: 327px;
+    overflow: scroll;
+}
+
+.btn {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.placeholder {
+    font-size: medium;
+    text-align: center;
+}

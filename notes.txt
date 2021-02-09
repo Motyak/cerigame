@@ -308,22 +308,33 @@ Défauts de l'application :
     (via le constructeur en private, tout ca)
 -La width de la fenêtre principale au milieu pourrait être plus grande
 (gratuitement en plus)
+-Manque d'animations
+
+
+-Faire l'historique des défis                   X
+-Afficher le nb de médailles dans Profil        X
+-Faire un menu à la place du bouton Profil      X
+    pour avoir accès à Profil, Joueurs et 
+    Top 10
+-Afficher la liste des joueurs connectés        X
+-Pouvoir consulter le profil d'un joueur        X
+    depuis la liste des joueurs connectés
+-Afficher le top 10 des meilleurs scores
+
+-Déploiement CERI
+-Enregistrement démo
 
 
 
 
 
 
-
+-Faire le classement
 
 [Pouvoir modifier son profil.]
     -> Faire une route backend POST avec uniquement la donnée modifiée
         (pouvoir construire des requetes sql sur mesure?? je sais pas)
     -> Faire en sorte de pouvoir éditer les champs du profil directement
-
-Déploiement sur le serveur du CERI.
-
-
 
 
 

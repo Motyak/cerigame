@@ -1,0 +1,102 @@
+-Angular repose sur le principe de Single Page Application.
+    Il faut impérativement utiliser les routes pour modifier dynamiquement
+    la page principale sans avoir à utiliser un milliard de directives
+    ngIf*.
+
+-Étudier le contenu du fichier app.module.ts pour savoir ce qu'on enlève/
+    ajoute,..
+
+https://angular.io/guide/router-tutorial#define-your-routes
+https://angular.io/guide/router#accessing-query-parameters-and-fragments
+
+Pour pouvoir utiliser une route il faut la créer au préalable dans
+app.module.ts. On peut aussi spécifier des redirections (par exemple
+pour faire une route par défaut).
+
+On peut utiliser la directive 'routerLink' pour spécifier une route
+dans laquelle naviguer lorsqu'on clique sur un bouton ou un lien.
+La vue routée sera chargée entre les balises 'router-outlet' du HTML.
+On peut aussi y ajouter la directive 'routerLinkActive' qui détecte
+si la route est active et en conséquence appliquer une ou plusieurs
+classes CSS à l'élément HTML en question.
+
+Lors de la navigation, on veut pouvoir faire communiquer des informations
+d'un composant à un autre, pour cela il faut importer 'Router, ActivatedRoute,
+ParamMap' et injecter ActivatedRoute dans le constructeur de l'appli.
+Puis dans la méthode ngOnInit on fait le tracking des paramètres souhaités.
+
+Il peut s'avérer pratique de naviguer sur des routes relatives à un
+composant autre que le composant principal. On appelle ce type de route
+imbriquées des child routes. On ajoute les child routes dans un tableau 
+'children' associé à la route mère.
+
+Pour restreindre l'accès à certaines routes on utilise des route guards.
+Génération d'un service guard (5 types dispos selon les situations).
+Une fois les méthodes implémentées, il faut ajouter à la route du 
+fichier app.module.ts le nom du guard et son type.
+
+On peut utiliser les link parameters array pour faire passer des
+paramètres requis et optionnels pour une route.
+Accessing query parameters and fragments <- pour y accèder.
+
+Pour faire communiquer deux composants entre eux, 3 possibilités :
+-Parent to child via Input                          <-
+-Child to parent via Output and EventEmitter        <-
+-Au travers d'un service/provider (peu recommandé)   X
+
+Routes (pour l'instant):
+
+/
+'-> Redirect vers /login si utilisateur non auth, /theme-selection sinon.
+
+/login
+'-> Navigable que si l'utilisateur n'est pas authentifié
+'-> Affichage d'un message de succès si authentification réussie
+        ou message d'erreur si authentification échouée
+'-> Redirige vers /theme-selection si authentification réussie
+
+/theme-selection
+'-> Navigable que si l'utilisateur est authentifié
+'-> Communique avec le composant ThemeCard qui doit lui renvoyer
+        un theme (string)
+
+/diff-selection
+'-> Navigable que si l'utilisateur est authentifié et a choisi un theme
+
+/quizz
+'-> Navigable que si l'utilisateur est authentifié, a choisi un theme 
+        et une difficulté
+
+/profile
+'-> Navigable que si l'utilisateur est authentifié
+
+
+Services :
+    HttpService
+    WebSocketService
+    PersistenceService
+    AuthenticationService
+
+
+Composants :
+    AppComponent
+    TopbarComponent                 services OK
+    BannerComponent                    /
+    LoginformComponent              services OK
+    ThemeselectionComponent             /
+    ThemecardComponent                  /
+    QuizzComponent                  services OK
+    ProfileComponent                services OK
+    PlayerslistComponent            services OK
+
+
+Classes utilitaires :
+    BannerType (enum)
+    ConStatus (struct)
+
+__________________________________________
+
+Refactorer app component
+Refactorer les composants (essayer de faire des composants plus
+    réutilisables, utiliser l'héritage, de manière à pouvoir
+    terminer les vues manquantes rapidement)

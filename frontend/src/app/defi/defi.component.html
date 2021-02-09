@@ -1,0 +1,25 @@
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <h3>{{defi.identifiantDefiant}} vous défie!</h3>
+        <div class="row">
+            <div class="col small-col">
+              <p class="line-h-1-2"><b>Thème :</b></p>
+            </div>
+            <div class="col small-col txt-align-r">
+              <p>{{defi.theme}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col small-col">
+              <p class="line-h-1-2"><b>Difficulté :</b></p>
+            </div>
+            <div class="col small-col txt-align-r">
+              <p>{{defi.diff}}</p>
+            </div>
+        </div>
+        <!-- <p><b>Thème:</b> {{theme}}</p>
+        <p><b>Difficulté:</b> {{diff}}</p> -->
+        <button class="btn btn-success" (click)="response(true)">Accepter</button>
+        <button class="btn btn-danger" (click)="response(false)">Refuser</button>
+    </div>
+</div>

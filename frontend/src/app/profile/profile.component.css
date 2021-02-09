@@ -60,7 +60,7 @@ a {
     color: black;
 }
 
-.diff0 {
+.diff0, .color-green {
     color: green;
 }
 
@@ -68,6 +68,23 @@ a {
     color: orange;
 }
 
-.diff2 {
+.diff2, .color-red {
     color: red;
+}
+
+.avatar {
+    position: relative;
+}
+
+#medailles-container {
+    position: absolute;
+    bottom: 2px;
+    right: 15px;
+
+    font-size: large;
+}
+
+#medailles-container p{
+    color: yellow;
+    background-color: rgba(0, 0, 0, 0.5);
 }

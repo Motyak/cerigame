@@ -1,0 +1,21 @@
+<div class="d-flex justify-content-center align-items-center h-100">
+    <div class="card">
+        <div class="card-header text-center">
+            <h3 *ngIf="challenge">Défier un joueur :</h3>
+            <h3 *ngIf="!challenge">Joueurs connectés :</h3>
+        </div>
+        <div class="card-body">
+            <p *ngIf="players?.length == 0" class="placeholder"><i>Aucun joueur connecté</i></p>
+            <div class="row" *ngFor="let p of players">
+                <button class="btn btn-light" (click)="select(p.id)">{{p.identifiant}}</button>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col small-col txt-align-c">
+                  <button class="btn btn-info" (click)="backToMenu()">Retour au menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

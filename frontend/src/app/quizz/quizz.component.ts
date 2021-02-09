@@ -1,5 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+
+import { HttpService } from '../http.service';
+import { PersistenceService } from '../persistence.service';
 
 @Component({
   selector: 'app-quizz',
@@ -8,8 +10,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class QuizzComponent implements OnInit {
 
+  @Input() defi: any;
+
   @Output('quizzEnded')
   sendQuizzEndedEmitter: EventEmitter<string> = new EventEmitter<any>();
+
+  @Output('playersListRequested')
+  sendPlayersListRequestedEmitter: EventEmitter<void> = new EventEmitter<any>();
 
   nbOfProp : any = {
     'Facile':     2,
@@ -21,7 +28,6 @@ export class QuizzComponent implements OnInit {
   theme: string;
   diff: string;
   questionNb : number = 0;
-  // answers : number[];
   answers : string[];
 
   interval;
@@ -32,12 +38,20 @@ export class QuizzComponent implements OnInit {
   nbGoodAnswers : number = 0;
   score : number = 0;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpService, private persi : PersistenceService) { }
 
   ngOnInit(): void {
-    this.theme = localStorage.getItem('thème');
-    this.diff = localStorage.getItem('diff');
-    this.quizz = JSON.parse(localStorage.getItem('quiz'));
+    console.log(this.defi);//debug
+    if(this.defi) {
+      this.theme = this.defi.theme;
+      this.diff = this.defi.diff;
+      this.quizz = this.defi.quiz;
+    }
+    else {
+      this.theme = this.persi.getTheme();
+      this.diff = this.persi.getDiff();
+      this.quizz = this.persi.getQuizz();
+    }
     this.setupQuizz();
     this.answers = new Array(10);
     this.interval = setInterval(() => { 
@@ -74,7 +88,10 @@ export class QuizzComponent implements OnInit {
       }
     };
 
-    var quiz = JSON.parse(localStorage.getItem('quiz'));
+    // prendre un clone de this.quizz
+    var quiz = Object.assign({}, this.quizz);
+    // var quiz = this.persi.getQuizz();
+    
     for(var z = 0 ; z < 10 ; ++z)
     {
       const réponse = quiz[z].quizz.réponse;
@@ -103,22 +120,39 @@ export class QuizzComponent implements OnInit {
       {
         this.stopTimer();
         this.calculateScore();
+        this.persi.setScore(this.score);
         this.sendResultToServer();
       }
   }
 
   sendResultToServer() : void {
     const diffInt = {'Facile':0,'Normal':1,'Difficile':2};
-    const user = JSON.parse(localStorage.getItem(localStorage.getItem('user')));
+    const user = this.persi.getConnectedUser();
 
-    this.http.post<any>('http://pedago.univ-avignon.fr:3037/histo', {
-      id_user: user.idDb, 
-      date_jeu: new Date(), 
-      niveau_jeu: diffInt[this.diff], 
-      nb_reponses_corr: this.nbGoodAnswers, 
-      temps: this.timerMin * 60 + this.timerSec, 
-      score: this.score
-    }).subscribe();
+    // ajout de la partie dans l'historique (avec score etc..)
+    this.http.postHisto(
+      user.idDb, 
+      new Date(), 
+      diffInt[this.diff], 
+      this.nbGoodAnswers, 
+      this.timerMin * 60 + this.timerSec,
+      this.score
+    ).subscribe();
+
+    if(this.defi) {
+      // ajout du défi dans l'historique (qui a gagné, etc..)
+      let id_user_gagnant, id_user_perdant;
+      if(this.defi.scoreDefiant > this.score) {
+        id_user_gagnant = this.defi.idUserDefiant;
+        id_user_perdant = user.idDb;
+      }
+      else {
+        id_user_gagnant = user.idDb;
+        id_user_perdant = this.defi.idUserDefiant;
+      }
+      this.http.postDefi(id_user_gagnant, id_user_perdant, new Date()).subscribe();
+    }
+    
   }
 
   backToMenu() : void {
@@ -126,9 +160,12 @@ export class QuizzComponent implements OnInit {
     this.sendQuizzEndedEmitter.emit();
   }
 
-  stopTimer() : void {
-    clearInterval(this.interval);
+  showPlayersList() : void {
+    // dire au composant principal que la liste doit etre visible
+    this.sendPlayersListRequestedEmitter.emit();
   }
+
+  stopTimer() : void { clearInterval(this.interval); }
 
   calculateScore() : void {
     const MAX_SCORE = 10000;

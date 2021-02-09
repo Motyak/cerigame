@@ -14,8 +14,7 @@ export class ThemeselectionComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onThemeSelected = function(theme: string) : void {
     this.sendSelectedThemeEmitter.emit(theme);
